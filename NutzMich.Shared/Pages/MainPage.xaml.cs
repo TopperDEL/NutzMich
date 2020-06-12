@@ -42,7 +42,8 @@ namespace NutzMich.Pages
         {
             base.OnNavigatedTo(e);
 
-            await LoadAngeboteAsync();
+            if (e.NavigationMode != NavigationMode.Back)
+                await LoadAngeboteAsync();
         }
 
         private async Task LoadAngeboteAsync()
