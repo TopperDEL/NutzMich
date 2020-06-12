@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using NutzMich.Pages;
+using Windows.UI.Core;
 
 namespace NutzMich
 {
@@ -80,6 +81,19 @@ namespace NutzMich
                 }
                 // Ensure the current window is active
                 Windows.UI.Xaml.Window.Current.Activate();
+            }
+
+            var sysManager = SystemNavigationManager.GetForCurrentView();
+            sysManager.BackRequested += SysManager_BackRequested;
+        }
+
+        private void SysManager_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            var frame = Windows.UI.Xaml.Window.Current.Content as Frame;
+            if (frame.CanGoBack)
+            {
+                frame.GoBack();
+                e.Handled = true;
             }
         }
 

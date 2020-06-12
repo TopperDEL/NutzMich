@@ -1,4 +1,5 @@
 ﻿using NutzMich.Contracts.Interfaces;
+using NutzMich.Shared.Pages;
 using NutzMich.Shared.Services;
 using NutzMich.Shared.ViewModels;
 using System;
@@ -51,6 +52,11 @@ namespace NutzMich.Pages
 
             foreach (var angebot in await _angebotService.GetMeineAngeboteAsync())
                 _angeboteVM.MeineAngebote.Add(new AngebotViewModel(angebot));
+        }
+
+        private void AngebotAnzeigen(object sender, ItemClickEventArgs e)
+        {
+            this.Frame.Navigate(typeof(AngebotDetailsPage), e.ClickedItem);
         }
     }
 }

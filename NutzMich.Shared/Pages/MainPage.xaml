@@ -9,7 +9,7 @@
 
     <Pivot Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Title="NutzMich">
         <PivotItem Header="Alle Angebote">
-            <ListView ItemsSource="{x:Bind _angeboteVM.AlleAngebote}">
+            <ListView ItemsSource="{x:Bind _angeboteVM.AlleAngebote}" IsItemClickEnabled="True" ItemClick="AngebotAnzeigen">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="viewmodels:AngebotViewModel">
                         <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
