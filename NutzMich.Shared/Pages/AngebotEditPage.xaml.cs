@@ -1,4 +1,6 @@
-﻿using NutzMich.Shared.ViewModels;
+﻿using NutzMich.Contracts.Interfaces;
+using NutzMich.Shared.Services;
+using NutzMich.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,10 +27,13 @@ namespace NutzMich.Shared.Pages
     public sealed partial class AngebotEditPage : Page
     {
         private AngebotViewModel _angebotVM;
+        private IAngebotService _angebotService;
 
         public AngebotEditPage()
         {
             this.InitializeComponent();
+
+            _angebotService = new AngebotService();
 
             KeyboardAccelerator GoBack = new KeyboardAccelerator();
             GoBack.Key = VirtualKey.GoBack;
@@ -71,6 +76,30 @@ namespace NutzMich.Shared.Pages
         {
             On_BackRequested();
             args.Handled = true;
+        }
+
+        private async void Save(object sender, RoutedEventArgs e)
+        {
+            var saved = await _angebotService.SaveAngebotAsync(_angebotVM.Angebot);
+
+            if (saved)
+                On_BackRequested();
+            else
+            {
+                ContentDialog notSavedDlg = new ContentDialog()
+                {
+                    Title = "Fehler",
+                    Content = "Dein Angebot konnte nicht gespeichert werden. Bitte später noch einmal versuchen.",
+                    CloseButtonText = "Ok"
+                };
+
+                await notSavedDlg.ShowAsync();
+            }
+        }
+
+        private void Cancel(object sender, RoutedEventArgs e)
+        {
+            On_BackRequested();
         }
     }
 }

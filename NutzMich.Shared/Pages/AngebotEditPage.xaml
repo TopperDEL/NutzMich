@@ -17,12 +17,7 @@
             </Grid.RowDefinitions>
 
             <!-- Header -->
-            <CommandBar Content="Neue Angebot anlegen" >
-                <CommandBar.PrimaryCommands>
-                    <AppBarButton Icon="Save" Label="Angebot anlegen"/>
-                    <AppBarButton Icon="Cancel" Label="Abbrechen"/>
-                </CommandBar.PrimaryCommands>
-            </CommandBar>
+            <CommandBar Grid.Row="0" Content="Neues Angebot anlegen"/>
 
             <!-- Form -->
             <StackPanel Grid.Row="1"
@@ -33,6 +28,18 @@
 						 Style="{StaticResource AnimatedTextBoxStyle}" />
                 <TextBox Header="Beschreibung" Text="{x:Bind _angebotVM.Angebot.Beschreibung, Mode=TwoWay}"
 						 Style="{StaticResource AnimatedTextBoxStyle}" AcceptsReturn="True"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button Margin="10" Click="Save">
+                        <Button.Content>
+                            <SymbolIcon Symbol="Save"/>
+                        </Button.Content>
+                    </Button>
+                    <Button Margin="10" Click="Cancel">
+                        <Button.Content>
+                            <SymbolIcon Symbol="Cancel"/>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
             </StackPanel>
         </Grid>
     </ScrollViewer>
