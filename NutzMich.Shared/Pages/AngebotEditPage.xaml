@@ -1,0 +1,39 @@
+﻿<Page
+    x:Class="NutzMich.Shared.Pages.AngebotEditPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NutzMich.Shared.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="uno"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <CommandBar Content="Neue Angebot anlegen" >
+                <CommandBar.PrimaryCommands>
+                    <AppBarButton Icon="Save" Label="Angebot anlegen"/>
+                    <AppBarButton Icon="Cancel" Label="Abbrechen"/>
+                </CommandBar.PrimaryCommands>
+            </CommandBar>
+
+            <!-- Form -->
+            <StackPanel Grid.Row="1"
+						Margin="40,30"
+						MaxWidth="500"
+						VerticalAlignment="Top">
+                <TextBox Header="Überschrift" Text="{x:Bind _angebotVM.Angebot.Ueberschrift, Mode=TwoWay}"
+						 Style="{StaticResource AnimatedTextBoxStyle}" />
+                <TextBox Header="Beschreibung" Text="{x:Bind _angebotVM.Angebot.Beschreibung, Mode=TwoWay}"
+						 Style="{StaticResource AnimatedTextBoxStyle}" AcceptsReturn="True"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Page>

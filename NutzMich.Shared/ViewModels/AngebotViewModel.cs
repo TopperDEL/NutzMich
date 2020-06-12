@@ -15,6 +15,10 @@ namespace NutzMich.Shared.ViewModels
         public BitmapImage Thumbnail { get; set; }
         public ObservableCollection<string> Fotos { get; private set; }
 
+        public AngebotViewModel() : this(new Angebot())
+        {
+
+        }
         public AngebotViewModel(Angebot angebot)
         {
             Angebot = angebot;

@@ -58,5 +58,10 @@ namespace NutzMich.Pages
         {
             this.Frame.Navigate(typeof(AngebotDetailsPage), e.ClickedItem);
         }
+
+        private void NeuesAngebotAnlegen(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(AngebotEditPage));
+        }
     }
 }
