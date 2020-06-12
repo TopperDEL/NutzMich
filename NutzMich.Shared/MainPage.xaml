@@ -4,10 +4,39 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:NutzMich"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewmodels="using:NutzMich.Shared.ViewModels"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-		<TextBlock Text="Hello, world!" Margin="20" FontSize="30" />
-    </Grid>
+    <Pivot Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Title="NutzMich">
+        <PivotItem Header="Alle Angebote">
+            <ListView ItemsSource="{x:Bind _angeboteVM.AlleAngebote}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="viewmodels:AngebotViewModel">
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                            <Image Source="{x:Bind Thumbnail}" Width="100" Margin="10,0,10,0"/>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="{x:Bind Path=Angebot.Ueberschrift}" FontWeight="Bold"/>
+                                <TextBlock Text="{x:Bind Path=Angebot.Beschreibung}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </PivotItem>
+        <PivotItem Header="Meine Angebote">
+            <ListView ItemsSource="{x:Bind _angeboteVM.MeineAngebote}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="viewmodels:AngebotViewModel">
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                            <Image Source="{x:Bind Thumbnail}" Width="100" Margin="10,0,10,0"/>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="{x:Bind Path=Angebot.Ueberschrift}" FontWeight="Bold"/>
+                                <TextBlock Text="{x:Bind Path=Angebot.Beschreibung}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </PivotItem>
+    </Pivot>
 </Page>

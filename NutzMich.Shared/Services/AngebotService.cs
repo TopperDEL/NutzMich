@@ -9,16 +9,23 @@ namespace NutzMich.Shared.Services
 {
     class AngebotService : IAngebotService
     {
-        public async Task<List<Angebot>> GetAngeboteAsync()
+        public async Task<List<Angebot>> GetAlleAngeboteAsync()
         {
             return new List<Angebot>() { new Angebot() { Ueberschrift = "Produkt 1", Beschreibung = "Beschreibung 1" },
                                          new Angebot() { Ueberschrift = "Produkt 2", Beschreibung = "Beschreibung 2" },
                                          new Angebot() { Ueberschrift = "Produkt 3", Beschreibung = "Beschreibung 3" }};
         }
 
+        public async Task<List<Angebot>> GetMeineAngeboteAsync()
+        {
+            return new List<Angebot>() { new Angebot() { Ueberschrift = "Mein Produkt 1", Beschreibung = "Beschreibung 1" },
+                                         new Angebot() { Ueberschrift = "Mein Produkt 2", Beschreibung = "Beschreibung 2" },
+                                         new Angebot() { Ueberschrift = "Mein Produkt 3", Beschreibung = "Beschreibung 3" }};
+        }
+
         public async Task<bool> SaveAngebotAsync(Angebot angebot)
         {
-            return true;
+            return false;
         }
     }
 }

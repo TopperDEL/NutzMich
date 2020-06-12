@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
-    <ProjectGuid>be0a10f2-abab-45f6-8cf6-d554df6f1599</ProjectGuid>
+    <ProjectGuid>{BE0A10F2-ABAB-45F6-8CF6-D554DF6F1599}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
     <RootNamespace>NutzMich</RootNamespace>
@@ -119,6 +119,9 @@
     <PackageReference Include="Uno.UI.RemoteControl" Version="2.4.0" Condition="'$(Configuration)'=='Debug'" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
+    <PackageReference Include="uplink.NET">
+      <Version>2.2.2</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Contents.json">
@@ -150,9 +153,10 @@
     </ImageAsset>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Media" Visible="false" />
-    <Folder Include="Media\AppIcons" Visible="false" />
-    <Folder Include="Media\LaunchImages" Visible="false" />
+    <ProjectReference Include="..\..\NutzMich.Contracts\NutzMich.Contracts.csproj">
+      <Project>{51ffa722-5e07-4991-96df-b4b81032f1e5}</Project>
+      <Name>NutzMich.Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="..\NutzMich.Shared\NutzMich.Shared.projitems" Label="Shared" Condition="Exists('..\NutzMich.Shared\NutzMich.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

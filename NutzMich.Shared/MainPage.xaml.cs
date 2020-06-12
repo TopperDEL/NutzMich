@@ -1,8 +1,12 @@
-﻿using System;
+﻿using NutzMich.Contracts.Interfaces;
+using NutzMich.Shared.Services;
+using NutzMich.Shared.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -22,9 +26,31 @@ namespace NutzMich
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        IAngebotService _angebotService;
+        AngeboteViewModel _angeboteVM;
+
         public MainPage()
         {
             this.InitializeComponent();
+
+            _angebotService = new AngebotService();
+            _angeboteVM = new AngeboteViewModel();
+        }
+
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            await LoadAngeboteAsync();
+        }
+
+        private async Task LoadAngeboteAsync()
+        {
+            foreach (var angebot in await _angebotService.GetAlleAngeboteAsync())
+                _angeboteVM.AlleAngebote.Add(new AngebotViewModel(angebot));
+
+            foreach (var angebot in await _angebotService.GetMeineAngeboteAsync())
+                _angeboteVM.MeineAngebote.Add(new AngebotViewModel(angebot));
         }
     }
 }
