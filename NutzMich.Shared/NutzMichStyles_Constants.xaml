@@ -8,6 +8,8 @@
 
     <converters:EmptyStringToBoolConverter x:Key="EmptyStringToFalse"
 										   EmptyStringMeansFalse="True" />
+    <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <converters:BooleanToInvertedVisibilityConverter x:Key="BooleanToInvertedVisibilityConverter"/>
 
     <CubicEase x:Key="FieldHeaderAnimationEasing"
 			   EasingMode="EaseOut" />

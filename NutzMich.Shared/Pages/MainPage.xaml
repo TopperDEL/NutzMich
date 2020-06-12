@@ -9,19 +9,23 @@
 
     <Pivot Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Title="NutzMich">
         <PivotItem Header="Alle Angebote">
-            <ListView ItemsSource="{x:Bind _angeboteVM.AlleAngebote}" IsItemClickEnabled="True" ItemClick="AngebotAnzeigen">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="viewmodels:AngebotViewModel">
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                            <Image Source="{x:Bind Thumbnail}" Width="100" Margin="10,0,10,0"/>
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Text="{x:Bind Path=Angebot.Ueberschrift}" FontWeight="Bold"/>
-                                <TextBlock Text="{x:Bind Path=Angebot.Beschreibung}"/>
+            <Grid>
+                <ProgressRing Visibility="{x:Bind _angeboteVM.Loading, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                <ListView ItemsSource="{x:Bind _angeboteVM.AlleAngebote}" IsItemClickEnabled="True" ItemClick="AngebotAnzeigen"
+                      Visibility="{x:Bind _angeboteVM.Loading, Mode=TwoWay, Converter={StaticResource BooleanToInvertedVisibilityConverter}}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="viewmodels:AngebotViewModel">
+                            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                                <Image Source="{x:Bind Thumbnail}" Width="100" Margin="10,0,10,0"/>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{x:Bind Path=Angebot.Ueberschrift}" FontWeight="Bold"/>
+                                    <TextBlock Text="{x:Bind Path=Angebot.Beschreibung}"/>
+                                </StackPanel>
                             </StackPanel>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
         </PivotItem>
         <PivotItem Header="Meine Angebote">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
@@ -30,7 +34,9 @@
                         <TextBlock Text="+" FontSize="60"/>
                     </Button.Content>
                 </Button>
-                <ListView ItemsSource="{x:Bind _angeboteVM.MeineAngebote}">
+                <ProgressRing Visibility="{x:Bind _angeboteVM.Loading, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                <ListView ItemsSource="{x:Bind _angeboteVM.MeineAngebote}"
+                          Visibility="{x:Bind _angeboteVM.Loading, Mode=TwoWay, Converter={StaticResource BooleanToInvertedVisibilityConverter}}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="viewmodels:AngebotViewModel">
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">

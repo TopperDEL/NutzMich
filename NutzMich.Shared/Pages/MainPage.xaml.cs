@@ -48,11 +48,15 @@ namespace NutzMich.Pages
 
         private async Task LoadAngeboteAsync()
         {
+            _angeboteVM.Loading = true;
+            _angeboteVM.AlleAngebote.Clear();
             foreach (var angebot in await _angebotService.GetAlleAngeboteAsync())
                 _angeboteVM.AlleAngebote.Add(new AngebotViewModel(angebot));
 
+            _angeboteVM.MeineAngebote.Clear();
             foreach (var angebot in await _angebotService.GetMeineAngeboteAsync())
                 _angeboteVM.MeineAngebote.Add(new AngebotViewModel(angebot));
+            _angeboteVM.Loading = false;
         }
 
         private void AngebotAnzeigen(object sender, ItemClickEventArgs e)

@@ -18,6 +18,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Converter\BooleanToInvertedVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converter\BooleanToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converter\EmptyStringToBooleanConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AngebotDetailsPage.xaml.cs">
       <DependentUpon>AngebotDetailsPage.xaml</DependentUpon>
