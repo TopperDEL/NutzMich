@@ -50,7 +50,7 @@ namespace NutzMich.Pages
 
         private async Task LoadAngeboteAsync()
         {
-            _angeboteVM.Loading = true;
+            _angeboteVM.SetLoading();
             _angeboteVM.AlleAngebote.Clear();
             foreach (var angebot in await _angebotService.GetAlleAngeboteAsync())
                 _angeboteVM.AlleAngebote.Add(new AngebotViewModel(angebot));
@@ -58,7 +58,7 @@ namespace NutzMich.Pages
             _angeboteVM.MeineAngebote.Clear();
             foreach (var angebot in await _angebotService.GetMeineAngeboteAsync())
                 _angeboteVM.MeineAngebote.Add(new AngebotViewModel(angebot));
-            _angeboteVM.Loading = false;
+            _angeboteVM.SetNotLoading();
         }
 
         private void AngebotAnzeigen(object sender, ItemClickEventArgs e)

@@ -6,9 +6,10 @@ using System.Text;
 
 namespace NutzMich.Shared.ViewModels
 {
-    class AngeboteViewModel : INotifyPropertyChanged
+    [Windows.UI.Xaml.Data.Bindable]
+    public class AngeboteViewModel : INotifyPropertyChanged
     {
-        public bool Loading { get; set; }
+        public bool Loading { get; private set; }
 
         public ObservableCollection<AngebotViewModel> AlleAngebote { get; private set; }
         public ObservableCollection<AngebotViewModel> MeineAngebote { get; private set; }

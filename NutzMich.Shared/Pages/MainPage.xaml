@@ -10,8 +10,13 @@
     <Pivot Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Title="NutzMich">
         <PivotItem Header="Alle Angebote">
             <Grid>
-                <ListView ItemsSource="{x:Bind _angeboteVM.AlleAngebote, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="AngebotAnzeigen"
-                          Visibility="{x:Bind _angeboteVM.Loading, Mode=OneWay, Converter={StaticResource BooleanToInvertedVisibilityConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <ProgressRing Grid.Row="0" Visibility="{x:Bind _angeboteVM.Loading, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}" IsActive="True"/>
+                <ListView Grid.Row="1" ItemsSource="{x:Bind _angeboteVM.AlleAngebote, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="AngebotAnzeigen"
+                          Visibility="{x:Bind _angeboteVM.Loading, Mode=OneWay, Converter={StaticResource TrueIsCollapsedConverter}}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="viewmodels:AngebotViewModel">
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
@@ -24,18 +29,21 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <ProgressRing Visibility="{x:Bind _angeboteVM.Loading, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" IsActive="True"/>
             </Grid>
         </PivotItem>
         <PivotItem Header="Meine Angebote">
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
-                <Button Click="NeuesAngebotAnlegen">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Button Grid.Row="0" Click="NeuesAngebotAnlegen">
                     <Button.Content>
                         <TextBlock Text="+" FontSize="60"/>
                     </Button.Content>
                 </Button>
-                <ListView ItemsSource="{x:Bind _angeboteVM.MeineAngebote, Mode=OneWay}"
-                          Visibility="{x:Bind _angeboteVM.Loading, Mode=OneWay, Converter={StaticResource BooleanToInvertedVisibilityConverter}}">
+                <ListView Grid.Row="1" ItemsSource="{x:Bind _angeboteVM.MeineAngebote, Mode=OneWay}"
+                          Visibility="{x:Bind _angeboteVM.Loading, Mode=OneWay, Converter={StaticResource TrueIsCollapsedConverter}}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="viewmodels:AngebotViewModel">
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
@@ -48,8 +56,8 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <ProgressRing Visibility="{x:Bind _angeboteVM.Loading, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" IsActive="True"/>
-            </StackPanel>
+                <ProgressRing Grid.Row="1" Visibility="{x:Bind _angeboteVM.Loading, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}" IsActive="True"/>
+            </Grid>
         </PivotItem>
     </Pivot>
 </Page>

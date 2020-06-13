@@ -6,19 +6,19 @@ using Windows.UI.Xaml.Data;
 
 namespace NutzMich.Shared.Converter
 {
-    public class BooleanToInvertedVisibilityConverter : IValueConverter
+    public class TrueIsCollapsedConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if ((bool)value == true)
-                return Visibility.Visible;
-            else
                 return Visibility.Collapsed;
+            else
+                return Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            if ((Visibility)value == Visibility.Visible)
+            if ((Visibility)value == Visibility.Collapsed)
                 return true;
             else
                 return false;
