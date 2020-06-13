@@ -26,8 +26,6 @@ namespace NutzMich.Shared.Services
         {
             await TardigradeConnectionService.InitAsync(_identityService.GetIdentityAccess());
 
-            await Task.Delay(4000);
-
             List<Angebot> angebote = new List<Angebot>();
 
             var angeboteItems = await TardigradeConnectionService.ObjectService.ListObjectsAsync(TardigradeConnectionService.Bucket, new ListObjectsOptions() { Prefix = "Angebote/", Recursive = true });
