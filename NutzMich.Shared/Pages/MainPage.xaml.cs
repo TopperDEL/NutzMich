@@ -36,6 +36,8 @@ namespace NutzMich.Pages
 
             _angebotService = new AngebotService();
             _angeboteVM = new AngeboteViewModel();
+
+            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)

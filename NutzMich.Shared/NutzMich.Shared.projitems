@@ -31,6 +31,8 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Services\AngebotService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\IdentityService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\TardigradeConnectionService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AngeboteViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AngebotViewModel.cs" />
   </ItemGroup>

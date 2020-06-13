@@ -10,9 +10,8 @@
     <Pivot Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Title="NutzMich">
         <PivotItem Header="Alle Angebote">
             <Grid>
-                <ProgressRing Visibility="{x:Bind _angeboteVM.Loading, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                <ListView ItemsSource="{x:Bind _angeboteVM.AlleAngebote}" IsItemClickEnabled="True" ItemClick="AngebotAnzeigen"
-                      Visibility="{x:Bind _angeboteVM.Loading, Mode=TwoWay, Converter={StaticResource BooleanToInvertedVisibilityConverter}}">
+                <ListView ItemsSource="{x:Bind _angeboteVM.AlleAngebote, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="AngebotAnzeigen"
+                          Visibility="{x:Bind _angeboteVM.Loading, Mode=OneWay, Converter={StaticResource BooleanToInvertedVisibilityConverter}}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="viewmodels:AngebotViewModel">
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
@@ -25,6 +24,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                <ProgressRing Visibility="{x:Bind _angeboteVM.Loading, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" IsActive="True"/>
             </Grid>
         </PivotItem>
         <PivotItem Header="Meine Angebote">
@@ -34,9 +34,8 @@
                         <TextBlock Text="+" FontSize="60"/>
                     </Button.Content>
                 </Button>
-                <ProgressRing Visibility="{x:Bind _angeboteVM.Loading, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                <ListView ItemsSource="{x:Bind _angeboteVM.MeineAngebote}"
-                          Visibility="{x:Bind _angeboteVM.Loading, Mode=TwoWay, Converter={StaticResource BooleanToInvertedVisibilityConverter}}">
+                <ListView ItemsSource="{x:Bind _angeboteVM.MeineAngebote, Mode=OneWay}"
+                          Visibility="{x:Bind _angeboteVM.Loading, Mode=OneWay, Converter={StaticResource BooleanToInvertedVisibilityConverter}}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="viewmodels:AngebotViewModel">
                             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
@@ -49,6 +48,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                <ProgressRing Visibility="{x:Bind _angeboteVM.Loading, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" IsActive="True"/>
             </StackPanel>
         </PivotItem>
     </Pivot>
