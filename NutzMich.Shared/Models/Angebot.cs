@@ -13,6 +13,7 @@ namespace NutzMich.Contracts.Models
         public string Ueberschrift { get; set; }
         public string Beschreibung { get; set; }
         public string Zustand { get; set; }
+        public string AnfrageAccess { get; set; }
 
         public Angebot()
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NutzMich.Contracts.Interfaces
 {
-    public interface IAngebotService
+    interface IAngebotService
     {
         Task<IEnumerable<Angebot>> GetAlleAngeboteAsync();
         Task<IEnumerable<Angebot>> GetMeineAngeboteAsync();

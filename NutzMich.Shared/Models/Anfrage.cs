@@ -24,6 +24,8 @@ namespace NutzMich.Shared.Models
         public DateTimeOffset AbholungsZeitpunkt { get; set; }
         public AnfrageStatus Status { get; set; }
 
+        public string TokenAccess { get; set; }
+
         public Anfrage(Angebot angebot)
         {
             AngebotId = angebot.Id;

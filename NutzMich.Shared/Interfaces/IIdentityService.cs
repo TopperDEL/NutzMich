@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NutzMich.Contracts.Interfaces
 {
-    public interface IIdentityService<T>
+    interface IIdentityService<T>
     {
         Guid AnbieterID { get; set; }
 
