@@ -34,7 +34,7 @@ namespace NutzMich.Pages
         {
             this.InitializeComponent();
 
-            _angebotService = new AngebotService();
+            _angebotService = Factory.GetAngebotService();
             this.DataContext = _angeboteVM = new AngeboteViewModel();
 
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;

@@ -23,7 +23,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converter\EmptyStringToBooleanConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IAngebotService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IIdentityService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Anfrage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Angebot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\AnfrageDialog.xaml.cs">
+      <DependentUpon>AnfrageDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AngebotDetailsPage.xaml.cs">
       <DependentUpon>AngebotDetailsPage.xaml</DependentUpon>
     </Compile>
@@ -34,8 +38,10 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Services\AngebotService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Factory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IdentityService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\TardigradeConnectionService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AnfrageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AngeboteViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AngebotViewModel.cs" />
   </ItemGroup>
@@ -49,6 +55,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)NutzMichStyles_TextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Pages\AnfrageDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

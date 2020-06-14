@@ -35,7 +35,7 @@
                 </Grid>
             </PivotItem>
             <PivotItem Header="Anfrage">
-                <TextBlock Text="Anfragen..."/>
+                <Button Content="Anfrage stellen" Click="AnfrageStellen"/>
             </PivotItem>
         </Pivot>
     </Grid>

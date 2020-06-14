@@ -33,7 +33,7 @@ namespace NutzMich.Shared.Pages
         {
             this.InitializeComponent();
 
-            _angebotService = new AngebotService();
+            _angebotService = Factory.GetAngebotService();
 
             KeyboardAccelerator GoBack = new KeyboardAccelerator();
             GoBack.Key = VirtualKey.GoBack;

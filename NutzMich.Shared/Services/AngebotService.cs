@@ -13,10 +13,6 @@ namespace NutzMich.Shared.Services
     {
         IIdentityService<Access> _identityService;
 
-        public AngebotService() : this(new IdentityService())
-        {
-        }
-
         public AngebotService(IIdentityService<Access> identityService)
         {
             _identityService = identityService;

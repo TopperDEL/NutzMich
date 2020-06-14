@@ -1,4 +1,5 @@
-﻿using NutzMich.Shared.ViewModels;
+﻿using NutzMich.Shared.Services;
+using NutzMich.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -69,6 +70,17 @@ namespace NutzMich.Shared.Pages
         {
             On_BackRequested();
             args.Handled = true;
+        }
+
+        private async void AnfrageStellen(object sender, RoutedEventArgs e)
+        {
+            var anfrageVM = new AnfrageViewModel(_angebotVM.Angebot, Factory.GetIdentityService());
+            AnfrageDialog dlg = new AnfrageDialog(anfrageVM);
+            var result = await dlg.ShowAsync();
+            if(result == ContentDialogResult.Primary)
+            {
+
+            }
         }
     }
 }
