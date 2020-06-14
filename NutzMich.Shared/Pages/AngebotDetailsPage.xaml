@@ -20,16 +20,18 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="{Binding Angebot.Beschreibung, Mode=OneWay}" />
-                    <FlipView Grid.Row="1" ItemsSource="{Binding Fotos, Mode=OneWay}" MaxWidth="500" MaxHeight="500">
+                    <FlipView Grid.Row="0" ItemsSource="{Binding Fotos, Mode=OneWay}" MaxWidth="500" MaxHeight="250">
                         <FlipView.ItemTemplate>
                             <DataTemplate>
-                                <Image Source="{Binding}" MaxHeight="500" MaxWidth="500"/>
+                                <Image Source="{Binding}" MaxHeight="500" MaxWidth="250" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </DataTemplate>
                         </FlipView.ItemTemplate>
                     </FlipView>
+                    <TextBox Grid.Row="1" Text="{Binding Angebot.Beschreibung, Mode=OneWay}" Header="Beschreibung" IsReadOnly="True" AcceptsReturn="True"/>
+                    <TextBox Grid.Row="2" Text="{Binding Angebot.Zustand, Mode=OneWay}" Header="Zustand" IsReadOnly="True" AcceptsReturn="True"/>
                 </Grid>
             </PivotItem>
             <PivotItem Header="Anfrage">

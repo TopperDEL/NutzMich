@@ -12,6 +12,7 @@ namespace NutzMich.Contracts.Models
         public Guid Anbieter { get; set; }
         public string Ueberschrift { get; set; }
         public string Beschreibung { get; set; }
+        public string Zustand { get; set; }
 
         public Angebot()
         {
