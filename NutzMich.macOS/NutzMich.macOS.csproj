@@ -98,12 +98,6 @@
     <ImageAsset Include="Assets.xcassets\unologo.imageset\unoplatform.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\NutzMich.Contracts\NutzMich.Contracts.csproj">
-      <Project>{51ffa722-5e07-4991-96df-b4b81032f1e5}</Project>
-      <Name>NutzMich.Contracts</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
   </ItemGroup>

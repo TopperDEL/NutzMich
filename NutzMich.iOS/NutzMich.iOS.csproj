@@ -155,12 +155,6 @@
       <Visible>false</Visible>
     </ImageAsset>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\NutzMich.Contracts\NutzMich.Contracts.csproj">
-      <Project>{51ffa722-5e07-4991-96df-b4b81032f1e5}</Project>
-      <Name>NutzMich.Contracts</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="..\NutzMich.Shared\NutzMich.Shared.projitems" Label="Shared" Condition="Exists('..\NutzMich.Shared\NutzMich.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

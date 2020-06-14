@@ -21,6 +21,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converter\TrueIsCollapsedConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converter\TrueIsVisibleConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converter\EmptyStringToBooleanConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IAngebotService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IIdentityService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Angebot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AngebotDetailsPage.xaml.cs">
       <DependentUpon>AngebotDetailsPage.xaml</DependentUpon>
     </Compile>
