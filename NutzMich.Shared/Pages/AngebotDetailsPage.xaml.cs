@@ -52,7 +52,7 @@ namespace NutzMich.Shared.Pages
             base.OnNavigatedTo(e);
             BackButton.IsEnabled = this.Frame.CanGoBack;
 
-            _angebotVM = e.Parameter as AngebotViewModel;
+            this.DataContext = _angebotVM = e.Parameter as AngebotViewModel;
         }
 
         private bool On_BackRequested()

@@ -15,15 +15,15 @@
 
         <Button Grid.Row="0" x:Name="BackButton" Click="Back_Click" Style="{StaticResource NavigationBackButtonNormalStyle}"/>
 
-        <Pivot Grid.Row="1" Title="{x:Bind _angebotVM.Angebot.Ueberschrift, Mode=OneWay}">
+        <Pivot Grid.Row="1" Title="{Binding Angebot.Ueberschrift, Mode=OneWay}">
             <PivotItem Header="Details">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="{x:Bind _angebotVM.Angebot.Beschreibung, Mode=OneWay}" />
-                    <FlipView Grid.Row="1" ItemsSource="{x:Bind _angebotVM.Fotos, Mode=OneWay}" MaxWidth="500" MaxHeight="500">
+                    <TextBlock Grid.Row="0" Text="{Binding Angebot.Beschreibung, Mode=OneWay}" />
+                    <FlipView Grid.Row="1" ItemsSource="{Binding Fotos, Mode=OneWay}" MaxWidth="500" MaxHeight="500">
                         <FlipView.ItemTemplate>
                             <DataTemplate>
                                 <Image Source="{Binding}" MaxHeight="500" MaxWidth="500"/>
