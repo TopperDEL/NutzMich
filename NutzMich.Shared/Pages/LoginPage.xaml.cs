@@ -38,7 +38,7 @@ namespace NutzMich.Shared.Pages
         private async void Login(object sender, RoutedEventArgs e)
         {
             var loginService = Factory.GetLoginService();
-            var loggedIn = await loginService.Login(_vm.Email, _vm.Password);
+            var loggedIn = await loginService.Login(email.Text, _vm.Password);
             if(loggedIn)
             {
                 this.Frame.Navigate(typeof(MainPage));
