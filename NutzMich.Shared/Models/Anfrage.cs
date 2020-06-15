@@ -17,8 +17,8 @@ namespace NutzMich.Shared.Models
     {
         public Guid Id { get; set; }
         public Guid AngebotId { get; set; }
-        public Guid AnfragerId { get; set; }
-        public Guid AnbieterId { get; set; }
+        public string AnfragerId { get; set; }
+        public string AnbieterId { get; set; }
         public DateTimeOffset LeiheVon { get; set; }
         public DateTimeOffset LeiheBis { get; set; }
         public DateTimeOffset AbholungsZeitpunkt { get; set; }

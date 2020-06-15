@@ -6,25 +6,30 @@ using System.Threading.Tasks;
 using uplink.NET.Models;
 using System.Linq;
 using System;
+using NutzMich.Shared.Interfaces;
 
 namespace NutzMich.Shared.Services
 {
     class AngebotService : IAngebotService
     {
-        IIdentityService<Access> _identityService;
+        IIdentityService _identityService;
+        ILoginService _loginService;
+        ConnectionService _readConnection;
+        ConnectionService _writeConnection;
 
-        public AngebotService(IIdentityService<Access> identityService)
+        public AngebotService(IIdentityService identityService, ILoginService loginService)
         {
             _identityService = identityService;
+            _loginService = loginService;
         }
 
         public async Task<IEnumerable<Angebot>> GetAlleAngeboteAsync()
         {
-            await TardigradeConnectionService.InitAsync(_identityService.GetIdentityAccess());
-
+            await InitReadConnection();
+            
             List<Angebot> angebote = new List<Angebot>();
 
-            var angeboteItems = await TardigradeConnectionService.ObjectService.ListObjectsAsync(TardigradeConnectionService.Bucket, new ListObjectsOptions() { Prefix = "Angebote/", Recursive = true });
+            var angeboteItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Angebote/", Recursive = true });
 
             foreach (var angebotItem in angeboteItems.Items)
             {
@@ -36,11 +41,11 @@ namespace NutzMich.Shared.Services
 
         public async Task<IEnumerable<Angebot>> GetMeineAngeboteAsync()
         {
-            await TardigradeConnectionService.InitAsync(_identityService.GetIdentityAccess());
+            await InitReadConnection();
 
             List<Angebot> angebote = new List<Angebot>();
 
-            var angeboteItems = await TardigradeConnectionService.ObjectService.ListObjectsAsync(TardigradeConnectionService.Bucket, new ListObjectsOptions() { Prefix = "Angebote/" + _identityService.AnbieterID.ToString() + "/", Recursive = true });
+            var angeboteItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Angebote/" + _loginService.AnbieterID + "/", Recursive = true });
 
             foreach (var angebotItem in angeboteItems.Items)
             {
@@ -52,7 +57,9 @@ namespace NutzMich.Shared.Services
 
         private async Task<Angebot> LoadAngebotAsync(string key)
         {
-            var angebotDownload = await TardigradeConnectionService.ObjectService.DownloadObjectAsync(TardigradeConnectionService.Bucket, key, new DownloadOptions(), false);
+            await InitReadConnection();
+
+            var angebotDownload = await _readConnection.ObjectService.DownloadObjectAsync(_readConnection.Bucket, key, new DownloadOptions(), false);
             await angebotDownload.StartDownloadAsync();
 
             if (angebotDownload.Completed)
@@ -63,15 +70,27 @@ namespace NutzMich.Shared.Services
 
         public async Task<bool> SaveAngebotAsync(Angebot angebot)
         {
-            await TardigradeConnectionService.InitAsync(_identityService.GetIdentityAccess());
+            await InitWriteConnection();
 
             var angebotJSON = Newtonsoft.Json.JsonConvert.SerializeObject(angebot);
             var angebotJSONbytes = Encoding.UTF8.GetBytes(angebotJSON);
 
-            var angebotUpload = await TardigradeConnectionService.ObjectService.UploadObjectAsync(TardigradeConnectionService.Bucket, "Angebote/" + _identityService.AnbieterID.ToString() + "/" + angebot.Id.ToString(), new UploadOptions(), angebotJSONbytes, false);
+            var angebotUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, "Angebote/" + _loginService.AnbieterID + "/" + angebot.Id.ToString(), new UploadOptions(), angebotJSONbytes, false);
             await angebotUpload.StartUploadAsync();
 
             return angebotUpload.Completed;
+        }
+
+        private async Task InitReadConnection()
+        {
+            if (_readConnection == null)
+                _readConnection = await ConnectionService.CreateAsync(_identityService.GetIdentityReadAccess());
+        }
+
+        private async Task InitWriteConnection()
+        {
+            if (_writeConnection == null)
+                _writeConnection = await ConnectionService.CreateAsync(_identityService.GetIdentityWriteAccess());
         }
     }
 }

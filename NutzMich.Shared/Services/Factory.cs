@@ -9,11 +9,11 @@ namespace NutzMich.Shared.Services
 {
     static class Factory
     {
-        static IIdentityService<Access> _identityService;
-        public static IIdentityService<Access> GetIdentityService()
+        static IIdentityService _identityService;
+        public static IIdentityService GetIdentityService()
         {
             if (_identityService == null)
-                _identityService = new IdentityService();
+                _identityService = new IdentityService(GetLoginService());
 
             return _identityService;
         }
@@ -22,7 +22,7 @@ namespace NutzMich.Shared.Services
         public static IAngebotService GetAngebotService()
         {
             if (_angebotService == null)
-                _angebotService = new AngebotService(GetIdentityService());
+                _angebotService = new AngebotService(GetIdentityService(), GetLoginService());
 
             return _angebotService;
         }
@@ -34,6 +34,13 @@ namespace NutzMich.Shared.Services
                 _loginService = new LoginService();
 
             return _loginService;
+        }
+
+        public static void Reset()
+        {
+            _identityService = null;
+            _angebotService = null;
+            _loginService = null;
         }
     }
 }

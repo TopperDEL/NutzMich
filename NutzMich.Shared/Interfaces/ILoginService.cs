@@ -5,8 +5,13 @@ using System.Threading.Tasks;
 
 namespace NutzMich.Shared.Interfaces
 {
-    interface ILoginService
+    public interface ILoginService
     {
-        Task<string> Login(string email, string password);
+        bool IsLoggedIn();
+        Task<bool> Login(string email, string password);
+        string GetReadAccess();
+        string GetWriteAccess();
+        string AnbieterID { get; }
+        void Logout();
     }
 }

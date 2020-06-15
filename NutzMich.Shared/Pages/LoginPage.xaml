@@ -14,8 +14,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="email" Header="E-mail" Grid.Row="0" Text="{x:Bind _vm.Email, Mode=TwoWay}"/>
-        <PasswordBox x:Name="password" Header="Passwort" Grid.Row="1" Password="{x:Bind _vm.Password, Mode=TwoWay}"/>
+        <TextBox x:Name="email" Header="E-mail" Grid.Row="0" Text="{Binding Email, Mode=TwoWay}"/>
+        <PasswordBox x:Name="password" Header="Passwort" Grid.Row="1" Password="{Binding Password, Mode=TwoWay}"/>
         <Button Content="Login" Click="Login" Grid.Row="2"/>
     </Grid>
 </Page>

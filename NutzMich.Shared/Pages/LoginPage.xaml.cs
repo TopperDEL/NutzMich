@@ -1,4 +1,5 @@
-﻿using NutzMich.Shared.Services;
+﻿using NutzMich.Pages;
+using NutzMich.Shared.Services;
 using NutzMich.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -30,13 +32,22 @@ namespace NutzMich.Shared.Pages
         {
             this.InitializeComponent();
 
-            _vm = new LoginViewModel();
+            this.DataContext = _vm = new LoginViewModel();
         }
 
         private async void Login(object sender, RoutedEventArgs e)
         {
             var loginService = Factory.GetLoginService();
-           var access = await loginService.Login(_vm.Email, _vm.Password);
+            var loggedIn = await loginService.Login(_vm.Email, _vm.Password);
+            if(loggedIn)
+            {
+                this.Frame.Navigate(typeof(MainPage));
+            }
+            else
+            {
+                MessageDialog dlg = new MessageDialog("Anmeldung war nicht möglich", "Fehler");
+                await dlg.ShowAsync();
+            }
         }
     }
 }

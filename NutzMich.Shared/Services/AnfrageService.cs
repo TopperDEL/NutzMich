@@ -11,16 +11,18 @@ namespace NutzMich.Shared.Services
 {
     class AnfrageService : IAnfrageService
     {
-        IIdentityService<Access> _identityService;
+        IIdentityService _identityService;
+        ILoginService _loginService;
 
-        public AnfrageService(IIdentityService<Access> identityService)
+        public AnfrageService(IIdentityService identityService, ILoginService loginService)
         {
             _identityService = identityService;
+            _loginService = loginService;
         }
 
         public async Task<bool> CreateAnfrageAsync(Anfrage anfrage)
         {
-            await TardigradeConnectionService.InitAsync(_identityService.GetIdentityAccess());
+            ConnectionService connection = await ConnectionService.CreateAsync(_identityService.GetIdentityWriteAccess());
 
             //ToDo: eine Art TardigradeConnectionService für fremd-Accesses bauen
             //ToDo: Bei Angebot einen Access mitgeben
@@ -30,7 +32,7 @@ namespace NutzMich.Shared.Services
             var anfrageJSON = Newtonsoft.Json.JsonConvert.SerializeObject(anfrage);
             var anfrageJSONbytes = Encoding.UTF8.GetBytes(anfrageJSON);
 
-            var anfrageUpload = await TardigradeConnectionService.ObjectService.UploadObjectAsync(TardigradeConnectionService.Bucket, "Angebote/" + _identityService.AnbieterID.ToString() + "/" + anfrage.AngebotId.ToString() + "/" + anfrage.Id.ToString(), new UploadOptions(), anfrageJSONbytes, false); ;
+            var anfrageUpload = await connection.ObjectService.UploadObjectAsync(TardigradeConnectionService.Bucket, "Angebote/" + _loginService.AnbieterID + "/" + anfrage.AngebotId.ToString() + "/" + anfrage.Id.ToString(), new UploadOptions(), anfrageJSONbytes, false); ;
             await anfrageUpload.StartUploadAsync();
 
             return anfrageUpload.Completed;

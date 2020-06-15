@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using uplink.NET.Models;
 
 namespace NutzMich.Contracts.Interfaces
 {
-    public interface IIdentityService<T>
+    public interface IIdentityService
     {
-        Guid AnbieterID { get; set; }
-
-        T GetIdentityAccess();
-        T GetDefaultAccess();
+        Access GetIdentityWriteAccess();
+        Access GetIdentityReadAccess();
+        Access GetDefaultAccess();
     }
 }
