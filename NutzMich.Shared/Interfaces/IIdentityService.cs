@@ -4,10 +4,11 @@ using System.Text;
 
 namespace NutzMich.Contracts.Interfaces
 {
-    interface IIdentityService<T>
+    public interface IIdentityService<T>
     {
         Guid AnbieterID { get; set; }
 
         T GetIdentityAccess();
+        T GetDefaultAccess();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using NutzMich.Contracts.Interfaces;
+using NutzMich.Shared.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,7 +7,7 @@ using uplink.NET.Models;
 
 namespace NutzMich.Shared.Services
 {
-    public static class Factory
+    static class Factory
     {
         static IIdentityService<Access> _identityService;
         public static IIdentityService<Access> GetIdentityService()
@@ -24,6 +25,15 @@ namespace NutzMich.Shared.Services
                 _angebotService = new AngebotService(GetIdentityService());
 
             return _angebotService;
+        }
+
+        static ILoginService _loginService;
+        public static ILoginService GetLoginService()
+        {
+            if (_loginService == null)
+                _loginService = new LoginService();
+
+            return _loginService;
         }
     }
 }

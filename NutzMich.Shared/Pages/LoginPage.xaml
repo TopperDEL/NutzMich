@@ -1,0 +1,21 @@
+﻿<Page
+    x:Class="NutzMich.Shared.Pages.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NutzMich.Shared.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="email" Header="E-mail" Grid.Row="0" Text="{x:Bind _vm.Email, Mode=TwoWay}"/>
+        <PasswordBox x:Name="password" Header="Passwort" Grid.Row="1" Password="{x:Bind _vm.Password, Mode=TwoWay}"/>
+        <Button Content="Login" Click="Login" Grid.Row="2"/>
+    </Grid>
+</Page>
