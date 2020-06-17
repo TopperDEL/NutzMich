@@ -11,5 +11,6 @@ namespace NutzMich.Contracts.Interfaces
         Task<IEnumerable<Angebot>> GetAlleAngeboteAsync();
         Task<IEnumerable<Angebot>> GetMeineAngeboteAsync();
         Task<bool> SaveAngebotAsync(Angebot angebot);
+        void Refresh();
     }
 }

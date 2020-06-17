@@ -70,5 +70,10 @@ namespace NutzMich.Pages
         {
             this.Frame.Navigate(typeof(AngebotEditPage));
         }
+
+        private async void Refresh(object sender, RoutedEventArgs e)
+        {
+            await LoadAngeboteAsync();
+        }
     }
 }

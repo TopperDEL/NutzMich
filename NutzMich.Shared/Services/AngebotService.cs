@@ -92,5 +92,9 @@ namespace NutzMich.Shared.Services
             if (_writeConnection == null)
                 _writeConnection = await ConnectionService.CreateAsync(_identityService.GetIdentityWriteAccess());
         }
+
+        public void Refresh()
+        {
+        }
     }
 }

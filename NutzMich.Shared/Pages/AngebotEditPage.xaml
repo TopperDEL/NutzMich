@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="uno"
+    xmlns:xamarin="http://uno.ui/xamarin"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -16,32 +17,21 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <!-- Header -->
-            <CommandBar Grid.Row="0" Content="Neues Angebot anlegen"/>
+            <CommandBar Grid.Row="0" Content="Angebot bearbeiten" Background="RoyalBlue" Foreground="White">
+                <CommandBar.PrimaryCommands>
+                    <AppBarButton Icon="Save" Click="Save" Foreground="White"/>
+                    <AppBarButton Icon="Cancel" Click="Cancel" Foreground="White"/>
+                </CommandBar.PrimaryCommands>
+            </CommandBar>
 
-            <!-- Form -->
-            <StackPanel Grid.Row="1"
-						Margin="40,30"
-						MaxWidth="500"
-						VerticalAlignment="Top" HorizontalAlignment="Left">
+            <StackPanel Grid.Row="1" Margin="10"
+						VerticalAlignment="Top" HorizontalAlignment="Stretch">
                 <TextBox Header="Überschrift" Text="{x:Bind _angebotVM.Angebot.Ueberschrift, Mode=TwoWay}"
-						 Style="{StaticResource AnimatedTextBoxStyle}" />
+						  />
                 <TextBox Header="Beschreibung" Text="{x:Bind _angebotVM.Angebot.Beschreibung, Mode=TwoWay}"
-						 Style="{StaticResource AnimatedTextBoxStyle}" AcceptsReturn="True"/>
+						  AcceptsReturn="True" MinHeight="100"/>
                 <TextBox Header="Zustand" Text="{x:Bind _angebotVM.Angebot.Zustand, Mode=TwoWay}"
-						 Style="{StaticResource AnimatedTextBoxStyle}" AcceptsReturn="True"/>
-                <StackPanel Orientation="Horizontal">
-                    <Button Margin="10" Click="Save">
-                        <Button.Content>
-                            <SymbolIcon Symbol="Save"/>
-                        </Button.Content>
-                    </Button>
-                    <Button Margin="10" Click="Cancel">
-                        <Button.Content>
-                            <SymbolIcon Symbol="Cancel"/>
-                        </Button.Content>
-                    </Button>
-                </StackPanel>
+						  AcceptsReturn="True" MinHeight="100"/>
             </StackPanel>
         </Grid>
     </ScrollViewer>
