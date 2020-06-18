@@ -84,7 +84,7 @@ namespace NutzMich.Shared.Pages
 
         private async void Save(object sender, RoutedEventArgs e)
         {
-            var saved = await _angebotService.SaveAngebotAsync(_angebotVM.Angebot);
+            var saved = await _angebotService.SaveAngebotAsync(_angebotVM.Angebot, _angebotVM.Fotos.ToList());
 
             if (saved)
                 On_BackRequested();
@@ -125,9 +125,7 @@ namespace NutzMich.Shared.Pages
                 return;
 
             var fileRead = File.OpenRead(file.Path);
-            var bitmap = new BitmapImage();
-            bitmap.SetSource(fileRead);
-            _angebotVM.Fotos.Add(bitmap);
+            _angebotVM.Fotos.Add(new Models.AttachmentImage(fileRead));
         }
     }
 }

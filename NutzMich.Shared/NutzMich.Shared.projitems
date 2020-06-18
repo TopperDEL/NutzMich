@@ -27,6 +27,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILoginService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Anfrage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Angebot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AttachmentImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AnfrageDialog.xaml.cs">
       <DependentUpon>AnfrageDialog.xaml</DependentUpon>
     </Compile>

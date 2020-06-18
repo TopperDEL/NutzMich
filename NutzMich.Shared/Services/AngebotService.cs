@@ -7,6 +7,8 @@ using uplink.NET.Models;
 using System.Linq;
 using System;
 using NutzMich.Shared.Interfaces;
+using NutzMich.Shared.Models;
+using System.IO;
 
 namespace NutzMich.Shared.Services
 {
@@ -68,7 +70,24 @@ namespace NutzMich.Shared.Services
                 return new Angebot() { Ueberschrift = "Angebot nicht mehr vorhanden" };
         }
 
-        public async Task<bool> SaveAngebotAsync(Angebot angebot)
+        public async Task<Stream> GetAngebotFirstImageAsync(Angebot angebot)
+        {
+            await InitReadConnection();
+
+            try
+            {
+                var firstImage = await _readConnection.ObjectService.GetObjectAsync(_readConnection.Bucket, "Fotos/" + _loginService.AnbieterID + "/" + angebot.Id.ToString() + "/1");
+
+                var angebotDownload = await _readConnection.ObjectService.DownloadObjectAsync(_readConnection.Bucket, firstImage.Key, new DownloadOptions(), false);
+                return new DownloadStream(_readConnection.Bucket, (int)firstImage.SystemMetaData.ContentLength, firstImage.Key);
+            }
+            catch
+            {
+                return null; //dummy
+            }
+        }
+
+        public async Task<bool> SaveAngebotAsync(Angebot angebot, List<AttachmentImage> images)
         {
             await InitWriteConnection();
 
@@ -77,6 +96,15 @@ namespace NutzMich.Shared.Services
 
             var angebotUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, "Angebote/" + _loginService.AnbieterID + "/" + angebot.Id.ToString(), new UploadOptions(), angebotJSONbytes, false);
             await angebotUpload.StartUploadAsync();
+
+            int count = 1;
+            foreach(var image in images)
+            {
+                image.Stream.Position = 0;
+                var imageUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, "Fotos/" + _loginService.AnbieterID + "/" + angebot.Id.ToString() + "/" + count, new UploadOptions(), image.Stream, false);
+                await imageUpload.StartUploadAsync();
+                count++;
+            }
 
             return angebotUpload.Completed;
         }

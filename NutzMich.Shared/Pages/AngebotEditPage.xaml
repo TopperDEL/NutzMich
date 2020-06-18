@@ -5,6 +5,7 @@
     xmlns:local="using:NutzMich.Shared.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:NutzMich.Shared.Models"
     xmlns:toolkit="uno"
     xmlns:xamarin="http://uno.ui/xamarin"
     mc:Ignorable="d"
@@ -32,7 +33,7 @@
 						  AcceptsReturn="True" MinHeight="100"/>
                 <TextBox Header="Zustand" Text="{x:Bind _angebotVM.Angebot.Zustand, Mode=TwoWay}"
 						  AcceptsReturn="True" MinHeight="100"/>
-                <GridView ItemsSource="{Binding Fotos, Mode=OneWay}" MinHeight="400">
+                <GridView ItemsSource="{Binding Fotos, Mode=OneWay}" MinHeight="400" Header="Fotos">
                     <GridView.FooterTemplate>
                         <DataTemplate>
                             <Button Width="100" Height="50" Padding="15" Click="AddPhoto">
@@ -43,9 +44,9 @@
                         </DataTemplate>
                     </GridView.FooterTemplate>
                     <GridView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="models:AttachmentImage">
                             <Border BorderBrush="RoyalBlue" BorderThickness="2" CornerRadius="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <Image Source="{Binding}" Stretch="UniformToFill" Width="130" Height="70" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <Image Source="{Binding Image}" Stretch="UniformToFill" Width="130" Height="70" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Border>
                         </DataTemplate>
                     </GridView.ItemTemplate>
