@@ -55,6 +55,8 @@ namespace NutzMich.Shared.Pages
                 _angebotVM = e.Parameter as AngebotViewModel;
             else
                 _angebotVM = new AngebotViewModel();
+
+            this.DataContext = _angebotVM;
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)

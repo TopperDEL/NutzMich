@@ -32,6 +32,24 @@
 						  AcceptsReturn="True" MinHeight="100"/>
                 <TextBox Header="Zustand" Text="{x:Bind _angebotVM.Angebot.Zustand, Mode=TwoWay}"
 						  AcceptsReturn="True" MinHeight="100"/>
+                <GridView ItemsSource="{Binding Fotos, Mode=OneWay}" MinHeight="400">
+                    <GridView.FooterTemplate>
+                        <DataTemplate>
+                            <Button Width="100" Height="50" Padding="15">
+                                <Viewbox>
+                                    <SymbolIcon Symbol="Add" Foreground="RoyalBlue"/>
+                                </Viewbox>
+                            </Button>
+                        </DataTemplate>
+                    </GridView.FooterTemplate>
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="RoyalBlue" BorderThickness="2" CornerRadius="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Image Source="{Binding}" Stretch="UniformToFill" Width="130" Height="70" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
             </StackPanel>
         </Grid>
     </ScrollViewer>
