@@ -4,6 +4,8 @@ using Android.OS;
 using Android.Content.PM;
 using Android.Views;
 
+[assembly: UsesFeature("android.hardware.camera", Required = false)]
+[assembly: UsesFeature("android.hardware.camera.autofocus", Required = false)]
 namespace NutzMich.Droid
 {
 	[Activity(
@@ -13,6 +15,18 @@ namespace NutzMich.Droid
 		)]
 	public class MainActivity : Windows.UI.Xaml.ApplicationActivity
 	{
+        protected override void OnCreate(Bundle bundle)
+        {
+            base.OnCreate(bundle);
+			Xamarin.Essentials.Platform.Init(this, bundle);
+		}
+
+		public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
+		{
+			Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
+			base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+		}
 	}
 }
 

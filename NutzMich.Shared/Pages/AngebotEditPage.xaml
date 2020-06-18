@@ -35,7 +35,7 @@
                 <GridView ItemsSource="{Binding Fotos, Mode=OneWay}" MinHeight="400">
                     <GridView.FooterTemplate>
                         <DataTemplate>
-                            <Button Width="100" Height="50" Padding="15">
+                            <Button Width="100" Height="50" Padding="15" Click="AddPhoto">
                                 <Viewbox>
                                     <SymbolIcon Symbol="Add" Foreground="RoyalBlue"/>
                                 </Viewbox>

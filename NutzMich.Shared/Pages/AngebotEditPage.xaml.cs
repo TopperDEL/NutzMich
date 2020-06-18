@@ -1,6 +1,7 @@
 ﻿using NutzMich.Contracts.Interfaces;
 using NutzMich.Shared.Services;
 using NutzMich.Shared.ViewModels;
+using Plugin.Media;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,6 +16,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -102,6 +104,30 @@ namespace NutzMich.Shared.Pages
         private void Cancel(object sender, RoutedEventArgs e)
         {
             On_BackRequested();
+        }
+
+        private async void AddPhoto(object sender, RoutedEventArgs e)
+        {
+            await CrossMedia.Current.Initialize();
+
+            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+            {
+                return;
+            }
+
+            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+            {
+                Directory = "NutzMich",
+                Name = "AngebotsFoto.jpg"
+            });
+
+            if (file == null)
+                return;
+
+            var fileRead = File.OpenRead(file.Path);
+            var bitmap = new BitmapImage();
+            bitmap.SetSource(fileRead);
+            _angebotVM.Fotos.Add(bitmap);
         }
     }
 }

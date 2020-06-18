@@ -15,7 +15,7 @@ namespace NutzMich.Shared.ViewModels
         public Angebot Angebot { get; set; }
 
         public BitmapImage Thumbnail { get; set; }
-        public ObservableCollection<string> Fotos { get; private set; }
+        public ObservableCollection<BitmapImage> Fotos { get; private set; }
 
         public AngebotViewModel() : this(new Angebot())
         {
@@ -26,9 +26,7 @@ namespace NutzMich.Shared.ViewModels
             Angebot = angebot;
 
             Thumbnail = new BitmapImage(new Uri(@"ms-appx:///Assets/ProductPlaceholder.jpg"));
-            Fotos = new ObservableCollection<string>();
-            Fotos.Add(@"ms-appx:///Assets/ProductPlaceholder.jpg");
-            Fotos.Add(@"ms-appx:///Assets/ProductPlaceholder.jpg");
+            Fotos = new ObservableCollection<BitmapImage>();
         }
     }
 }
