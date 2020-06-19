@@ -78,13 +78,28 @@ namespace NutzMich.Shared.Services
             {
                 var firstImage = await _readConnection.ObjectService.GetObjectAsync(_readConnection.Bucket, "Fotos/" + _loginService.AnbieterID + "/" + angebot.Id.ToString() + "/1");
 
-                var angebotDownload = await _readConnection.ObjectService.DownloadObjectAsync(_readConnection.Bucket, firstImage.Key, new DownloadOptions(), false);
                 return new DownloadStream(_readConnection.Bucket, (int)firstImage.SystemMetaData.ContentLength, firstImage.Key);
             }
             catch
             {
                 return null; //dummy
             }
+        }
+
+        public async Task<List<Stream>> GetAngebotImagesAsync(Angebot angebot)
+        {
+            await InitReadConnection();
+
+            List<Stream> result = new List<Stream>();
+
+            var images = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Fotos/" + _loginService.AnbieterID + "/", System = true, Recursive = true });
+
+            foreach (var image in images.Items.Where(i => !i.IsPrefix))
+            {
+                result.Add(new DownloadStream(_readConnection.Bucket, (int)image.SystemMetaData.ContentLength, image.Key));
+            }
+
+            return result;
         }
 
         public async Task<bool> SaveAngebotAsync(Angebot angebot, List<AttachmentImage> images)

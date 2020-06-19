@@ -39,8 +39,12 @@ namespace NutzMich.Shared.ViewModels
 
         public async Task LoadFotos()
         {
-            var firstImage = await Factory.GetAngebotService().GetAngebotFirstImageAsync(Angebot);
-            Fotos.Add(new AttachmentImage(firstImage));
+            var images = await Factory.GetAngebotService().GetAngebotImagesAsync(Angebot);
+            foreach (var image in images)
+            {
+                if (images != null)
+                    Fotos.Add(new AttachmentImage(image));
+            }
         }
 
         private async Task LoadFirstImageAsync()
@@ -52,12 +56,14 @@ namespace NutzMich.Shared.ViewModels
 #if WINDOWS_UWP
                 await thumb.SetSourceAsync(firstImage.AsRandomAccessStream());
 #else
-                thumb.SetSource(firstImage);
+                byte[] data = new byte[firstImage.Length];
+                firstImage.Read(data, 0, (int)firstImage.Length);
+                MemoryStream mstream = new MemoryStream(data);
+                thumb.SetSource(mstream);
 #endif
 
                 Thumbnail = thumb;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Thumbnail)));
-                //Fotos.Add(new AttachmentImage(firstImage));
             }
         }
     }

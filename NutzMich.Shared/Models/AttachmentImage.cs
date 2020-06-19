@@ -14,7 +14,19 @@ namespace NutzMich.Shared.Models
         {
             get
             {
-                
+                if (_image == null)
+                {
+                    _image = new BitmapImage();
+#if WINDOWS_UWP
+                _image.SetSourceAsync(Stream.AsRandomAccessStream());
+#else
+                    //Workaround für Uno. Das muss aber besser gehen.
+                    byte[] data = new byte[Stream.Length];
+                    Stream.Read(data, 0, (int)Stream.Length);
+                    MemoryStream mstream = new MemoryStream(data);
+                    _image.SetSource(mstream);
+#endif
+                }
                 return _image;
             }
         }
@@ -22,15 +34,6 @@ namespace NutzMich.Shared.Models
         public AttachmentImage(Stream stream)
         {
             Stream = stream;
-            if (_image == null)
-            {
-                _image = new BitmapImage();
-#if WINDOWS_UWP
-                _image.SetSourceAsync(Stream.AsRandomAccessStream());
-#else
-                    _image.SetSource(Stream);
-#endif
-            }
         }
     }
 }
