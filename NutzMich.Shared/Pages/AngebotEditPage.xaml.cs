@@ -84,7 +84,9 @@ namespace NutzMich.Shared.Pages
 
         private async void Save(object sender, RoutedEventArgs e)
         {
+            _angebotVM.SetIsLoading();
             var saved = await _angebotService.SaveAngebotAsync(_angebotVM.Angebot, _angebotVM.Fotos.ToList());
+            _angebotVM.SetIsNotLoading();
 
             if (saved)
                 On_BackRequested();

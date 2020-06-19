@@ -21,6 +21,8 @@ namespace NutzMich.Shared.ViewModels
 
         public BitmapImage Thumbnail { get; set; }
         public ObservableCollection<AttachmentImage> Fotos { get; private set; }
+        public bool Loading { get; set; }
+        public bool NotLoading { get; set; }
 
         public AngebotViewModel() : this(new Angebot())
         {
@@ -28,11 +30,28 @@ namespace NutzMich.Shared.ViewModels
         }
         public AngebotViewModel(Angebot angebot)
         {
+            SetIsNotLoading();
             Angebot = angebot;
 
             Thumbnail = new BitmapImage(new Uri(@"ms-appx:///Assets/ProductPlaceholder.jpg"));
             Fotos = new ObservableCollection<AttachmentImage>();
             LoadFirstImageAsync();
+        }
+
+        public void SetIsLoading()
+        {
+            Loading = true;
+            NotLoading = true;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Loading)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NotLoading)));
+        }
+
+        public void SetIsNotLoading()
+        {
+            Loading = false;
+            NotLoading = true;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Loading)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NotLoading)));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
