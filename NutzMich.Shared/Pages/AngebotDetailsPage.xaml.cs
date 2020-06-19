@@ -54,6 +54,7 @@ namespace NutzMich.Shared.Pages
             BackButton.IsEnabled = this.Frame.CanGoBack;
 
             this.DataContext = _angebotVM = e.Parameter as AngebotViewModel;
+            _angebotVM.LoadFotos();
         }
 
         private bool On_BackRequested()

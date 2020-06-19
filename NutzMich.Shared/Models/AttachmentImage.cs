@@ -14,11 +14,7 @@ namespace NutzMich.Shared.Models
         {
             get
             {
-                if(_image == null)
-                {
-                    _image = new BitmapImage();
-                    _image.SetSource(Stream);
-                }
+                
                 return _image;
             }
         }
@@ -26,6 +22,15 @@ namespace NutzMich.Shared.Models
         public AttachmentImage(Stream stream)
         {
             Stream = stream;
+            if (_image == null)
+            {
+                _image = new BitmapImage();
+#if WINDOWS_UWP
+                _image.SetSourceAsync(Stream.AsRandomAccessStream());
+#else
+                    _image.SetSource(Stream);
+#endif
+            }
         }
     }
 }

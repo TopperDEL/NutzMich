@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
@@ -36,15 +37,27 @@ namespace NutzMich.Shared.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public async Task LoadFotos()
+        {
+            var firstImage = await Factory.GetAngebotService().GetAngebotFirstImageAsync(Angebot);
+            Fotos.Add(new AttachmentImage(firstImage));
+        }
+
         private async Task LoadFirstImageAsync()
         {
             var firstImage = await Factory.GetAngebotService().GetAngebotFirstImageAsync(Angebot);
             if (firstImage != null)
             {
                 BitmapImage thumb = new BitmapImage();
+#if WINDOWS_UWP
+                await thumb.SetSourceAsync(firstImage.AsRandomAccessStream());
+#else
                 thumb.SetSource(firstImage);
+#endif
+
                 Thumbnail = thumb;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Thumbnail)));
+                //Fotos.Add(new AttachmentImage(firstImage));
             }
         }
     }

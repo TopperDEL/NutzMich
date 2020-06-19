@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:NutzMich.Shared.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:models="using:NutzMich.Shared.Models"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid>
@@ -25,8 +25,8 @@
                     </Grid.RowDefinitions>
                     <FlipView Grid.Row="0" ItemsSource="{Binding Fotos, Mode=OneWay}" MaxWidth="500" MaxHeight="250">
                         <FlipView.ItemTemplate>
-                            <DataTemplate>
-                                <Image Source="{Binding}" MaxHeight="500" MaxWidth="250" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <DataTemplate x:DataType="models:AttachmentImage">
+                                <Image Source="{Binding Image}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform"/>
                             </DataTemplate>
                         </FlipView.ItemTemplate>
                     </FlipView>

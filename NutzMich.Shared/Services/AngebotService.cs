@@ -28,7 +28,7 @@ namespace NutzMich.Shared.Services
         public async Task<IEnumerable<Angebot>> GetAlleAngeboteAsync()
         {
             await InitReadConnection();
-            
+
             List<Angebot> angebote = new List<Angebot>();
 
             var angeboteItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Angebote/", Recursive = true });
@@ -98,7 +98,7 @@ namespace NutzMich.Shared.Services
             await angebotUpload.StartUploadAsync();
 
             int count = 1;
-            foreach(var image in images)
+            foreach (var image in images)
             {
                 image.Stream.Position = 0;
                 var imageUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, "Fotos/" + _loginService.AnbieterID + "/" + angebot.Id.ToString() + "/" + count, new UploadOptions(), image.Stream, false);
