@@ -168,6 +168,8 @@ namespace NutzMich.Shared.Services
 
         public void Refresh()
         {
+            Barrel.Current.Empty("alleAngebote");
+            Barrel.Current.Empty("meineAngebote");
         }
     }
 }

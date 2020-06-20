@@ -44,8 +44,7 @@ namespace NutzMich.Pages
         {
             base.OnNavigatedTo(e);
 
-            if (e.NavigationMode != NavigationMode.Back)
-                await LoadAngeboteAsync();
+            await LoadAngeboteAsync();
         }
 
         private async Task LoadAngeboteAsync()
@@ -73,6 +72,7 @@ namespace NutzMich.Pages
 
         private async void Refresh(object sender, RoutedEventArgs e)
         {
+            _angebotService.Refresh();
             await LoadAngeboteAsync();
         }
     }

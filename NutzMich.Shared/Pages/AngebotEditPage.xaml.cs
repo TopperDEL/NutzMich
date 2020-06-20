@@ -89,7 +89,10 @@ namespace NutzMich.Shared.Pages
             _angebotVM.SetIsNotLoading();
 
             if (saved)
+            {
+                _angebotService.Refresh();
                 On_BackRequested();
+            }
             else
             {
                 ContentDialog notSavedDlg = new ContentDialog()
