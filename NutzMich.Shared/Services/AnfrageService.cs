@@ -32,7 +32,7 @@ namespace NutzMich.Shared.Services
             var anfrageJSON = Newtonsoft.Json.JsonConvert.SerializeObject(anfrage);
             var anfrageJSONbytes = Encoding.UTF8.GetBytes(anfrageJSON);
 
-            var anfrageUpload = await connection.ObjectService.UploadObjectAsync(TardigradeConnectionService.Bucket, "Angebote/" + _loginService.AnbieterID + "/" + anfrage.AngebotId.ToString() + "/" + anfrage.Id.ToString(), new UploadOptions(), anfrageJSONbytes, false); ;
+            var anfrageUpload = await connection.ObjectService.UploadObjectAsync(TardigradeConnectionService.Bucket, "Angebote/" + _loginService.AnbieterId + "/" + anfrage.AngebotId.ToString() + "/" + anfrage.Id.ToString(), new UploadOptions(), anfrageJSONbytes, false); ;
             await anfrageUpload.StartUploadAsync();
 
             return anfrageUpload.Completed;

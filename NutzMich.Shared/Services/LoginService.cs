@@ -66,7 +66,7 @@ namespace NutzMich.Shared.Services
             return _vault.Retrieve(NUTZ_MICH, WRITE_ACCESS)?.Password;
         }
 
-        public string AnbieterID
+        public string AnbieterId
         {
             get
             {

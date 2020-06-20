@@ -47,7 +47,7 @@ namespace NutzMich.Shared.Services
 
             List<Angebot> angebote = new List<Angebot>();
 
-            var angeboteItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Angebote/" + _loginService.AnbieterID + "/", Recursive = true });
+            var angeboteItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Angebote/" + _loginService.AnbieterId + "/", Recursive = true });
 
             foreach (var angebotItem in angeboteItems.Items)
             {
@@ -76,7 +76,7 @@ namespace NutzMich.Shared.Services
 
             try
             {
-                var firstImage = await _readConnection.ObjectService.GetObjectAsync(_readConnection.Bucket, "Fotos/" + _loginService.AnbieterID + "/" + angebot.Id.ToString() + "/1");
+                var firstImage = await _readConnection.ObjectService.GetObjectAsync(_readConnection.Bucket, "Fotos/" + angebot.AnbieterId + "/" + angebot.Id.ToString() + "/1");
 
                 return new DownloadStream(_readConnection.Bucket, (int)firstImage.SystemMetaData.ContentLength, firstImage.Key);
             }
@@ -92,7 +92,7 @@ namespace NutzMich.Shared.Services
 
             List<Stream> result = new List<Stream>();
 
-            var images = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Fotos/" + _loginService.AnbieterID + "/", System = true, Recursive = true });
+            var images = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Fotos/" + angebot.AnbieterId + "/", System = true, Recursive = true });
 
             foreach (var image in images.Items.Where(i => !i.IsPrefix))
             {
@@ -106,17 +106,19 @@ namespace NutzMich.Shared.Services
         {
             await InitWriteConnection();
 
+            angebot.AnbieterId = _loginService.AnbieterId;
+
             var angebotJSON = Newtonsoft.Json.JsonConvert.SerializeObject(angebot);
             var angebotJSONbytes = Encoding.UTF8.GetBytes(angebotJSON);
 
-            var angebotUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, "Angebote/" + _loginService.AnbieterID + "/" + angebot.Id.ToString(), new UploadOptions(), angebotJSONbytes, false);
+            var angebotUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, "Angebote/" + _loginService.AnbieterId + "/" + angebot.Id.ToString(), new UploadOptions(), angebotJSONbytes, false);
             await angebotUpload.StartUploadAsync();
 
             int count = 1;
             foreach (var image in images)
             {
                 image.Stream.Position = 0;
-                var imageUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, "Fotos/" + _loginService.AnbieterID + "/" + angebot.Id.ToString() + "/" + count, new UploadOptions(), image.Stream, false);
+                var imageUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, "Fotos/" + _loginService.AnbieterId + "/" + angebot.Id.ToString() + "/" + count, new UploadOptions(), image.Stream, false);
                 await imageUpload.StartUploadAsync();
                 count++;
             }

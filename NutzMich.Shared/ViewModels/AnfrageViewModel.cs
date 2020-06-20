@@ -20,7 +20,7 @@ namespace NutzMich.Shared.ViewModels
         {
             Angebot = angebot;
             Anfrage = new Anfrage(Angebot);
-            Anfrage.AnfragerId = loginService.AnbieterID;
+            Anfrage.AnfragerId = loginService.AnbieterId;
             Anfrage.AbholungsZeitpunkt = DateTime.Now;
             Anfrage.LeiheVon = DateTime.Now.AddDays(1);
             Anfrage.LeiheBis = DateTime.Now.AddDays(8);

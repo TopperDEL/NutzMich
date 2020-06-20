@@ -11,7 +11,7 @@ namespace NutzMich.Shared.Interfaces
         Task<bool> Login(string email, string password);
         string GetReadAccess();
         string GetWriteAccess();
-        string AnbieterID { get; }
+        string AnbieterId { get; }
         void Logout();
     }
 }
