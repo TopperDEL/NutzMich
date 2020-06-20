@@ -18,7 +18,7 @@ namespace NutzMich.Shared.Models
                 {
                     _image = new BitmapImage();
 #if WINDOWS_UWP
-                _image.SetSourceAsync(Stream.AsRandomAccessStream());
+                    _image.SetSourceAsync(Stream.AsRandomAccessStream());
 #else
                     //Workaround für Uno. Das muss aber besser gehen.
                     byte[] data = new byte[Stream.Length];

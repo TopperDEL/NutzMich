@@ -9,6 +9,9 @@ using System;
 using NutzMich.Shared.Interfaces;
 using NutzMich.Shared.Models;
 using System.IO;
+using MonkeyCache.FileStore;
+using Plugin.Connectivity;
+using Windows.Media.Protection.PlayReady;
 
 namespace NutzMich.Shared.Services
 {
@@ -23,10 +26,15 @@ namespace NutzMich.Shared.Services
         {
             _identityService = identityService;
             _loginService = loginService;
+
+            Barrel.ApplicationId = "nutzmich_monkeycache";
         }
 
         public async Task<IEnumerable<Angebot>> GetAlleAngeboteAsync()
         {
+            if (!Barrel.Current.IsExpired("alleAngebote") || !CrossConnectivity.Current.IsConnected)
+                return Barrel.Current.Get<IEnumerable<Angebot>>("alleAngebote");
+
             await InitReadConnection();
 
             List<Angebot> angebote = new List<Angebot>();
@@ -38,11 +46,16 @@ namespace NutzMich.Shared.Services
                 angebote.Add(await LoadAngebotAsync(angebotItem.Key));
             }
 
+            Barrel.Current.Add<IEnumerable<Angebot>>("alleAngebote", angebote, TimeSpan.FromDays(1));
+
             return angebote;
         }
 
         public async Task<IEnumerable<Angebot>> GetMeineAngeboteAsync()
         {
+            if (!Barrel.Current.IsExpired("meineAngebote") || !CrossConnectivity.Current.IsConnected)
+                return Barrel.Current.Get<IEnumerable<Angebot>>("meineAngebote");
+
             await InitReadConnection();
 
             List<Angebot> angebote = new List<Angebot>();
@@ -54,31 +67,46 @@ namespace NutzMich.Shared.Services
                 angebote.Add(await LoadAngebotAsync(angebotItem.Key));
             }
 
+            Barrel.Current.Add<IEnumerable<Angebot>>("meineAngebote", angebote, TimeSpan.FromDays(180));
+
             return angebote;
         }
 
         private async Task<Angebot> LoadAngebotAsync(string key)
         {
+            if (!Barrel.Current.IsExpired("angebot_" + key) || !CrossConnectivity.Current.IsConnected)
+                return Barrel.Current.Get<Angebot>("angebot_" + key);
             await InitReadConnection();
 
             var angebotDownload = await _readConnection.ObjectService.DownloadObjectAsync(_readConnection.Bucket, key, new DownloadOptions(), false);
             await angebotDownload.StartDownloadAsync();
 
             if (angebotDownload.Completed)
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<Angebot>(Encoding.UTF8.GetString(angebotDownload.DownloadedBytes));
+            {
+                var angebot = Newtonsoft.Json.JsonConvert.DeserializeObject<Angebot>(Encoding.UTF8.GetString(angebotDownload.DownloadedBytes));
+                Barrel.Current.Add<Angebot>("angebot_" + key, angebot, TimeSpan.FromDays(180));
+                return angebot;
+            }
             else
                 return new Angebot() { Ueberschrift = "Angebot nicht mehr vorhanden" };
         }
 
         public async Task<Stream> GetAngebotFirstImageAsync(Angebot angebot)
         {
+            if (!Barrel.Current.IsExpired("angebot_foto_1_" + angebot.Id) || !CrossConnectivity.Current.IsConnected)
+                return new MemoryStream(Barrel.Current.Get<byte[]>("angebot_foto_1_" + angebot.Id));
             await InitReadConnection();
 
             try
             {
                 var firstImage = await _readConnection.ObjectService.GetObjectAsync(_readConnection.Bucket, "Fotos/" + angebot.AnbieterId + "/" + angebot.Id.ToString() + "/1");
 
-                return new DownloadStream(_readConnection.Bucket, (int)firstImage.SystemMetaData.ContentLength, firstImage.Key);
+                var stream = new DownloadStream(_readConnection.Bucket, (int)firstImage.SystemMetaData.ContentLength, firstImage.Key);
+
+                byte[] data = new byte[stream.Length];
+                await stream.ReadAsync(data, 0, (int)stream.Length);
+                Barrel.Current.Add<byte[]>("angebot_foto_1_" + angebot.Id, data, TimeSpan.FromDays(365));
+                return stream;
             }
             catch
             {

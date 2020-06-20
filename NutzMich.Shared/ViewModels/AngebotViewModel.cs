@@ -1,6 +1,8 @@
-﻿using NutzMich.Contracts.Models;
+﻿using MonkeyCache.FileStore;
+using NutzMich.Contracts.Models;
 using NutzMich.Shared.Models;
 using NutzMich.Shared.Services;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,7 +17,7 @@ using Windows.UI.Xaml.Media.Imaging;
 namespace NutzMich.Shared.ViewModels
 {
     [Windows.UI.Xaml.Data.Bindable]
-    public class AngebotViewModel:INotifyPropertyChanged
+    public class AngebotViewModel : INotifyPropertyChanged
     {
         public Angebot Angebot { get; set; }
 
@@ -30,6 +32,8 @@ namespace NutzMich.Shared.ViewModels
         }
         public AngebotViewModel(Angebot angebot)
         {
+            Barrel.ApplicationId = "nutzmich_monkeycache";
+
             SetIsNotLoading();
             Angebot = angebot;
 
@@ -59,10 +63,26 @@ namespace NutzMich.Shared.ViewModels
         public async Task LoadFotos()
         {
             var images = await Factory.GetAngebotService().GetAngebotImagesAsync(Angebot);
+            int count = 1;
             foreach (var image in images)
             {
                 if (images != null)
-                    Fotos.Add(new AttachmentImage(image));
+                {
+                    if (!Barrel.Current.IsExpired("angebot_foto_" + count + "_" + Angebot.Id) || !CrossConnectivity.Current.IsConnected)
+                    {
+                        var mstream = new MemoryStream(Barrel.Current.Get<byte[]>("angebot_foto_" + count + "_" + Angebot.Id));
+                        Fotos.Add(new AttachmentImage(mstream));
+                    }
+                    else
+                    {
+                        byte[] data = new byte[image.Length];
+                        image.Read(data, 0, (int)image.Length);
+
+                        Fotos.Add(new AttachmentImage(image));
+                        Barrel.Current.Add<byte[]>("angebot_foto_" + count + "_" + Angebot.Id, data, TimeSpan.FromDays(365));
+                    }
+                    count++;
+                }
             }
         }
 
@@ -71,17 +91,9 @@ namespace NutzMich.Shared.ViewModels
             var firstImage = await Factory.GetAngebotService().GetAngebotFirstImageAsync(Angebot);
             if (firstImage != null)
             {
-                BitmapImage thumb = new BitmapImage();
-#if WINDOWS_UWP
-                await thumb.SetSourceAsync(firstImage.AsRandomAccessStream());
-#else
-                byte[] data = new byte[firstImage.Length];
-                firstImage.Read(data, 0, (int)firstImage.Length);
-                MemoryStream mstream = new MemoryStream(data);
-                thumb.SetSource(mstream);
-#endif
+                AttachmentImage image = new AttachmentImage(firstImage);
 
-                Thumbnail = thumb;
+                Thumbnail = image.Image;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Thumbnail)));
             }
         }
