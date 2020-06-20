@@ -25,6 +25,14 @@ namespace NutzMich.Shared.ViewModels
         public ObservableCollection<AttachmentImage> Fotos { get; private set; }
         public bool Loading { get; set; }
         public bool NotLoading { get; set; }
+        public string BeschreibungShort { get
+            {
+                if (Angebot.Beschreibung.Length > 80)
+                    return Angebot.Beschreibung.Substring(0, 80) + "...";
+                else
+                    return Angebot.Beschreibung;
+            }
+        }
 
         public AngebotViewModel() : this(new Angebot())
         {
