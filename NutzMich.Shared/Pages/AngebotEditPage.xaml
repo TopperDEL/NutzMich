@@ -8,10 +8,9 @@
     xmlns:models="using:NutzMich.Shared.Models"
     xmlns:toolkit="uno"
     xmlns:xamarin="http://uno.ui/xamarin"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
-    <ScrollViewer>
+    <ScrollViewer Background="White">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
