@@ -122,7 +122,7 @@ namespace NutzMich.Shared.Services
 
             var images = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Fotos/" + angebot.AnbieterId + "/" + angebot.Id + "/", System = true, Recursive = true });
 
-            foreach (var image in images.Items.Where(i => !i.IsPrefix))
+            foreach (var image in images.Items.Where(i => !i.IsPrefix).OrderBy(i=>i.Key))
             {
                 result.Add(new DownloadStream(_readConnection.Bucket, (int)image.SystemMetaData.ContentLength, image.Key));
             }
