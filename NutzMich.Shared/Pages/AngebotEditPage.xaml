@@ -26,13 +26,13 @@
 
             <StackPanel Grid.Row="1" Margin="10"
 						VerticalAlignment="Top" HorizontalAlignment="Stretch">
-                <TextBox Header="Überschrift" Text="{x:Bind _angebotVM.Angebot.Ueberschrift, Mode=TwoWay}"
+                <TextBox Header="Überschrift" Text="{Binding Angebot.Ueberschrift, Mode=TwoWay}"
                          IsEnabled="{Binding NotLoading, Mode=OneWay}"
 						  />
-                <TextBox Header="Beschreibung" Text="{x:Bind _angebotVM.Angebot.Beschreibung, Mode=TwoWay}"
+                <TextBox Header="Beschreibung" Text="{Binding Angebot.Beschreibung, Mode=TwoWay}"
 						  AcceptsReturn="True" MinHeight="100"
                           IsEnabled="{Binding NotLoading, Mode=OneWay}"/>
-                <TextBox Header="Zustand" Text="{x:Bind _angebotVM.Angebot.Zustand, Mode=TwoWay}"
+                <TextBox Header="Zustand" Text="{Binding Angebot.Zustand, Mode=TwoWay}"
 						  AcceptsReturn="True" MinHeight="100"
                           IsEnabled="{Binding NotLoading, Mode=OneWay}"/>
                 <GridView ItemsSource="{Binding Fotos, Mode=OneWay}" MinHeight="400" Header="Fotos">

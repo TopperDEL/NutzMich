@@ -49,12 +49,17 @@ namespace NutzMich.Shared.Pages
             AltLeft.Modifiers = VirtualKeyModifiers.Menu;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
             if (e.Parameter != null)
+            {
                 _angebotVM = e.Parameter as AngebotViewModel;
+                _angebotVM.SetIsLoading();
+                await _angebotVM.LoadFotos();
+                _angebotVM.SetIsNotLoading();
+            }
             else
                 _angebotVM = new AngebotViewModel();
 

@@ -58,7 +58,7 @@
                         </Button.Content>
                     </Button>
                     <ProgressRing Grid.Row="1" Visibility="{Binding Loading, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}" IsActive="True"/>
-                    <ListView Grid.Row="2" ItemsSource="{x:Bind _angeboteVM.MeineAngebote, Mode=OneWay}"
+                    <ListView Grid.Row="2" ItemsSource="{x:Bind _angeboteVM.MeineAngebote, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="AngebotBearbeiten"
                           Visibility="{x:Bind _angeboteVM.Loading, Mode=OneWay, Converter={StaticResource TrueIsCollapsedConverter}}">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="viewmodels:AngebotViewModel">

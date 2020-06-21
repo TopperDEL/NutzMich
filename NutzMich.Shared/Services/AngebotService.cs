@@ -149,7 +149,11 @@ namespace NutzMich.Shared.Services
                 var imageUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, "Fotos/" + _loginService.AnbieterId + "/" + angebot.Id.ToString() + "/" + count, new UploadOptions(), image.Stream, false);
                 await imageUpload.StartUploadAsync();
                 count++;
+
+                Barrel.Current.Empty("angebot_foto_" + count + "_" + angebot.Id);
             }
+
+            Barrel.Current.Empty("angebot_" + angebot.Id);
 
             return angebotUpload.Completed;
         }
