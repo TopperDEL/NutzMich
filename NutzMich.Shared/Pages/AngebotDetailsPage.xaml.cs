@@ -51,7 +51,6 @@ namespace NutzMich.Shared.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            BackButton.IsEnabled = this.Frame.CanGoBack;
 
             this.DataContext = _angebotVM = e.Parameter as AngebotViewModel;
             _angebotVM.LoadFotos();

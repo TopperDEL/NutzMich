@@ -6,36 +6,38 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:models="using:NutzMich.Shared.Models"
     mc:Ignorable="d">
-    <Grid Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" x:Name="BackButton" Click="Back_Click" Style="{StaticResource NavigationBackButtonNormalStyle}"/>
+    <ScrollViewer Background="White">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <Pivot Grid.Row="1" Title="{Binding Angebot.Ueberschrift, Mode=OneWay}">
-            <PivotItem Header="Details">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBox Grid.Row="0" Text="{Binding Angebot.Beschreibung, Mode=OneWay}" Header="Beschreibung" IsReadOnly="True" BorderThickness="0" AcceptsReturn="True"/>
-                    <TextBox Grid.Row="1" Text="{Binding Angebot.Zustand, Mode=OneWay}" Header="Zustand" IsReadOnly="True" BorderThickness="0" AcceptsReturn="True"/>
-                    <FlipView Grid.Row="2" ItemsSource="{Binding Fotos, Mode=OneWay}" MaxWidth="500" MaxHeight="250">
-                        <FlipView.ItemTemplate>
-                            <DataTemplate x:DataType="models:AttachmentImage">
+            <CommandBar Grid.Row="0" Content="{Binding Angebot.Ueberschrift, Mode=OneWay}" Background="RoyalBlue" Foreground="White">
+                <CommandBar.PrimaryCommands>
+                    <AppBarButton Icon="Back" Click="Back_Click" Foreground="White"/>
+                </CommandBar.PrimaryCommands>
+            </CommandBar>
+
+            <Grid Grid.Row="1" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBox Grid.Row="0" Text="{Binding Angebot.Beschreibung, Mode=OneWay}" Header="Beschreibung" IsReadOnly="True" BorderThickness="0" AcceptsReturn="True"/>
+                <TextBox Grid.Row="1" Text="{Binding Angebot.Zustand, Mode=OneWay}" Header="Zustand" IsReadOnly="True" BorderThickness="0" AcceptsReturn="True"/>
+                <FlipView Grid.Row="2" ItemsSource="{Binding Fotos, Mode=OneWay}" HorizontalAlignment="Center" HorizontalContentAlignment="Center">
+                    <FlipView.ItemTemplate>
+                        <DataTemplate x:DataType="models:AttachmentImage">
+                            <Grid>
                                 <Image Source="{Binding Image}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform"/>
-                            </DataTemplate>
-                        </FlipView.ItemTemplate>
-                    </FlipView>
-                </Grid>
-            </PivotItem>
-            <PivotItem Header="Anfrage">
-                <Button Content="Anfrage stellen" Click="AnfrageStellen"/>
-            </PivotItem>
-        </Pivot>
-    </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </FlipView.ItemTemplate>
+                </FlipView>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
 </Page>

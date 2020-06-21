@@ -35,7 +35,7 @@
                                     <Image Source="{Binding Thumbnail, Mode=OneWay}" Width="100" Margin="0,0,10,0"/>
                                     <StackPanel Orientation="Vertical">
                                         <TextBlock Text="{x:Bind Path=Angebot.Ueberschrift}" FontWeight="Bold"/>
-                                        <TextBlock Text="{x:Bind Path=BeschreibungShort}" TextWrapping="Wrap" MaxWidth="220"/>
+                                        <TextBlock Text="{x:Bind Path=BeschreibungShort}" TextWrapping="Wrap" MaxWidth="190"/>
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
@@ -66,13 +66,12 @@
                                     <Image Source="{x:Bind Thumbnail, Mode=OneWay}" Width="100" Margin="0,0,10,0"/>
                                     <StackPanel Orientation="Vertical">
                                         <TextBlock Text="{x:Bind Path=Angebot.Ueberschrift}" FontWeight="Bold"/>
-                                        <TextBlock Text="{x:Bind Path=BeschreibungShort}" TextWrapping="Wrap" MaxWidth="220"/>
+                                        <TextBlock Text="{x:Bind Path=BeschreibungShort}" TextWrapping="Wrap" MaxWidth="190"/>
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-
                 </Grid>
             </PivotItem>
         </Pivot>
