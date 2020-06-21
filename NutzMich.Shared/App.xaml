@@ -7,7 +7,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="NutzMichStyles_Constants.xaml"/>
                 <ResourceDictionary Source="NutzMichStyles_Buttons.xaml"/>
-                <ResourceDictionary Source="NutzMichStyles_TextBox.xaml"/>
+                <ResourceDictionary Source="NutzMichStyles_Headers.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -22,15 +22,15 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <FlipView Grid.Row="0" ItemsSource="{Binding Fotos, Mode=OneWay}" MaxWidth="500" MaxHeight="250">
+                    <TextBox Grid.Row="0" Text="{Binding Angebot.Beschreibung, Mode=OneWay}" Header="Beschreibung" IsReadOnly="True" BorderThickness="0" AcceptsReturn="True"/>
+                    <TextBox Grid.Row="1" Text="{Binding Angebot.Zustand, Mode=OneWay}" Header="Zustand" IsReadOnly="True" BorderThickness="0" AcceptsReturn="True"/>
+                    <FlipView Grid.Row="2" ItemsSource="{Binding Fotos, Mode=OneWay}" MaxWidth="500" MaxHeight="250">
                         <FlipView.ItemTemplate>
                             <DataTemplate x:DataType="models:AttachmentImage">
                                 <Image Source="{Binding Image}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform"/>
                             </DataTemplate>
                         </FlipView.ItemTemplate>
                     </FlipView>
-                    <TextBox Grid.Row="1" Text="{Binding Angebot.Beschreibung, Mode=OneWay}" Header="Beschreibung" IsReadOnly="True" AcceptsReturn="True"/>
-                    <TextBox Grid.Row="2" Text="{Binding Angebot.Zustand, Mode=OneWay}" Header="Zustand" IsReadOnly="True" AcceptsReturn="True"/>
                 </Grid>
             </PivotItem>
             <PivotItem Header="Anfrage">
