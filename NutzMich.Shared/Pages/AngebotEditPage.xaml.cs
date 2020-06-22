@@ -58,12 +58,12 @@ namespace NutzMich.Shared.Pages
                 _angebotVM = e.Parameter as AngebotViewModel;
                 _angebotVM.SetIsLoading();
                 await _angebotVM.LoadFotos();
-                _angebotVM.SetIsNotLoading();
             }
             else
                 _angebotVM = new AngebotViewModel();
 
             this.DataContext = _angebotVM;
+            _angebotVM.SetIsNotLoading();
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)

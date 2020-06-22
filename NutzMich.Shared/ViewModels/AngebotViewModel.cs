@@ -65,7 +65,7 @@ namespace NutzMich.Shared.ViewModels
         public void SetIsLoading()
         {
             Loading = true;
-            NotLoading = true;
+            NotLoading = false;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Loading)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NotLoading)));
         }

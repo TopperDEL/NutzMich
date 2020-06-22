@@ -54,6 +54,7 @@
                     </GridView.ItemTemplate>
                 </GridView>
             </StackPanel>
+            <ProgressRing IsActive="{Binding Loading, Mode=OneWay}" Visibility="Visible" Background="White" Foreground="RoyalBlue" Opacity="50" Grid.RowSpan="2"/>
         </Grid>
     </ScrollViewer>
 </Page>
