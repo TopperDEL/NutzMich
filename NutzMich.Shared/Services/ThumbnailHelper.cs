@@ -25,7 +25,7 @@ namespace NutzMich.Shared.Services
             var imageBytes = new byte[image.Stream.Length];
             image.Stream.Position = 0;
             image.Stream.Read(imageBytes, 0, (int)image.Stream.Length);
-            var thumbnailBytes = GetThumbnailBytes(imageBytes, 100, 100);
+            var thumbnailBytes = GetThumbnailBytes(imageBytes, 200, 200);
 #endif
 #if WINDOWS_UWP
             StorageFolder folder = ApplicationData.Current.TemporaryFolder;
