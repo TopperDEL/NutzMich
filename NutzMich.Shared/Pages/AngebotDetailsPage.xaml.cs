@@ -48,12 +48,12 @@ namespace NutzMich.Shared.Pages
             On_BackRequested();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
             this.DataContext = _angebotVM = e.Parameter as AngebotViewModel;
-            _angebotVM.LoadFotos();
+            await _angebotVM.LoadFotos();
         }
 
         private bool On_BackRequested()
