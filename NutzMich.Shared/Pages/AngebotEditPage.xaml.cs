@@ -128,7 +128,8 @@ namespace NutzMich.Shared.Pages
             var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
             {
                 Directory = "NutzMich",
-                Name = "AngebotsFoto.jpg"
+                Name = "AngebotsFoto.jpg",
+                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium
             });
 
             if (file == null)

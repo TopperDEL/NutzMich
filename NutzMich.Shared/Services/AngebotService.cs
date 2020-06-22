@@ -19,13 +19,15 @@ namespace NutzMich.Shared.Services
     {
         IIdentityService _identityService;
         ILoginService _loginService;
+        IThumbnailHelper _thumbnailHelper;
         ConnectionService _readConnection;
         ConnectionService _writeConnection;
 
-        public AngebotService(IIdentityService identityService, ILoginService loginService)
+        public AngebotService(IIdentityService identityService, ILoginService loginService, IThumbnailHelper thumbnailHelper)
         {
             _identityService = identityService;
             _loginService = loginService;
+            _thumbnailHelper = thumbnailHelper;
 
             Barrel.ApplicationId = "nutzmich_monkeycache";
         }
@@ -135,11 +137,15 @@ namespace NutzMich.Shared.Services
             await InitWriteConnection();
 
             angebot.AnbieterId = _loginService.AnbieterId;
+            if (images.Count > 0)
+                angebot.ThumbnailBase64 = await _thumbnailHelper.ThumbnailToBase64Async(images.First());
 
             var angebotJSON = Newtonsoft.Json.JsonConvert.SerializeObject(angebot);
             var angebotJSONbytes = Encoding.UTF8.GetBytes(angebotJSON);
 
-            var angebotUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, "Angebote/" + _loginService.AnbieterId + "/" + angebot.Id.ToString(), new UploadOptions(), angebotJSONbytes, false);
+            string key = "Angebote/" + _loginService.AnbieterId + "/" + angebot.Id.ToString();
+
+            var angebotUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, key, new UploadOptions(), angebotJSONbytes, false);
             await angebotUpload.StartUploadAsync();
 
             int count = 1;
@@ -153,7 +159,7 @@ namespace NutzMich.Shared.Services
                 Barrel.Current.Empty("angebot_foto_" + count + "_" + angebot.Id);
             }
 
-            Barrel.Current.Empty("angebot_" + angebot.Id);
+            Barrel.Current.Empty("angebot_" + key);
 
             return angebotUpload.Completed;
         }

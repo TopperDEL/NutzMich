@@ -1,5 +1,6 @@
 ﻿using MonkeyCache.FileStore;
 using NutzMich.Contracts.Models;
+using NutzMich.Shared.Interfaces;
 using NutzMich.Shared.Models;
 using NutzMich.Shared.Services;
 using Plugin.Connectivity;
@@ -19,9 +20,19 @@ namespace NutzMich.Shared.ViewModels
     [Windows.UI.Xaml.Data.Bindable]
     public class AngebotViewModel : INotifyPropertyChanged
     {
+        private IThumbnailHelper _thumbnailHelper;
         public Angebot Angebot { get; set; }
 
-        public BitmapImage Thumbnail { get; set; }
+        public BitmapImage Thumbnail
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(Angebot.ThumbnailBase64))
+                    return _thumbnailHelper.ThumbnailFromBase64(Angebot.ThumbnailBase64).Image;
+                else
+                    return new BitmapImage(new Uri(@"ms-appx:///Assets/ProductPlaceholder.jpg"));
+            }
+        }
         public ObservableCollection<AttachmentImage> Fotos { get; private set; }
         public bool Loading { get; set; }
         public bool NotLoading { get; set; }
@@ -42,14 +53,13 @@ namespace NutzMich.Shared.ViewModels
         }
         public AngebotViewModel(Angebot angebot)
         {
+            _thumbnailHelper = Factory.GetThumbnailHelper();
             Barrel.ApplicationId = "nutzmich_monkeycache";
 
             SetIsNotLoading();
             Angebot = angebot;
 
-            Thumbnail = new BitmapImage(new Uri(@"ms-appx:///Assets/ProductPlaceholder.jpg"));
             Fotos = new ObservableCollection<AttachmentImage>();
-            LoadFirstImageAsync();
         }
 
         public void SetIsLoading()
@@ -93,18 +103,6 @@ namespace NutzMich.Shared.ViewModels
                     }
                     count++;
                 }
-            }
-        }
-
-        private async Task LoadFirstImageAsync()
-        {
-            var firstImage = await Factory.GetAngebotService().GetAngebotFirstImageAsync(Angebot);
-            if (firstImage != null)
-            {
-                AttachmentImage image = new AttachmentImage(firstImage);
-
-                Thumbnail = image.Image;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Thumbnail)));
             }
         }
     }

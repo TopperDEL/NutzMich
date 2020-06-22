@@ -22,7 +22,7 @@ namespace NutzMich.Shared.Services
         public static IAngebotService GetAngebotService()
         {
             if (_angebotService == null)
-                _angebotService = new AngebotService(GetIdentityService(), GetLoginService());
+                _angebotService = new AngebotService(GetIdentityService(), GetLoginService(), GetThumbnailHelper());
 
             return _angebotService;
         }
@@ -34,6 +34,15 @@ namespace NutzMich.Shared.Services
                 _loginService = new LoginService();
 
             return _loginService;
+        }
+
+        static IThumbnailHelper _thumbnailHelper;
+        public static IThumbnailHelper GetThumbnailHelper()
+        {
+            if (_thumbnailHelper == null)
+                _thumbnailHelper = new ThumbnailHelper();
+
+            return _thumbnailHelper;
         }
 
         public static void Reset()

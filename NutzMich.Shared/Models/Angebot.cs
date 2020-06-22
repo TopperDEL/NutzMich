@@ -14,6 +14,7 @@ namespace NutzMich.Contracts.Models
         public string Beschreibung { get; set; }
         public string Zustand { get; set; }
         public string AnfrageAccess { get; set; }
+        public string ThumbnailBase64 { get; set; }
 
         public Angebot()
         {

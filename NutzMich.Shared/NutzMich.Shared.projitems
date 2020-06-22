@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IAngebotService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IIdentityService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILoginService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IThumbnailHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Anfrage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Angebot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AttachmentImage.cs" />
@@ -50,6 +51,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\IdentityService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LoginService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\TardigradeConnectionService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ThumbnailHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AnfrageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AngeboteViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AngebotViewModel.cs" />
