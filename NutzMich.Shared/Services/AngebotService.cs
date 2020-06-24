@@ -53,6 +53,18 @@ namespace NutzMich.Shared.Services
             return angebote;
         }
 
+        public async IAsyncEnumerable<Angebot> GetAlleAsync()
+        {
+            await InitReadConnection();
+
+            var angeboteItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Angebote/", Recursive = true });
+
+            foreach(var angebot in angeboteItems.Items)
+            {
+                yield return await LoadAngebotAsync(angebot.Key);
+            }
+        }
+
         public async Task<IEnumerable<Angebot>> GetMeineAngeboteAsync()
         {
             if (!Barrel.Current.IsExpired("meineAngebote") || !CrossConnectivity.Current.IsConnected)
