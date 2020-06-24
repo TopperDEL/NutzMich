@@ -25,10 +25,13 @@ namespace NutzMich.Shared.Services
 
             List<ChatNachricht> nachrichten = new List<ChatNachricht>();
 
-            var nachrichtenItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Nachrichten/" + _loginService.AnbieterId + "/" + angebot.Id + "/", Recursive = true });
+            var nachrichtenItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Nachrichten/" + _loginService.AnbieterId + "/" + angebot.Id + "/", Recursive = false });
 
             foreach (var nachrichtItem in nachrichtenItems.Items)
             {
+                if (nachrichtItem.IsPrefix)
+                    continue;
+
                 var nachricht = await LoadNachrichtAsync(nachrichtItem.Key);
                 if (nachricht != null)
                     nachrichten.Add(nachricht);
@@ -44,7 +47,7 @@ namespace NutzMich.Shared.Services
             if (includeForeignAccess)
             {
                 var token = _identityService.CreatePartialWriteAccess("Nachrichten/" + nachricht.SenderAnbieterID + "/" + nachricht.AngebotID + "/" + nachricht.EmpfaengerAnbieterID + "/");
-                var foreignAccessUpload = await foreignConnection.ObjectService.UploadObjectAsync(foreignConnection.Bucket, "Nachrichten/" + nachricht.EmpfaengerAnbieterID + "/" + nachricht.AngebotID + "/" + nachricht.SenderAnbieterID, new UploadOptions(), Encoding.UTF8.GetBytes(token), false);
+                var foreignAccessUpload = await foreignConnection.ObjectService.UploadObjectAsync(foreignConnection.Bucket, "Nachrichten/" + nachricht.EmpfaengerAnbieterID + "/" + nachricht.AngebotID + "/" + nachricht.SenderAnbieterID + "/Token", new UploadOptions(), Encoding.UTF8.GetBytes(token), false);
                 await foreignAccessUpload.StartUploadAsync();
             }
 

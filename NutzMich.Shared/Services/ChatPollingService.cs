@@ -28,7 +28,7 @@ namespace NutzMich.Shared.Services
         {
             CancellationTokenSource source = new CancellationTokenSource();
             Task pollingTask = Task.Run(() => DoPollingAsync(angebot, source.Token), source.Token);
-            pollingTask.Start();
+            //pollingTask.Start();
             _pollingTasks.Add(angebot, source);
         }
 
@@ -51,7 +51,7 @@ namespace NutzMich.Shared.Services
                 {
                     foreach(var nachricht in nachrichtenNeu)
                     {
-                        if(nachrichten.Where(n=> n.Id != nachricht.Id).Count() == 0)
+                        if(nachrichten.Where(n=> n.Id == nachricht.Id).Count() == 0)
                         {
                             nachrichten.Add(nachricht);
                             NachrichtErhalten?.Invoke(angebot, nachricht);
