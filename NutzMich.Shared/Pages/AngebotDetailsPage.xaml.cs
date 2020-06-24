@@ -1,4 +1,5 @@
-﻿using NutzMich.Shared.Services;
+﻿using NutzMich.Shared.Models;
+using NutzMich.Shared.Services;
 using NutzMich.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,23 @@ namespace NutzMich.Shared.Pages
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             On_BackRequested();
+        }
+
+        /// <summary>
+        /// Nur temporär!!
+        /// </summary>
+        private async void Chat_Click(object sender, RoutedEventArgs e)
+        {
+            ChatService chatService = new ChatService(Factory.GetIdentityService(), Factory.GetLoginService());
+
+            ChatNachricht nachricht = new ChatNachricht();
+            nachricht.AngebotID = _angebotVM.Angebot.Id;
+            nachricht.EmpfaengerAnbieterID = _angebotVM.Angebot.AnbieterId;
+            nachricht.Nachricht = "Gesendet am: " + DateTime.Now.ToString();
+            nachricht.SendeDatum = DateTime.Now;
+            nachricht.SenderAnbieterID = Factory.GetLoginService().AnbieterId;
+
+            await chatService.SendNachrichtAsync(nachricht, _angebotVM.Angebot.NachrichtenAccess, true);
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)

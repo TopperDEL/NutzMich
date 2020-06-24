@@ -10,5 +10,6 @@ namespace NutzMich.Contracts.Interfaces
         Access GetIdentityWriteAccess();
         Access GetIdentityReadAccess();
         Access GetDefaultAccess();
+        string CreatePartialWriteAccess(string path);
     }
 }

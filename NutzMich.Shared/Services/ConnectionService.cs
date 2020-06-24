@@ -10,7 +10,7 @@ using Windows.Media.Audio;
 
 namespace NutzMich.Shared.Services
 {
-    class ConnectionService
+    public class ConnectionService
     {
         private SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
         private bool _isInitialized;

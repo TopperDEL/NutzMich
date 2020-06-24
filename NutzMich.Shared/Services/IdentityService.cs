@@ -43,5 +43,12 @@ namespace NutzMich.Shared.Services
 
             return _defaultAccess;
         }
+
+        public string CreatePartialWriteAccess(string path)
+        {
+            Permission permission = new Permission();
+            permission.AllowUpload = true;
+            return GetIdentityWriteAccess().Share(permission, new List<SharePrefix>() { new SharePrefix() { Bucket = "nutz-mich", Prefix = path } }).Serialize();
+        }
     }
 }

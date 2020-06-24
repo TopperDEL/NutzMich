@@ -17,6 +17,7 @@
             <CommandBar Grid.Row="0" Content="{Binding Angebot.Ueberschrift, Mode=OneWay}" Background="RoyalBlue" Foreground="White">
                 <CommandBar.PrimaryCommands>
                     <AppBarButton Icon="Back" Click="Back_Click" Foreground="White"/>
+                    <AppBarButton Icon="Message" Click="Chat_Click" Foreground="White"/>
                 </CommandBar.PrimaryCommands>
             </CommandBar>
 

@@ -15,17 +15,13 @@ using Windows.Media.Protection.PlayReady;
 
 namespace NutzMich.Shared.Services
 {
-    class AngebotService : IAngebotService
+    class AngebotService : ConnectionUsingServiceBase, IAngebotService
     {
-        IIdentityService _identityService;
         ILoginService _loginService;
         IThumbnailHelper _thumbnailHelper;
-        ConnectionService _readConnection;
-        ConnectionService _writeConnection;
 
-        public AngebotService(IIdentityService identityService, ILoginService loginService, IThumbnailHelper thumbnailHelper)
+        public AngebotService(IIdentityService identityService, ILoginService loginService, IThumbnailHelper thumbnailHelper):base(identityService)
         {
-            _identityService = identityService;
             _loginService = loginService;
             _thumbnailHelper = thumbnailHelper;
 
@@ -37,7 +33,7 @@ namespace NutzMich.Shared.Services
             if (!Barrel.Current.IsExpired("alleAngebote") || !CrossConnectivity.Current.IsConnected)
                 return Barrel.Current.Get<IEnumerable<Angebot>>("alleAngebote");
 
-            await InitReadConnection();
+            await InitReadConnectionAsync();
 
             List<Angebot> angebote = new List<Angebot>();
 
@@ -55,7 +51,7 @@ namespace NutzMich.Shared.Services
 
         public async IAsyncEnumerable<Angebot> GetAlleAsync()
         {
-            await InitReadConnection();
+            await InitReadConnectionAsync();
 
             var angeboteItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Angebote/", Recursive = true });
 
@@ -70,7 +66,7 @@ namespace NutzMich.Shared.Services
             if (!Barrel.Current.IsExpired("meineAngebote") || !CrossConnectivity.Current.IsConnected)
                 return Barrel.Current.Get<IEnumerable<Angebot>>("meineAngebote");
 
-            await InitReadConnection();
+            await InitReadConnectionAsync();
 
             List<Angebot> angebote = new List<Angebot>();
 
@@ -90,7 +86,7 @@ namespace NutzMich.Shared.Services
         {
             if (!Barrel.Current.IsExpired("angebot_" + key) || !CrossConnectivity.Current.IsConnected)
                 return Barrel.Current.Get<Angebot>("angebot_" + key);
-            await InitReadConnection();
+            await InitReadConnectionAsync();
 
             var angebotDownload = await _readConnection.ObjectService.DownloadObjectAsync(_readConnection.Bucket, key, new DownloadOptions(), false);
             await angebotDownload.StartDownloadAsync();
@@ -109,7 +105,7 @@ namespace NutzMich.Shared.Services
         {
             if (!Barrel.Current.IsExpired("angebot_foto_1_" + angebot.Id) || !CrossConnectivity.Current.IsConnected)
                 return new MemoryStream(Barrel.Current.Get<byte[]>("angebot_foto_1_" + angebot.Id));
-            await InitReadConnection();
+            await InitReadConnectionAsync();
 
             try
             {
@@ -130,7 +126,7 @@ namespace NutzMich.Shared.Services
 
         public async Task<List<Stream>> GetAngebotImagesAsync(Angebot angebot)
         {
-            await InitReadConnection();
+            await InitReadConnectionAsync();
 
             List<Stream> result = new List<Stream>();
 
@@ -146,11 +142,16 @@ namespace NutzMich.Shared.Services
 
         public async Task<bool> SaveAngebotAsync(Angebot angebot, List<AttachmentImage> images)
         {
-            await InitWriteConnection();
+            await InitWriteConnectionAsync();
 
             angebot.AnbieterId = _loginService.AnbieterId;
             if (images.Count > 0)
                 angebot.ThumbnailBase64 = await _thumbnailHelper.ThumbnailToBase64Async(images.First());
+
+            if(string.IsNullOrEmpty(angebot.NachrichtenAccess))
+            {
+                angebot.NachrichtenAccess = _identityService.CreatePartialWriteAccess("Nachrichten/" + _loginService.AnbieterId + "/" + angebot.Id + "/");
+            }
 
             var angebotJSON = Newtonsoft.Json.JsonConvert.SerializeObject(angebot);
             var angebotJSONbytes = Encoding.UTF8.GetBytes(angebotJSON);
@@ -174,18 +175,6 @@ namespace NutzMich.Shared.Services
             Barrel.Current.Empty("angebot_" + key);
 
             return angebotUpload.Completed;
-        }
-
-        private async Task InitReadConnection()
-        {
-            if (_readConnection == null)
-                _readConnection = await ConnectionService.CreateAsync(_identityService.GetIdentityReadAccess());
-        }
-
-        private async Task InitWriteConnection()
-        {
-            if (_writeConnection == null)
-                _writeConnection = await ConnectionService.CreateAsync(_identityService.GetIdentityWriteAccess());
         }
 
         public void Refresh()

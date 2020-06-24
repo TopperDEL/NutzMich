@@ -15,8 +15,8 @@ namespace NutzMich.Shared.Models
     [Bindable]
     public class Anfrage
     {
-        public Guid Id { get; set; }
-        public Guid AngebotId { get; set; }
+        public string Id { get; set; }
+        public string AngebotId { get; set; }
         public string AnfragerId { get; set; }
         public string AnbieterId { get; set; }
         public DateTimeOffset LeiheVon { get; set; }

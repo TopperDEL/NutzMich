@@ -23,12 +23,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converter\EmptyStringToBooleanConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IAnfrageService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IAngebotService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IChatPollingService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IChatService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IIdentityService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILoginService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IThumbnailHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Anfrage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Angebot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AttachmentImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ChatNachricht.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AnfrageDialog.xaml.cs">
       <DependentUpon>AnfrageDialog.xaml</DependentUpon>
     </Compile>
@@ -45,7 +48,10 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Services\AngebotService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ChatPollingService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ChatService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ConnectionService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ConnectionUsingServiceBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Factory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AnfrageService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IdentityService.cs" />
@@ -55,6 +61,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AnfrageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AngeboteViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AngebotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ChatViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\LoginViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
