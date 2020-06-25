@@ -54,16 +54,10 @@ namespace NutzMich.Shared.Pages
         /// </summary>
         private async void Chat_Click(object sender, RoutedEventArgs e)
         {
-            ChatService chatService = new ChatService(Factory.GetIdentityService(), Factory.GetLoginService());
-
-            ChatNachricht nachricht = new ChatNachricht();
-            nachricht.AngebotID = _angebotVM.Angebot.Id;
-            nachricht.EmpfaengerAnbieterID = _angebotVM.Angebot.AnbieterId;
-            nachricht.Nachricht = "Gesendet am: " + DateTime.Now.ToString();
-            nachricht.SendeDatum = DateTime.Now;
-            nachricht.SenderAnbieterID = Factory.GetLoginService().AnbieterId;
-
-            await chatService.SendNachrichtAsync(nachricht, _angebotVM.Angebot.NachrichtenAccess, true);
+            ChatDialog chat = new ChatDialog();
+            chat.InitChat(_angebotVM.Angebot);
+            await chat.ShowAsync();
+            chat.Cleanup();
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)

@@ -39,6 +39,7 @@ namespace NutzMich.Shared.Services
             {
                 pollingTask.Cancel();
             }
+            _pollingTasks.Remove(angebot);
         }
 
         private async Task DoPollingAsync(Angebot angebot, CancellationToken token)

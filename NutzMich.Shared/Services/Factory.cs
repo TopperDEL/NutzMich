@@ -45,6 +45,24 @@ namespace NutzMich.Shared.Services
             return _thumbnailHelper;
         }
 
+        static IChatService _chatService;
+        public static IChatService GetChatService()
+        {
+            if (_chatService == null)
+                _chatService = new ChatService(GetIdentityService(), GetLoginService());
+
+            return _chatService;
+        }
+
+        static IChatPollingService _chatPollingService;
+        public static IChatPollingService GetChatPollingService()
+        {
+            if (_chatPollingService == null)
+                _chatPollingService = new ChatPollingService(GetChatService());
+
+            return _chatPollingService;
+        }
+
         public static void Reset()
         {
             _identityService = null;
