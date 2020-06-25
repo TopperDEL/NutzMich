@@ -84,8 +84,8 @@ namespace NutzMich.Shared.Services
 
         private async Task<Angebot> LoadAngebotAsync(string key)
         {
-            //if (!Barrel.Current.IsExpired("angebot_" + key) || !CrossConnectivity.Current.IsConnected)
-            //    return Barrel.Current.Get<Angebot>("angebot_" + key);
+            if (!Barrel.Current.IsExpired("angebot_" + key) || !CrossConnectivity.Current.IsConnected)
+                return Barrel.Current.Get<Angebot>("angebot_" + key);
             await InitReadConnectionAsync();
 
             var angebotDownload = await _readConnection.ObjectService.DownloadObjectAsync(_readConnection.Bucket, key, new DownloadOptions(), false);
