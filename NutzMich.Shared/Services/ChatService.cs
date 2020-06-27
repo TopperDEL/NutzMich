@@ -1,4 +1,5 @@
-﻿using NutzMich.Contracts.Interfaces;
+﻿using MonkeyCache.FileStore;
+using NutzMich.Contracts.Interfaces;
 using NutzMich.Contracts.Models;
 using NutzMich.Shared.Interfaces;
 using NutzMich.Shared.Models;
@@ -13,10 +14,28 @@ namespace NutzMich.Shared.Services
     public class ChatService : ConnectionUsingServiceBase, IChatService
     {
         private ILoginService _loginService;
+        private IAngebotService _angebotService;
 
-        public ChatService(IIdentityService identityService, ILoginService loginService) : base(identityService)
+        public ChatService(IIdentityService identityService, ILoginService loginService, IAngebotService angebotService) : base(identityService)
         {
             _loginService = loginService;
+            _angebotService = angebotService;
+
+            Barrel.ApplicationId = "nutzmich_monkeycache";
+        }
+
+        public async Task<List<Angebot>> GetChatListeAsync()
+        {
+            List<Angebot> result = new List<Angebot>();
+            if (Barrel.Current.Exists("ChatListe"))
+            {
+                var angebotsIDs = Barrel.Current.Get<List<string>>("ChatListe");
+                foreach(var angebotID in angebotsIDs)
+                {
+                    result.Add(await _angebotService.LoadAngebotAsync(angebotID));
+                }
+            }
+            return result;
         }
 
         public async Task<List<ChatNachricht>> GetNachrichtenAsync(Angebot angebot)

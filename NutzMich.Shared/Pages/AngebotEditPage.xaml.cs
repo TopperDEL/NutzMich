@@ -68,7 +68,7 @@ namespace NutzMich.Shared.Pages
             this.DataContext = _angebotVM;
             _angebotVM.SetIsNotLoading();
 
-            ChatService chatService = new ChatService(Factory.GetIdentityService(),Factory.GetLoginService());
+            ChatService chatService = new ChatService(Factory.GetIdentityService(),Factory.GetLoginService(), Factory.GetAngebotService());
             var messages = await chatService.GetNachrichtenAsync(_angebotVM.Angebot);
             //foreach(var message in messages)
             //{

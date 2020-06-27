@@ -15,7 +15,7 @@ using Windows.Media.Protection.PlayReady;
 
 namespace NutzMich.Shared.Services
 {
-    class AngebotService : ConnectionUsingServiceBase, IAngebotService
+    public class AngebotService : ConnectionUsingServiceBase, IAngebotService
     {
         ILoginService _loginService;
         IThumbnailHelper _thumbnailHelper;
@@ -74,7 +74,7 @@ namespace NutzMich.Shared.Services
 
             foreach (var angebotItem in angeboteItems.Items)
             {
-                angebote.Add(await LoadAngebotAsync(angebotItem.Key));
+                angebote.Add(await LoadAngebotAsync(angebotItem.Key.Replace("Angebote/" + _loginService.AnbieterId + "/", "")));
             }
 
             Barrel.Current.Add<IEnumerable<Angebot>>("meineAngebote", angebote, TimeSpan.FromDays(180));
@@ -82,19 +82,19 @@ namespace NutzMich.Shared.Services
             return angebote;
         }
 
-        private async Task<Angebot> LoadAngebotAsync(string key)
+        public async Task<Angebot> LoadAngebotAsync(string angebotID)
         {
-            if (!Barrel.Current.IsExpired("angebot_" + key) || !CrossConnectivity.Current.IsConnected)
-                return Barrel.Current.Get<Angebot>("angebot_" + key);
+            if (!Barrel.Current.IsExpired("angebot_" + angebotID) || !CrossConnectivity.Current.IsConnected)
+                return Barrel.Current.Get<Angebot>("angebot_" + angebotID);
             await InitReadConnectionAsync();
 
-            var angebotDownload = await _readConnection.ObjectService.DownloadObjectAsync(_readConnection.Bucket, key, new DownloadOptions(), false);
+            var angebotDownload = await _readConnection.ObjectService.DownloadObjectAsync(_readConnection.Bucket, "Angebote/" + _loginService.AnbieterId + "/" + angebotID, new DownloadOptions(), false);
             await angebotDownload.StartDownloadAsync();
 
             if (angebotDownload.Completed)
             {
                 var angebot = Newtonsoft.Json.JsonConvert.DeserializeObject<Angebot>(Encoding.UTF8.GetString(angebotDownload.DownloadedBytes));
-                Barrel.Current.Add<Angebot>("angebot_" + key, angebot, TimeSpan.FromDays(180));
+                Barrel.Current.Add<Angebot>("angebot_" + angebotID, angebot, TimeSpan.FromDays(180));
                 return angebot;
             }
             else

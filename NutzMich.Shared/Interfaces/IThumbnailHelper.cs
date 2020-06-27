@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NutzMich.Shared.Interfaces
 {
-    interface IThumbnailHelper
+    public interface IThumbnailHelper
     {
         Task<string> ThumbnailToBase64Async(AttachmentImage image);
         AttachmentImage ThumbnailFromBase64(string serialisedThumbnail);

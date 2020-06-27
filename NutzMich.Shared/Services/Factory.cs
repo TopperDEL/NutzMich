@@ -49,7 +49,7 @@ namespace NutzMich.Shared.Services
         public static IChatService GetChatService()
         {
             if (_chatService == null)
-                _chatService = new ChatService(GetIdentityService(), GetLoginService());
+                _chatService = new ChatService(GetIdentityService(), GetLoginService(), GetAngebotService());
 
             return _chatService;
         }
