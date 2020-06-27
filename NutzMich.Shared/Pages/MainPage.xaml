@@ -17,6 +17,7 @@
         <CommandBar Grid.Row="0" Content="NutzMich" Background="RoyalBlue" Foreground="White">
             <CommandBar.PrimaryCommands>
                 <AppBarButton Icon="Refresh" Click="Refresh" Foreground="White"/>
+                <AppBarButton Icon="Message" Click="OpenChats" Foreground="White"/>
             </CommandBar.PrimaryCommands>
         </CommandBar>
         <Pivot Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Row="1">

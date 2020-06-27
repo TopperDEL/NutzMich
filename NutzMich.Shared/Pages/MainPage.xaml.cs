@@ -80,5 +80,10 @@ namespace NutzMich.Pages
             _angebotService.Refresh();
             await LoadAngeboteAsync();
         }
+
+        private void OpenChats(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ChatListPage));
+        }
     }
 }

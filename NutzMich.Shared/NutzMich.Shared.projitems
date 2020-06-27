@@ -44,6 +44,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\ChatDialog.xaml.cs">
       <DependentUpon>ChatDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\ChatListPage.xaml.cs">
+      <DependentUpon>ChatListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -64,6 +67,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AnfrageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AngeboteViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AngebotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ChatListViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ChatNachrichtViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ChatViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\LoginViewModel.cs" />
@@ -94,6 +98,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Pages\ChatDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Pages\ChatListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
