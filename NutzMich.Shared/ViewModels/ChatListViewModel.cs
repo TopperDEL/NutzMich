@@ -21,10 +21,10 @@ namespace NutzMich.Shared.ViewModels
         private async Task InitAsync()
         {
             var angebotService = Factory.GetAngebotService();
-            foreach (var angebot in await angebotService.GetMeineAngeboteAsync())
-            {
-                Chats.Add(new ChatViewModel(new AngebotViewModel(angebot)));
-            }
+            //foreach (var angebot in await angebotService.GetMeineAngeboteAsync())
+            //{
+            //    Chats.Add(new ChatViewModel(new AngebotViewModel(angebot)));
+            //}
         }
     }
 }

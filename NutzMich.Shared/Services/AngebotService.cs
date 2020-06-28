@@ -28,27 +28,6 @@ namespace NutzMich.Shared.Services
             Barrel.ApplicationId = "nutzmich_monkeycache";
         }
 
-        public async Task<IEnumerable<Angebot>> GetAlleAngeboteAsync()
-        {
-            if (!Barrel.Current.IsExpired("alleAngebote") || !CrossConnectivity.Current.IsConnected)
-                return Barrel.Current.Get<IEnumerable<Angebot>>("alleAngebote");
-
-            await InitReadConnectionAsync();
-
-            List<Angebot> angebote = new List<Angebot>();
-
-            var angeboteItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Angebote/", Recursive = true });
-
-            foreach (var angebotItem in angeboteItems.Items)
-            {
-                angebote.Add(await LoadAngebotAsync(angebotItem.Key));
-            }
-
-            Barrel.Current.Add<IEnumerable<Angebot>>("alleAngebote", angebote, TimeSpan.FromDays(1));
-
-            return angebote;
-        }
-
         public async IAsyncEnumerable<Angebot> GetAlleAsync()
         {
             await InitReadConnectionAsync();
@@ -59,27 +38,6 @@ namespace NutzMich.Shared.Services
             {
                 yield return await LoadAngebotAsync(angebot.Key);
             }
-        }
-
-        public async Task<IEnumerable<Angebot>> GetMeineAngeboteAsync()
-        {
-            if (!Barrel.Current.IsExpired("meineAngebote") || !CrossConnectivity.Current.IsConnected)
-                return Barrel.Current.Get<IEnumerable<Angebot>>("meineAngebote");
-
-            await InitReadConnectionAsync();
-
-            List<Angebot> angebote = new List<Angebot>();
-
-            var angeboteItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Angebote/" + _loginService.AnbieterId + "/", Recursive = true });
-
-            foreach (var angebotItem in angeboteItems.Items)
-            {
-                angebote.Add(await LoadAngebotAsync(angebotItem.Key));
-            }
-
-            Barrel.Current.Add<IEnumerable<Angebot>>("meineAngebote", angebote, TimeSpan.FromDays(180));
-
-            return angebote;
         }
 
         private async Task<Angebot> LoadAngebotAsync(string key)
@@ -99,29 +57,6 @@ namespace NutzMich.Shared.Services
             }
             else
                 return new Angebot() { Ueberschrift = "Angebot nicht mehr vorhanden" };
-        }
-
-        public async Task<Stream> GetAngebotFirstImageAsync(Angebot angebot)
-        {
-            if (!Barrel.Current.IsExpired("angebot_foto_1_" + angebot.Id) || !CrossConnectivity.Current.IsConnected)
-                return new MemoryStream(Barrel.Current.Get<byte[]>("angebot_foto_1_" + angebot.Id));
-            await InitReadConnectionAsync();
-
-            try
-            {
-                var firstImage = await _readConnection.ObjectService.GetObjectAsync(_readConnection.Bucket, "Fotos/" + angebot.AnbieterId + "/" + angebot.Id.ToString() + "/1");
-
-                var stream = new DownloadStream(_readConnection.Bucket, (int)firstImage.SystemMetaData.ContentLength, firstImage.Key);
-
-                byte[] data = new byte[stream.Length];
-                await stream.ReadAsync(data, 0, (int)stream.Length);
-                Barrel.Current.Add<byte[]>("angebot_foto_1_" + angebot.Id, data, TimeSpan.FromDays(365));
-                return stream;
-            }
-            catch
-            {
-                return null; //dummy
-            }
         }
 
         public async Task<List<Stream>> GetAngebotImagesAsync(Angebot angebot)

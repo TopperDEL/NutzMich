@@ -1,4 +1,5 @@
 ﻿using NutzMich.Contracts.Interfaces;
+using NutzMich.Shared.Interfaces;
 using NutzMich.Shared.Pages;
 using NutzMich.Shared.Services;
 using NutzMich.Shared.ViewModels;
@@ -28,6 +29,7 @@ namespace NutzMich.Pages
     public sealed partial class MainPage : Page
     {
         IAngebotService _angebotService;
+        ILoginService _loginService;
         AngeboteViewModel _angeboteVM;
 
         public MainPage()
@@ -35,6 +37,7 @@ namespace NutzMich.Pages
             this.InitializeComponent();
 
             _angebotService = Factory.GetAngebotService();
+            _loginService = Factory.GetLoginService();
             this.DataContext = _angeboteVM = new AngeboteViewModel();
 
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
@@ -51,12 +54,15 @@ namespace NutzMich.Pages
         {
             _angeboteVM.SetLoading();
             _angeboteVM.AlleAngebote.Clear();
-            foreach (var angebot in await _angebotService.GetAlleAngeboteAsync())
-                _angeboteVM.AlleAngebote.Add(new AngebotViewModel(angebot));
-
             _angeboteVM.MeineAngebote.Clear();
-            foreach (var angebot in await _angebotService.GetMeineAngeboteAsync())
-                _angeboteVM.MeineAngebote.Add(new AngebotViewModel(angebot));
+            await foreach (var angebot in _angebotService.GetAlleAsync())
+            {
+                if (angebot.AnbieterId == _loginService.AnbieterId)
+                    _angeboteVM.MeineAngebote.Add(new AngebotViewModel(angebot));
+                else
+                    _angeboteVM.AlleAngebote.Add(new AngebotViewModel(angebot));
+            }
+
             _angeboteVM.SetNotLoading();
         }
 

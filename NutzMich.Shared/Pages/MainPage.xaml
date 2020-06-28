@@ -28,8 +28,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <ProgressRing Grid.Row="0" Visibility="{Binding Loading, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}" IsActive="True" Foreground="RoyalBlue"/>
-                    <ListView Grid.Row="1" ItemsSource="{x:Bind _angeboteVM.AlleAngebote, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="AngebotAnzeigen"
-                          Visibility="{x:Bind _angeboteVM.Loading, Mode=OneWay, Converter={StaticResource TrueIsCollapsedConverter}}">
+                    <ListView Grid.Row="1" ItemsSource="{x:Bind _angeboteVM.AlleAngebote, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="AngebotAnzeigen">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="viewmodels:AngebotViewModel">
                                 <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
@@ -59,8 +58,7 @@
                         </Button.Content>
                     </Button>
                     <ProgressRing Grid.Row="1" Visibility="{Binding Loading, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}" IsActive="True" Foreground="RoyalBlue"/>
-                    <ListView Grid.Row="2" ItemsSource="{x:Bind _angeboteVM.MeineAngebote, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="AngebotBearbeiten"
-                          Visibility="{x:Bind _angeboteVM.Loading, Mode=OneWay, Converter={StaticResource TrueIsCollapsedConverter}}">
+                    <ListView Grid.Row="2" ItemsSource="{x:Bind _angeboteVM.MeineAngebote, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="AngebotBearbeiten">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="viewmodels:AngebotViewModel">
                                 <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
