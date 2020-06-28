@@ -51,7 +51,7 @@ namespace NutzMich.Pages
         {
             _angeboteVM.SetLoading();
             _angeboteVM.AlleAngebote.Clear();
-            await foreach (var angebot in _angebotService.GetAlleAsync())
+            foreach (var angebot in await _angebotService.GetAlleAngeboteAsync())
                 _angeboteVM.AlleAngebote.Add(new AngebotViewModel(angebot));
 
             _angeboteVM.MeineAngebote.Clear();

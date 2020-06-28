@@ -1,4 +1,5 @@
 ﻿using NutzMich.Contracts.Interfaces;
+using NutzMich.Shared.Interfaces;
 using NutzMich.Shared.Services;
 using NutzMich.Shared.ViewModels;
 using Plugin.Media;
@@ -50,7 +51,7 @@ namespace NutzMich.Shared.Pages
             AltLeft.Modifiers = VirtualKeyModifiers.Menu;
         }
 
-        ChatPollingService _polling;
+        
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -67,24 +68,6 @@ namespace NutzMich.Shared.Pages
 
             this.DataContext = _angebotVM;
             _angebotVM.SetIsNotLoading();
-
-            ChatService chatService = new ChatService(Factory.GetIdentityService(),Factory.GetLoginService(), Factory.GetAngebotService());
-            var messages = await chatService.GetNachrichtenAsync(_angebotVM.Angebot);
-            //foreach(var message in messages)
-            //{
-            //    MessageDialog dlg = new MessageDialog(message.Nachricht);
-            //    await dlg.ShowAsync();
-            //}
-
-            _polling = new ChatPollingService(chatService);
-            _polling.NachrichtErhalten += _polling_NachrichtErhalten;
-            _polling.StartPolling(_angebotVM.Angebot);
-        }
-
-        private async void _polling_NachrichtErhalten(Contracts.Models.Angebot angebot, Models.ChatNachricht nachricht)
-        {
-            MessageDialog dlg = new MessageDialog(nachricht.Nachricht);
-            await dlg.ShowAsync();
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)

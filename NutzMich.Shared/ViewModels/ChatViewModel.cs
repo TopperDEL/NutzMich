@@ -70,7 +70,6 @@ namespace NutzMich.Shared.ViewModels
              });
 
             //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Nachrichten)));
-            //Todo: buffer
         }
 
         public async Task SendNachricht()
@@ -85,13 +84,13 @@ namespace NutzMich.Shared.ViewModels
             {
                 nachricht.SenderAnbieterID = _loginService.AnbieterId;
                 //nachricht.EmpfaengerAnbieterID = _angebot.AnbieterId;
-                await _chatService.SendNachrichtAsync(nachricht, AngebotViewModel.Angebot.NachrichtenAccess, includeForeignAccess);
+                await _chatService.SendNachrichtAsync(AngebotViewModel.Angebot, nachricht, null, includeForeignAccess);
             }
             else
             {
                 nachricht.EmpfaengerAnbieterID = AngebotViewModel.Angebot.AnbieterId;
                 nachricht.SenderAnbieterID = _loginService.AnbieterId;
-                await _chatService.SendNachrichtAsync(nachricht, AngebotViewModel.Angebot.NachrichtenAccess, includeForeignAccess);
+                await _chatService.SendNachrichtAsync(AngebotViewModel.Angebot, nachricht, AngebotViewModel.Angebot.NachrichtenAccess, includeForeignAccess);
             }
 
             var neueNachricht = new ChatNachrichtViewModel(nachricht) { IchWarSender = true };
@@ -99,7 +98,6 @@ namespace NutzMich.Shared.ViewModels
             NachrichtComposer = "";
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NachrichtComposer)));
             ScrollToChatNachricht?.Invoke(neueNachricht);
-            //Todo: buffer
         }
 
         public void Cleanup()

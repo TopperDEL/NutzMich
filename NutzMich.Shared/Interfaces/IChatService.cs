@@ -9,8 +9,8 @@ namespace NutzMich.Shared.Interfaces
 {
     public interface IChatService
     {
-        Task<List<Angebot>> GetChatListeAsync();
+        List<ChatInfo> GetChatListe();
         Task<List<ChatNachricht>> GetNachrichtenAsync(Angebot angebot);
-        Task SendNachrichtAsync(ChatNachricht nachricht, string accessGrant, bool includeForeignAccess = false);
+        Task SendNachrichtAsync(Angebot angebot, ChatNachricht nachricht, string accessGrant, bool includeForeignAccess = false);
     }
 }

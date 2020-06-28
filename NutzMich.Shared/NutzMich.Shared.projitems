@@ -23,6 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converter\EmptyStringToBooleanConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IAnfrageService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IAngebotService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IChatBufferService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IChatPollingService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IChatService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IIdentityService.cs" />
@@ -31,6 +32,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Anfrage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Angebot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AttachmentImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ChatInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChatNachricht.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AnfrageDialog.xaml.cs">
       <DependentUpon>AnfrageDialog.xaml</DependentUpon>
@@ -54,6 +56,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Services\AngebotService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ChatBufferService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ChatPollingService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ChatService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ConnectionService.cs" />

@@ -15,12 +15,12 @@ using Windows.Media.Protection.PlayReady;
 
 namespace NutzMich.Shared.Services
 {
-    public class AngebotService : ConnectionUsingServiceBase, IAngebotService
+    class AngebotService : ConnectionUsingServiceBase, IAngebotService
     {
         ILoginService _loginService;
         IThumbnailHelper _thumbnailHelper;
 
-        public AngebotService(IIdentityService identityService, ILoginService loginService, IThumbnailHelper thumbnailHelper):base(identityService)
+        public AngebotService(IIdentityService identityService, ILoginService loginService, IThumbnailHelper thumbnailHelper) : base(identityService)
         {
             _loginService = loginService;
             _thumbnailHelper = thumbnailHelper;
@@ -55,7 +55,7 @@ namespace NutzMich.Shared.Services
 
             var angeboteItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Angebote/", Recursive = true });
 
-            foreach(var angebot in angeboteItems.Items)
+            foreach (var angebot in angeboteItems.Items)
             {
                 yield return await LoadAngebotAsync(angebot.Key);
             }
@@ -74,7 +74,7 @@ namespace NutzMich.Shared.Services
 
             foreach (var angebotItem in angeboteItems.Items)
             {
-                angebote.Add(await LoadAngebotAsync(angebotItem.Key.Replace("Angebote/" + _loginService.AnbieterId + "/", "")));
+                angebote.Add(await LoadAngebotAsync(angebotItem.Key));
             }
 
             Barrel.Current.Add<IEnumerable<Angebot>>("meineAngebote", angebote, TimeSpan.FromDays(180));
@@ -82,19 +82,19 @@ namespace NutzMich.Shared.Services
             return angebote;
         }
 
-        public async Task<Angebot> LoadAngebotAsync(string angebotID)
+        private async Task<Angebot> LoadAngebotAsync(string key)
         {
-            if (!Barrel.Current.IsExpired("angebot_" + angebotID) || !CrossConnectivity.Current.IsConnected)
-                return Barrel.Current.Get<Angebot>("angebot_" + angebotID);
+            if (!Barrel.Current.IsExpired("angebot_" + key) || !CrossConnectivity.Current.IsConnected)
+                return Barrel.Current.Get<Angebot>("angebot_" + key);
             await InitReadConnectionAsync();
 
-            var angebotDownload = await _readConnection.ObjectService.DownloadObjectAsync(_readConnection.Bucket, "Angebote/" + _loginService.AnbieterId + "/" + angebotID, new DownloadOptions(), false);
+            var angebotDownload = await _readConnection.ObjectService.DownloadObjectAsync(_readConnection.Bucket, key, new DownloadOptions(), false);
             await angebotDownload.StartDownloadAsync();
 
             if (angebotDownload.Completed)
             {
                 var angebot = Newtonsoft.Json.JsonConvert.DeserializeObject<Angebot>(Encoding.UTF8.GetString(angebotDownload.DownloadedBytes));
-                Barrel.Current.Add<Angebot>("angebot_" + angebotID, angebot, TimeSpan.FromDays(180));
+                Barrel.Current.Add<Angebot>("angebot_" + key, angebot, TimeSpan.FromDays(180));
                 return angebot;
             }
             else
@@ -132,7 +132,7 @@ namespace NutzMich.Shared.Services
 
             var images = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Fotos/" + angebot.AnbieterId + "/" + angebot.Id + "/", System = true, Recursive = true });
 
-            foreach (var image in images.Items.Where(i => !i.IsPrefix).OrderBy(i=>i.Key))
+            foreach (var image in images.Items.Where(i => !i.IsPrefix).OrderBy(i => i.Key))
             {
                 result.Add(new DownloadStream(_readConnection.Bucket, (int)image.SystemMetaData.ContentLength, image.Key));
             }
@@ -148,7 +148,7 @@ namespace NutzMich.Shared.Services
             if (images.Count > 0)
                 angebot.ThumbnailBase64 = await _thumbnailHelper.ThumbnailToBase64Async(images.First());
 
-            if(string.IsNullOrEmpty(angebot.NachrichtenAccess))
+            if (string.IsNullOrEmpty(angebot.NachrichtenAccess))
             {
                 angebot.NachrichtenAccess = _identityService.CreatePartialWriteAccess("Nachrichten/" + _loginService.AnbieterId + "/" + angebot.Id + "/");
             }

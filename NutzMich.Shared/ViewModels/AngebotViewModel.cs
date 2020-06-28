@@ -51,6 +51,7 @@ namespace NutzMich.Shared.ViewModels
         {
 
         }
+
         public AngebotViewModel(Angebot angebot)
         {
             _thumbnailHelper = Factory.GetThumbnailHelper();

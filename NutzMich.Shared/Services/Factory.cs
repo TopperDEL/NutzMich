@@ -49,7 +49,7 @@ namespace NutzMich.Shared.Services
         public static IChatService GetChatService()
         {
             if (_chatService == null)
-                _chatService = new ChatService(GetIdentityService(), GetLoginService(), GetAngebotService());
+                _chatService = new ChatService(GetIdentityService(), GetLoginService(), GetAngebotService(), GetChatBufferService());
 
             return _chatService;
         }
@@ -61,6 +61,15 @@ namespace NutzMich.Shared.Services
                 _chatPollingService = new ChatPollingService(GetChatService());
 
             return _chatPollingService;
+        }
+
+        static IChatBufferService _chatBufferService;
+        public static IChatBufferService GetChatBufferService()
+        {
+            if (_chatBufferService == null)
+                _chatBufferService = new ChatBufferService();
+
+            return _chatBufferService;
         }
 
         public static void Reset()

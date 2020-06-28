@@ -28,7 +28,6 @@ namespace NutzMich.Shared.Services
         {
             CancellationTokenSource source = new CancellationTokenSource();
             Task pollingTask = Task.Run(() => DoPollingAsync(angebot, source.Token), source.Token);
-            //pollingTask.Start();
             _pollingTasks.Add(angebot, source);
         }
 
