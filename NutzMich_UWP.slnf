@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "path": "NutzMich.sln",
+    "projects": [
+      "NutzMich.Contracts\\NutzMich.Contracts.csproj",
+      "NutzMich\\NutzMich.Shared\\NutzMich.Shared.shproj",
+      "NutzMich\\NutzMich.UWP\\NutzMich.UWP.csproj"
+    ]
+  }
+}
