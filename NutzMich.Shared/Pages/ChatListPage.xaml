@@ -12,14 +12,14 @@
     mc:Ignorable="d not_win">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" toolkit:VisibleBoundsPadding.PaddingMask="All">
-        <SplitView x:Name="Split" OpenPaneLength="320" DisplayMode="Inline" IsPaneOpen="True">
+        <SplitView x:Name="Split" OpenPaneLength="220" DisplayMode="Inline" IsPaneOpen="True">
             <SplitView.PaneBackground>
                 <win:AcrylicBrush TintColor="{ThemeResource NavPaneBackgroundColor}" BackgroundSource="HostBackdrop" TintOpacity="0.5" />
                 <not_win:SolidColorBrush Color="{ThemeResource NavPaneBackgroundColor}" />
             </SplitView.PaneBackground>
             <SplitView.Pane>
-                <Grid Padding="12">
-                    <ListView ItemsSource="{x:Bind _vm.Chats}" SelectedItem="{x:Bind _vm.SelectedChat, Mode=TwoWay}">
+                <Grid Padding="0">
+                    <ListView ItemsSource="{x:Bind _vm.Chats, Mode=OneWay}" SelectedItem="{x:Bind _vm.SelectedChat, Mode=TwoWay}">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />

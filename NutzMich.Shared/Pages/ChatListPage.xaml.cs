@@ -40,6 +40,7 @@ namespace NutzMich.Shared.Pages
             if(e.Parameter is AngebotViewModel)
             {
                 _vm.EnsureAndOpenChat(e.Parameter as AngebotViewModel);
+                Split.IsPaneOpen = false;
             }
         }
 
@@ -47,7 +48,7 @@ namespace NutzMich.Shared.Pages
 
         private async void SendeNachricht(object sender, RoutedEventArgs e)
         {
-            await _vm.SelectedChat.SendNachricht();
+            await _vm.SendeNachrichtAsync();
         }
     }
 }

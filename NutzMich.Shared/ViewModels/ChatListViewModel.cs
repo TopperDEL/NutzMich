@@ -6,16 +6,20 @@ using NutzMich.Shared.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
 using Uno.Extensions.Specialized;
 
 namespace NutzMich.Shared.ViewModels
 {
-    public class ChatListViewModel
+    public class ChatListViewModel:INotifyPropertyChanged
     {
         private IChatService _chatService;
         private IAngebotService _angebotService;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public ObservableCollection<ChatViewModel> Chats{ get; set; }
         public ChatViewModel SelectedChat { get; set; }
 
@@ -62,6 +66,13 @@ namespace NutzMich.Shared.ViewModels
         private void Open(ChatViewModel chatVM)
         {
             SelectedChat = chatVM;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedChat)));
+        }
+
+        public async Task SendeNachrichtAsync()
+        {
+            await SelectedChat.SendNachricht();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedChat)));
         }
     }
 }
