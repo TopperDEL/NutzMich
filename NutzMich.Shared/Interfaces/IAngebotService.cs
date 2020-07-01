@@ -13,7 +13,7 @@ namespace NutzMich.Contracts.Interfaces
         Task<bool> SaveAngebotAsync(Angebot angebot, List<AttachmentImage> images);
         Task<List<Stream>> GetAngebotImagesAsync(Angebot angebot);
         void Refresh();
-
         IAsyncEnumerable<Angebot> GetAlleAsync();
+        Task<Angebot> LoadAngebotAsync(string angebotId);
     }
 }

@@ -32,7 +32,7 @@ namespace NutzMich.Shared.Pages
 
         public void InitChat(Angebot angebot)
         {
-            this.DataContext = _vm = new ChatViewModel(Factory.GetChatPollingService(), Factory.GetChatService(), Factory.GetLoginService(), angebot, Dispatcher);
+            //this.DataContext = _vm = new ChatViewModel(Factory.GetChatPollingService(), Factory.GetChatService(), Factory.GetLoginService(), angebot, Dispatcher);
             _vm.ScrollToChatNachricht += _vm_ScrollToChatNachricht;
         }
 

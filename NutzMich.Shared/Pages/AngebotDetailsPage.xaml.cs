@@ -54,10 +54,7 @@ namespace NutzMich.Shared.Pages
         /// </summary>
         private async void Chat_Click(object sender, RoutedEventArgs e)
         {
-            ChatDialog chat = new ChatDialog();
-            chat.InitChat(_angebotVM.Angebot);
-            await chat.ShowAsync();
-            chat.Cleanup();
+            this.Frame.Navigate(typeof(ChatListPage), _angebotVM);
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)

@@ -36,23 +36,23 @@ namespace NutzMich.Shared.Services
 
             foreach (var angebot in angeboteItems.Items)
             {
-                yield return await LoadAngebotAsync(angebot.Key);
+                yield return await LoadAngebotAsync(angebot.Key.Replace("Angebote/",""));
             }
         }
 
-        private async Task<Angebot> LoadAngebotAsync(string key)
+        public async Task<Angebot> LoadAngebotAsync(string angebotId)
         {
-            if (!Barrel.Current.IsExpired("angebot_" + key) || !CrossConnectivity.Current.IsConnected)
-                return Barrel.Current.Get<Angebot>("angebot_" + key);
+            if (!Barrel.Current.IsExpired("angebot_" + angebotId) || !CrossConnectivity.Current.IsConnected)
+                return Barrel.Current.Get<Angebot>("angebot_" + angebotId);
             await InitReadConnectionAsync();
 
-            var angebotDownload = await _readConnection.ObjectService.DownloadObjectAsync(_readConnection.Bucket, key, new DownloadOptions(), false);
+            var angebotDownload = await _readConnection.ObjectService.DownloadObjectAsync(_readConnection.Bucket, "Angebote/" + angebotId, new DownloadOptions(), false);
             await angebotDownload.StartDownloadAsync();
 
             if (angebotDownload.Completed)
             {
                 var angebot = Newtonsoft.Json.JsonConvert.DeserializeObject<Angebot>(Encoding.UTF8.GetString(angebotDownload.DownloadedBytes));
-                Barrel.Current.Add<Angebot>("angebot_" + key, angebot, TimeSpan.FromDays(180));
+                Barrel.Current.Add<Angebot>("angebot_" + angebotId, angebot, TimeSpan.FromDays(180));
                 return angebot;
             }
             else

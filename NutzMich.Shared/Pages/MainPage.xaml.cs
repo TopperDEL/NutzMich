@@ -36,6 +36,8 @@ namespace NutzMich.Pages
         {
             this.InitializeComponent();
 
+            ChatViewModel._coreDispatcher = Dispatcher;
+
             _angebotService = Factory.GetAngebotService();
             _loginService = Factory.GetLoginService();
             this.DataContext = _angeboteVM = new AngeboteViewModel();

@@ -55,6 +55,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Resources\ChatMessageTemplateSelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AngebotService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ChatBufferService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ChatPollingService.cs" />
@@ -113,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Pages\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Resources\ChatDataTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,4 +1,5 @@
-﻿using NutzMich.Shared.ViewModels;
+﻿using NutzMich.Shared.Services;
+using NutzMich.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,7 +30,24 @@ namespace NutzMich.Shared.Pages
         {
             this.InitializeComponent();
 
-            _vm = new ChatListViewModel();
+            _vm = new ChatListViewModel(Factory.GetChatService(), Factory.GetAngebotService());
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if(e.Parameter is AngebotViewModel)
+            {
+                _vm.EnsureAndOpenChat(e.Parameter as AngebotViewModel);
+            }
+        }
+
+        private void PaneToggle(object sender, PointerRoutedEventArgs e) => Split.IsPaneOpen = !Split.IsPaneOpen;
+
+        private async void SendeNachricht(object sender, RoutedEventArgs e)
+        {
+            await _vm.SelectedChat.SendNachricht();
         }
     }
 }
