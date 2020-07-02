@@ -33,11 +33,11 @@ namespace NutzMich.Shared.Services
         {
             await InitReadConnectionAsync();
 
-            var nachrichtenItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Nachrichten/" + _loginService.AnbieterId + "/" + angebot.Id + "/", Recursive = false });
+            var nachrichtenItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Nachrichten/" + _loginService.AnbieterId + "/" + angebot.Id + "/", Recursive = true });
 
             foreach (var nachrichtItem in nachrichtenItems.Items)
             {
-                if (nachrichtItem.IsPrefix)
+                if (nachrichtItem.IsPrefix || nachrichtItem.Key.Contains("Token"))
                     continue;
 
                 var nachricht = await LoadNachrichtAsync(nachrichtItem.Key);
@@ -52,7 +52,20 @@ namespace NutzMich.Shared.Services
 
         public async Task SendNachrichtAsync(Angebot angebot, ChatNachricht nachricht, string accessGrant, bool includeForeignAccess = false)
         {
-            var foreignConnection = await InitForeignConnectionAsync(accessGrant);
+            string accessGrantToUse;
+            //Idee: wenn accessGrant leer, dann aus foreign nachlesen
+            if(string.IsNullOrEmpty(accessGrant))
+            {
+                await InitReadConnectionAsync();
+                var accessDownload = await _readConnection.ObjectService.DownloadObjectAsync(_readConnection.Bucket, "Nachrichten/" + nachricht.SenderAnbieterID + "/" + nachricht.AngebotID + "/" + nachricht.EmpfaengerAnbieterID + "/Token", new DownloadOptions(), false);
+                await accessDownload.StartDownloadAsync();
+                accessGrantToUse = Encoding.UTF8.GetString(accessDownload.DownloadedBytes);
+            }
+            else
+            {
+                accessGrantToUse = accessGrant;
+            }
+            var foreignConnection = await InitForeignConnectionAsync(accessGrantToUse);
 
             if (includeForeignAccess)
             {
@@ -62,10 +75,10 @@ namespace NutzMich.Shared.Services
             }
 
             var nachrichtJson = Newtonsoft.Json.JsonConvert.SerializeObject(nachricht);
-            var nachrichtUpload = await foreignConnection.ObjectService.UploadObjectAsync(foreignConnection.Bucket, "Nachrichten/" + nachricht.EmpfaengerAnbieterID + "/" + nachricht.AngebotID + "/" + nachricht.Id, new UploadOptions() { Expires = DateTime.Now.AddDays(7) }, Encoding.UTF8.GetBytes(nachrichtJson), false);
+            var nachrichtUpload = await foreignConnection.ObjectService.UploadObjectAsync(foreignConnection.Bucket, "Nachrichten/" + nachricht.EmpfaengerAnbieterID + "/" + nachricht.AngebotID + "/" + nachricht.SenderAnbieterID + "/" + nachricht.Id, new UploadOptions() { Expires = DateTime.Now.AddDays(7) }, Encoding.UTF8.GetBytes(nachrichtJson), false);
             await nachrichtUpload.StartUploadAsync();
 
-            _chatBufferService.BufferNachricht(angebot, nachricht, accessGrant);
+            _chatBufferService.BufferNachricht(angebot, nachricht, accessGrantToUse);
         }
 
         private async Task<ChatNachricht> LoadNachrichtAsync(string key)

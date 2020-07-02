@@ -7,6 +7,7 @@ namespace NutzMich.Shared.Models
     public class ChatInfo
     {
         public string AngebotID { get; set; }
+        public string AnbieterID { get; set; }
         public string NachrichtenAccess { get; set; }
         public string GegenseiteAnbieterID { get; set; }
         public List<ChatNachricht> Nachrichten { get; set; }

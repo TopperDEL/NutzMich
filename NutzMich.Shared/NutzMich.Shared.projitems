@@ -24,6 +24,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IAnfrageService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IAngebotService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IChatBufferService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IChatController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IChatPollingService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IChatService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IIdentityService.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Resources\ChatMessageTemplateSelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AngebotService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ChatBufferService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ChatController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ChatPollingService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ChatService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ConnectionService.cs" />

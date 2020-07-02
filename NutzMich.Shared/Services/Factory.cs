@@ -67,9 +67,18 @@ namespace NutzMich.Shared.Services
         public static IChatBufferService GetChatBufferService()
         {
             if (_chatBufferService == null)
-                _chatBufferService = new ChatBufferService();
+                _chatBufferService = new ChatBufferService(GetLoginService());
 
             return _chatBufferService;
+        }
+
+        static IChatController _chatController;
+        public static IChatController GetChatController()
+        {
+            if (_chatController == null)
+                _chatController = new ChatController(GetAngebotService(), GetLoginService(), GetChatPollingService(), GetChatBufferService());
+
+            return _chatController;
         }
 
         public static void Reset()

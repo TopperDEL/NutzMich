@@ -37,7 +37,7 @@ namespace NutzMich.Shared.ViewModels
         {
             foreach(var chatInfo in _chatService.GetChatListe())
             {
-                Angebot angebot = await _angebotService.LoadAngebotAsync(chatInfo.AngebotID);
+                Angebot angebot = await _angebotService.LoadAngebotAsync(chatInfo.AnbieterID + "/" + chatInfo.AngebotID);
                 Chats.Add(new ChatViewModel(chatInfo, Factory.GetChatPollingService(), Factory.GetChatService(), Factory.GetLoginService(), angebot));
             }
         }
@@ -72,6 +72,11 @@ namespace NutzMich.Shared.ViewModels
         public async Task SendeNachrichtAsync()
         {
             await SelectedChat.SendNachricht();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedChat)));
+        }
+
+        public void SelectedChatChanged()
+        {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedChat)));
         }
     }

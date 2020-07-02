@@ -20,6 +20,7 @@ namespace NutzMich.Shared.ViewModels
         private IChatPollingService _pollingservice;
         private IChatService _chatService;
         private ILoginService _loginService;
+        private ChatInfo _chatInfo;
         public AngebotViewModel AngebotViewModel { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -33,7 +34,13 @@ namespace NutzMich.Shared.ViewModels
                 if (Nachrichten == null || Nachrichten.Count == 0)
                     return "";
                 else
-                    return Nachrichten[Nachrichten.Count - 1].Nachricht.Nachricht.Substring(0, 200);
+                {
+                    var nachricht = Nachrichten[Nachrichten.Count - 1].Nachricht.Nachricht;
+                    if (nachricht.Length > 200)
+                        return nachricht.Substring(0, 200) + "...";
+                    else
+                        return nachricht;
+                }
             }
         }
         public ObservableCollection<ChatNachrichtViewModel> Nachrichten { get; set; }
@@ -51,11 +58,13 @@ namespace NutzMich.Shared.ViewModels
 
             AngebotViewModel = new AngebotViewModel(angebot);
             _pollingservice.StartPolling(angebot);
+
+            _chatInfo = chatInfo;
         }
 
         private async void _pollingservice_NachrichtErhalten(Angebot angebot, ChatNachricht nachricht)
         {
-            if (angebot.Id != AngebotViewModel.Angebot.Id)
+            if (angebot.Id != AngebotViewModel.Angebot.Id || nachricht.SenderAnbieterID == _loginService.AnbieterId)
                 return;
 
             await _coreDispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
@@ -64,8 +73,6 @@ namespace NutzMich.Shared.ViewModels
                  Nachrichten.Add(neueNachricht);
                  ScrollToChatNachricht?.Invoke(neueNachricht);
              });
-
-            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Nachrichten)));
         }
 
         public async Task SendNachricht()
@@ -76,18 +83,9 @@ namespace NutzMich.Shared.ViewModels
             nachricht.AngebotID = AngebotViewModel.Angebot.Id;
             nachricht.Nachricht = NachrichtComposer;
             nachricht.SendeDatum = DateTime.Now;
-            if (AngebotViewModel.Angebot.AnbieterId == _loginService.AnbieterId)
-            {
-                nachricht.SenderAnbieterID = _loginService.AnbieterId;
-                //nachricht.EmpfaengerAnbieterID = _angebot.AnbieterId;
-                //await _chatService.SendNachrichtAsync(AngebotViewModel.Angebot, nachricht, null, includeForeignAccess);
-            }
-            else
-            {
-                nachricht.EmpfaengerAnbieterID = AngebotViewModel.Angebot.AnbieterId;
-                nachricht.SenderAnbieterID = _loginService.AnbieterId;
-                //await _chatService.SendNachrichtAsync(AngebotViewModel.Angebot, nachricht, AngebotViewModel.Angebot.NachrichtenAccess, includeForeignAccess);
-            }
+            nachricht.SenderAnbieterID = _loginService.AnbieterId;
+            nachricht.EmpfaengerAnbieterID = _chatInfo.GegenseiteAnbieterID;
+            await _chatService.SendNachrichtAsync(AngebotViewModel.Angebot, nachricht, _chatInfo.NachrichtenAccess, includeForeignAccess);
 
             var neueNachricht = new ChatNachrichtViewModel(nachricht) { IchWarSender = true };
             Nachrichten.Add(neueNachricht);

@@ -33,12 +33,15 @@ namespace NutzMich.Shared.Services
 
         public void EndPolling(Angebot angebot)
         {
-            var pollingTask = _pollingTasks[angebot];
-            if(pollingTask != null)
+            if (_pollingTasks.ContainsKey(angebot))
             {
-                pollingTask.Cancel();
+                var pollingTask = _pollingTasks[angebot];
+                if (pollingTask != null)
+                {
+                    pollingTask.Cancel();
+                }
+                _pollingTasks.Remove(angebot);
             }
-            _pollingTasks.Remove(angebot);
         }
 
         private async Task DoPollingAsync(Angebot angebot, CancellationToken token)

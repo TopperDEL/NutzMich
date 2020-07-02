@@ -90,6 +90,9 @@ namespace NutzMich
 
             var sysManager = SystemNavigationManager.GetForCurrentView();
             sysManager.BackRequested += SysManager_BackRequested;
+
+            Factory.GetChatController().DeactivateBackgroundChatPollingAsync();
+            Factory.GetChatController().ActivateForegroundChatPollingAsync();
         }
 
         private void SysManager_BackRequested(object sender, BackRequestedEventArgs e)
@@ -122,6 +125,8 @@ namespace NutzMich
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
+            Factory.GetChatController().DeactivateForegroundChatPollingAsync();
+            Factory.GetChatController().ActivateBackgroundChatPollingAsync();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }

@@ -50,5 +50,10 @@ namespace NutzMich.Shared.Pages
         {
             await _vm.SendeNachrichtAsync();
         }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _vm.SelectedChatChanged();
+        }
     }
 }
