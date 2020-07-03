@@ -19,7 +19,7 @@
             </SplitView.PaneBackground>
             <SplitView.Pane>
                 <Grid Padding="0">
-                    <ListView ItemsSource="{x:Bind _vm.Chats, Mode=OneWay}" SelectedItem="{x:Bind _vm.SelectedChat, Mode=TwoWay}" SelectionChanged="ListView_SelectionChanged">
+                    <ListView x:Name="ChatList" ItemsSource="{x:Bind _vm.Chats, Mode=OneWay}" SelectedItem="{x:Bind _vm.SelectedChat, Mode=TwoWay}" SelectionChanged="ListView_SelectionChanged" SelectionMode="Single">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -41,6 +41,7 @@
                                     <TextBlock Text="{x:Bind AngebotViewModel.Angebot.AnbieterId}" FontSize="15" FontWeight="Bold" Grid.Column="1" VerticalAlignment="Center" />
                                     <TextBlock Text="{x:Bind NeuesteNachricht, Mode=OneWay}" FontSize="15" Grid.Row="1" Grid.Column="1" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
                                     <!--<TextBlock Text="9:41" FontSize="15" Grid.Column="2" /> Für Uhrzeit oder ähnliches-->
+                                    <Button Content="Del" Click="DeleteTemp"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

@@ -6,8 +6,10 @@ using System.Text;
 
 namespace NutzMich.Shared.Interfaces
 {
+    public delegate void NewChatCreatedEventHandler(ChatInfo newChat);
     public interface IChatBufferService
     {
+        event NewChatCreatedEventHandler NewChatCreated;
         List<ChatInfo> LoadBufferedChats();
         void BufferNachricht(Angebot angebot, ChatNachricht nachricht, string nachrichtenAccess);
         List<ChatNachricht> GetNachrichten(Angebot angebot);

@@ -29,9 +29,11 @@ namespace NutzMich.Shared.Services
             return _chatBufferService.LoadBufferedChats();
         }
 
-        public async Task<List<ChatNachricht>> GetNachrichtenAsync(Angebot angebot)
+        public async Task<List<ChatNachricht>> GetNachrichtenAsync(Angebot angebot, bool onlyNewOnes)
         {
             await InitReadConnectionAsync();
+
+            List<ChatNachricht> neueNachrichten = new List<ChatNachricht>();
 
             var nachrichtenItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Nachrichten/" + _loginService.AnbieterId + "/" + angebot.Id + "/", Recursive = true });
 
@@ -44,10 +46,14 @@ namespace NutzMich.Shared.Services
                 if (nachricht != null)
                 {
                     _chatBufferService.BufferNachricht(angebot, nachricht, null);
+                    neueNachrichten.Add(nachricht);
                 }
             }
 
-            return _chatBufferService.GetNachrichten(angebot).OrderByDescending(n => n.SendeDatum).ToList();
+            if (onlyNewOnes)
+                return neueNachrichten;
+            else
+                return _chatBufferService.GetNachrichten(angebot).OrderByDescending(n => n.SendeDatum).ToList();
         }
 
         public async Task SendNachrichtAsync(Angebot angebot, ChatNachricht nachricht, string accessGrant, bool includeForeignAccess = false)

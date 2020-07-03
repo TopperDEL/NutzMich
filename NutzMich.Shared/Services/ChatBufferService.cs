@@ -15,6 +15,8 @@ namespace NutzMich.Shared.Services
         List<ChatInfo> _buffer;
         ILoginService _loginService;
 
+        public event NewChatCreatedEventHandler NewChatCreated;
+
         public ChatBufferService(ILoginService loginService)
         {
             _loginService = loginService;
@@ -29,6 +31,7 @@ namespace NutzMich.Shared.Services
 
         public void BufferNachricht(Angebot angebot, ChatNachricht nachricht, string nachrichtenAccess)
         {
+            ChatInfo newChat = null;
             var bufferedEntry = _buffer.Where(b => b.AngebotID == angebot.Id).FirstOrDefault();
             if (bufferedEntry != null)
             {
@@ -41,19 +44,22 @@ namespace NutzMich.Shared.Services
             }
             else
             {
-                var chatInfo = new ChatInfo();
-                chatInfo.AngebotID = angebot.Id;
-                chatInfo.AnbieterID = angebot.AnbieterId;
-                chatInfo.NachrichtenAccess = nachrichtenAccess;
-                chatInfo.Nachrichten.Add(nachricht);
+                newChat = new ChatInfo();
+                newChat.AngebotID = angebot.Id;
+                newChat.AnbieterID = angebot.AnbieterId;
+                newChat.NachrichtenAccess = nachrichtenAccess;
+                newChat.Nachrichten.Add(nachricht);
                 if (_loginService.AnbieterId == nachricht.SenderAnbieterID)
-                    chatInfo.GegenseiteAnbieterID = nachricht.EmpfaengerAnbieterID;
+                    newChat.GegenseiteAnbieterID = nachricht.EmpfaengerAnbieterID;
                 else
-                    chatInfo.GegenseiteAnbieterID = nachricht.SenderAnbieterID;
+                    newChat.GegenseiteAnbieterID = nachricht.SenderAnbieterID;
 
-                _buffer.Add(chatInfo);
+                _buffer.Add(newChat);
             }
             Barrel.Current.Add<List<ChatInfo>>("ChatListe", _buffer, TimeSpan.FromDays(365));
+
+            if (newChat != null)
+                NewChatCreated?.Invoke(newChat);
         }
 
         public List<ChatNachricht> GetNachrichten(Angebot angebot)

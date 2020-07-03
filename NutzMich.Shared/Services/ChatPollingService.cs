@@ -49,7 +49,7 @@ namespace NutzMich.Shared.Services
             List<ChatNachricht> nachrichten = new List<ChatNachricht>();
             while (!token.IsCancellationRequested)
             {
-                var nachrichtenNeu = await _chatService.GetNachrichtenAsync(angebot);
+                var nachrichtenNeu = await _chatService.GetNachrichtenAsync(angebot, true);
                 if (nachrichtenNeu.Count() > nachrichten.Count())
                 {
                     foreach(var nachricht in nachrichtenNeu)

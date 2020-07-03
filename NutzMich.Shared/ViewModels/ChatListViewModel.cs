@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
 using Uno.Extensions.Specialized;
+using Windows.UI.Core;
 
 namespace NutzMich.Shared.ViewModels
 {
@@ -17,20 +18,33 @@ namespace NutzMich.Shared.ViewModels
     {
         private IChatService _chatService;
         private IAngebotService _angebotService;
+        private IChatController _chatController;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<ChatViewModel> Chats{ get; set; }
         public ChatViewModel SelectedChat { get; set; }
 
-        public ChatListViewModel(IChatService chatService, IAngebotService angebotService)
+        public ChatListViewModel(IChatService chatService, IAngebotService angebotService, IChatController chatController)
         {
             Chats = new ObservableCollection<ChatViewModel>();
 
             _chatService = chatService;
             _angebotService = angebotService;
+            _chatController = chatController;
+            _chatController.NewChatOpened += _chatController_NewChatOpened;
 
             InitAsync();
+        }
+
+        private async void _chatController_NewChatOpened(ChatInfo newChat)
+        {
+            await ChatViewModel._coreDispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                Angebot angebot = await _angebotService.LoadAngebotAsync(newChat.AnbieterID + "/" + newChat.AngebotID);
+
+                Chats.Add(new ChatViewModel(newChat, Factory.GetChatPollingService(), Factory.GetChatService(), Factory.GetLoginService(), angebot));
+            });
         }
 
         private async Task InitAsync()
@@ -75,9 +89,11 @@ namespace NutzMich.Shared.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedChat)));
         }
 
-        public void SelectedChatChanged()
+        public void SelectedChatChanged(ChatViewModel selectedChat)
         {
+            SelectedChat = selectedChat;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedChat)));
+            SelectedChat?.RefreshBindings();
         }
     }
 }

@@ -98,5 +98,11 @@ namespace NutzMich.Shared.ViewModels
         {
             _pollingservice.EndPolling(AngebotViewModel.Angebot);
         }
+
+        public void RefreshBindings()
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Nachrichten)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NachrichtComposer)));
+        }
     }
 }

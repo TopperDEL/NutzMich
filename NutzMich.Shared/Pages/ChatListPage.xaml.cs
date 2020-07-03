@@ -30,7 +30,7 @@ namespace NutzMich.Shared.Pages
         {
             this.InitializeComponent();
 
-            _vm = new ChatListViewModel(Factory.GetChatService(), Factory.GetAngebotService());
+            _vm = new ChatListViewModel(Factory.GetChatService(), Factory.GetAngebotService(), Factory.GetChatController());
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -51,9 +51,15 @@ namespace NutzMich.Shared.Pages
             await _vm.SendeNachrichtAsync();
         }
 
+        private async void DeleteTemp(object sender, RoutedEventArgs e)
+        {
+            MonkeyCache.FileStore.Barrel.Current.Empty("ChatListe");
+        }
+
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            _vm.SelectedChatChanged();
+            _vm.SelectedChatChanged(ChatList.SelectedItem as ChatViewModel);
+            Split.IsPaneOpen = false;
         }
     }
 }
