@@ -47,14 +47,12 @@ namespace NutzMich.Shared.ViewModels
 
         public ChatViewModel(ChatInfo chatInfo, IChatPollingService pollingService, IChatService chatService, ILoginService loginService, Angebot angebot)
         {
-            Nachrichten = new ObservableCollection<ChatNachrichtViewModel>(chatInfo.Nachrichten.Select(c => new ChatNachrichtViewModel(c)));
-
             _pollingservice = pollingService;
             _pollingservice.NachrichtErhalten += _pollingservice_NachrichtErhalten;
-
             _chatService = chatService;
-
             _loginService = loginService;
+
+            Nachrichten = new ObservableCollection<ChatNachrichtViewModel>(chatInfo.Nachrichten.Select(c => new ChatNachrichtViewModel(c) { IchBinEmpfaenger = _loginService.AnbieterId == c.EmpfaengerAnbieterID, IchWarSender = _loginService.AnbieterId == c.SenderAnbieterID }));
 
             AngebotViewModel = new AngebotViewModel(angebot);
             _pollingservice.StartPolling(angebot);
