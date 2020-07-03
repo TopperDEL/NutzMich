@@ -41,7 +41,7 @@
                                     <TextBlock Text="{x:Bind AngebotViewModel.Angebot.AnbieterId}" FontSize="15" FontWeight="Bold" Grid.Column="1" VerticalAlignment="Center" />
                                     <TextBlock Text="{x:Bind NeuesteNachricht, Mode=OneWay}" FontSize="15" Grid.Row="1" Grid.Column="1" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
                                     <!--<TextBlock Text="9:41" FontSize="15" Grid.Column="2" /> Für Uhrzeit oder ähnliches-->
-                                    <Button Content="Del" Click="DeleteTemp"/>
+                                    <!--<Button Content="Del" Click="DeleteTemp"/>-->
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
