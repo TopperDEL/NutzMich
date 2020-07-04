@@ -35,19 +35,25 @@ namespace NutzMich.Shared.Services
 
             List<ChatNachricht> neueNachrichten = new List<ChatNachricht>();
 
-            var nachrichtenItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Nachrichten/" + _loginService.AnbieterId + "/" + angebot.Id + "/", Recursive = true });
-
-            foreach (var nachrichtItem in nachrichtenItems.Items)
+            try
             {
-                if (nachrichtItem.IsPrefix || nachrichtItem.Key.Contains("Token"))
-                    continue;
+                var nachrichtenItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Nachrichten/" + _loginService.AnbieterId + "/" + angebot.Id + "/", Recursive = true });
 
-                var nachricht = await LoadNachrichtAsync(nachrichtItem.Key);
-                if (nachricht != null)
+                foreach (var nachrichtItem in nachrichtenItems.Items)
                 {
-                    _chatBufferService.BufferNachricht(angebot, nachricht, null, true);
-                    neueNachrichten.Add(nachricht);
+                    if (nachrichtItem.IsPrefix || nachrichtItem.Key.Contains("Token"))
+                        continue;
+
+                    var nachricht = await LoadNachrichtAsync(nachrichtItem.Key);
+                    if (nachricht != null)
+                    {
+                        _chatBufferService.BufferNachricht(angebot, nachricht, null, true);
+                        neueNachrichten.Add(nachricht);
+                    }
                 }
+            }catch
+            {
+
             }
 
             if (onlyNewOnes)
@@ -58,19 +64,25 @@ namespace NutzMich.Shared.Services
 
         private async Task<ChatNachricht> LoadNachrichtAsync(string key)
         {
-            await InitWriteConnectionAsync();
-
-            var nachrichtDownload = await _writeConnection.ObjectService.DownloadObjectAsync(_writeConnection.Bucket, key, new DownloadOptions(), false);
-            await nachrichtDownload.StartDownloadAsync();
-
-            if (nachrichtDownload.Completed)
+            try
             {
-                var nachricht = Newtonsoft.Json.JsonConvert.DeserializeObject<ChatNachricht>(Encoding.UTF8.GetString(nachrichtDownload.DownloadedBytes));
-                await _writeConnection.ObjectService.DeleteObjectAsync(_writeConnection.Bucket, key);
-                return nachricht;
-            }
-            else
+                await InitWriteConnectionAsync();
+
+                var nachrichtDownload = await _writeConnection.ObjectService.DownloadObjectAsync(_writeConnection.Bucket, key, new DownloadOptions(), false);
+                await nachrichtDownload.StartDownloadAsync();
+
+                if (nachrichtDownload.Completed)
+                {
+                    var nachricht = Newtonsoft.Json.JsonConvert.DeserializeObject<ChatNachricht>(Encoding.UTF8.GetString(nachrichtDownload.DownloadedBytes));
+                    await _writeConnection.ObjectService.DeleteObjectAsync(_writeConnection.Bucket, key);
+                    return nachricht;
+                }
+                else
+                    return null;
+            }catch
+            {
                 return null;
+            }
         }
 
         public async Task SendNachrichtAsync(Angebot angebot, ChatNachricht nachricht, string accessGrant, bool includeForeignAccess = false)
