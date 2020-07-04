@@ -19,6 +19,7 @@ namespace NutzMich.Droid
         {
             base.OnCreate(bundle);
 			Xamarin.Essentials.Platform.Init(this, bundle);
+			//ToastNotification
 		}
 
 		public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)

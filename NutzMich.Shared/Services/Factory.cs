@@ -81,6 +81,15 @@ namespace NutzMich.Shared.Services
             return _chatController;
         }
 
+        static INotificationService _notificationService;
+        public static INotificationService GetNotificationService()
+        {
+            if (_notificationService == null)
+                _notificationService = new NotificationService();
+
+            return _notificationService;
+        }
+
         public static void Reset()
         {
             _identityService = null;

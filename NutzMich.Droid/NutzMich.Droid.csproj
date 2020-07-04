@@ -88,6 +88,9 @@
     <PackageReference Include="Xam.Plugin.Media">
       <Version>5.0.1</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.AndroidX.AppCompat.AppCompatResources">
+      <Version>1.1.0.1</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Browser">
       <Version>1.2.0.1</Version>
     </PackageReference>
