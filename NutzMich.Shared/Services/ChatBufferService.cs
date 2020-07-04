@@ -41,6 +41,9 @@ namespace NutzMich.Shared.Services
                 }
                 if (bufferedEntry.Nachrichten.Where(n => n.Id == nachricht.Id).Count() == 0)
                     bufferedEntry.Nachrichten.Add(nachricht);
+
+                if (isNew)
+                    bufferedEntry.Ungelesen = true;
             }
             else
             {
@@ -53,10 +56,11 @@ namespace NutzMich.Shared.Services
                     newChat.GegenseiteAnbieterID = nachricht.EmpfaengerAnbieterID;
                 else
                     newChat.GegenseiteAnbieterID = nachricht.SenderAnbieterID;
+                newChat.Ungelesen = true;
 
                 _buffer.Add(newChat);
             }
-            Barrel.Current.Add<List<ChatInfo>>("ChatListe", _buffer, TimeSpan.FromDays(365));
+            PersistBuffer();
 
             if (newChat != null)
                 NewChatCreated?.Invoke(newChat);
@@ -77,6 +81,11 @@ namespace NutzMich.Shared.Services
         public List<ChatInfo> LoadBufferedChats()
         {
             return _buffer;
+        }
+
+        public void PersistBuffer()
+        {
+            Barrel.Current.Add<List<ChatInfo>>("ChatListe", _buffer, TimeSpan.FromDays(365));
         }
     }
 }

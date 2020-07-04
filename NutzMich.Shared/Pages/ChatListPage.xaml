@@ -39,7 +39,9 @@
                                     </Grid.RowDefinitions>
                                     <PersonPicture ProfilePicture="{x:Bind AngebotViewModel.Thumbnail}" Initials="AB" DisplayName="CD" Grid.RowSpan="2" Width="60" Height="60"/>
                                     <TextBlock Text="{x:Bind AngebotViewModel.Angebot.AnbieterId}" FontSize="15" FontWeight="Bold" Grid.Column="1" VerticalAlignment="Center" />
-                                    <TextBlock Text="{x:Bind NeuesteNachricht, Mode=OneWay}" FontSize="15" Grid.Row="1" Grid.Column="1" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+                                    <TextBlock Text="{x:Bind NeuesteNachricht, Mode=OneWay}" FontSize="15" Grid.Row="1" Grid.Column="1" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Visibility="{x:Bind Ungelesen, Mode=OneWay, Converter={StaticResource TrueIsCollapsedConverter}}" />
+                                    <TextBlock Text="{x:Bind NeuesteNachricht, Mode=OneWay}" FontSize="15" Grid.Row="1" Grid.Column="1" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Visibility="{x:Bind Ungelesen, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}"
+                                               Foreground="Black" FontWeight="ExtraBlack"/>
                                     <!--<TextBlock Text="9:41" FontSize="15" Grid.Column="2" /> Für Uhrzeit oder ähnliches-->
                                     <!--<Button Content="Del" Click="DeleteTemp"/>-->
                                 </Grid>

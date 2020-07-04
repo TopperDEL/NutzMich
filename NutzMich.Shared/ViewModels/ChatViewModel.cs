@@ -17,7 +17,8 @@ namespace NutzMich.Shared.ViewModels
     public class ChatViewModel : INotifyPropertyChanged
     {
         internal static CoreDispatcher _coreDispatcher;
-        private IChatPollingService _pollingservice;
+        private IChatPollingService _chatPollingService;
+        private IChatBufferService _chatBufferService;
         private IChatService _chatService;
         private ILoginService _loginService;
         private ChatInfo _chatInfo;
@@ -45,22 +46,31 @@ namespace NutzMich.Shared.ViewModels
         }
         public ObservableCollection<ChatNachrichtViewModel> Nachrichten { get; set; }
 
-        public ChatViewModel(ChatInfo chatInfo, IChatPollingService pollingService, IChatService chatService, ILoginService loginService, Angebot angebot)
+        public bool Ungelesen
         {
-            _pollingservice = pollingService;
-            _pollingservice.NachrichtErhalten += _pollingservice_NachrichtErhalten;
+            get
+            {
+                return _chatInfo.Ungelesen;
+            }
+        }
+
+        public ChatViewModel(ChatInfo chatInfo, IChatPollingService chatPollingService, IChatService chatService, ILoginService loginService, IChatBufferService chatBufferService, Angebot angebot)
+        {
+            _chatPollingService = chatPollingService;
+            _chatPollingService.NachrichtErhalten += _chatPollingService_NachrichtErhalten;
             _chatService = chatService;
             _loginService = loginService;
+            _chatBufferService = chatBufferService;
 
             Nachrichten = new ObservableCollection<ChatNachrichtViewModel>(chatInfo.Nachrichten.Select(c => new ChatNachrichtViewModel(c) { IchBinEmpfaenger = _loginService.AnbieterId == c.EmpfaengerAnbieterID, IchWarSender = _loginService.AnbieterId == c.SenderAnbieterID }));
 
             AngebotViewModel = new AngebotViewModel(angebot);
-            _pollingservice.StartPolling(angebot);
+            _chatPollingService.StartPolling(angebot);
 
             _chatInfo = chatInfo;
         }
 
-        private async void _pollingservice_NachrichtErhalten(Angebot angebot, ChatNachricht nachricht)
+        private async void _chatPollingService_NachrichtErhalten(Angebot angebot, ChatNachricht nachricht)
         {
             if (angebot.Id != AngebotViewModel.Angebot.Id || nachricht.SenderAnbieterID == _loginService.AnbieterId)
                 return;
@@ -70,6 +80,7 @@ namespace NutzMich.Shared.ViewModels
                  var neueNachricht = new ChatNachrichtViewModel(nachricht) { IchBinEmpfaenger = true };
                  Nachrichten.Add(neueNachricht);
                  ScrollToChatNachricht?.Invoke(neueNachricht);
+                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Ungelesen)));
              });
         }
 
@@ -94,13 +105,26 @@ namespace NutzMich.Shared.ViewModels
 
         public void Cleanup()
         {
-            _pollingservice.EndPolling(AngebotViewModel.Angebot);
+            _chatPollingService.EndPolling(AngebotViewModel.Angebot);
         }
 
         public void RefreshBindings()
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Nachrichten)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NachrichtComposer)));
+        }
+
+        public async Task SetGesehenAsync()
+        {
+            await _coreDispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                if (_chatInfo.Ungelesen)
+                {
+                    _chatInfo.Ungelesen = false;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Ungelesen)));
+                    _chatBufferService.PersistBuffer();
+                }
+            });
         }
     }
 }
