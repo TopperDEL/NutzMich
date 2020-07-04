@@ -76,7 +76,7 @@ namespace NutzMich.Shared.Services
         public static IChatController GetChatController()
         {
             if (_chatController == null)
-                _chatController = new ChatController(GetAngebotService(), GetLoginService(), GetChatPollingService(), GetChatBufferService());
+                _chatController = new ChatController(GetAngebotService(), GetChatPollingService(), GetChatBufferService());
 
             return _chatController;
         }

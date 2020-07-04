@@ -11,6 +11,7 @@ namespace NutzMich.Shared.Models
         public string NachrichtenAccess { get; set; }
         public string GegenseiteAnbieterID { get; set; }
         public List<ChatNachricht> Nachrichten { get; set; }
+        public bool Ungelesen { get; set; }
 
         public ChatInfo()
         {

@@ -11,7 +11,7 @@ namespace NutzMich.Shared.Interfaces
     {
         event NewChatCreatedEventHandler NewChatCreated;
         List<ChatInfo> LoadBufferedChats();
-        void BufferNachricht(Angebot angebot, ChatNachricht nachricht, string nachrichtenAccess);
+        void BufferNachricht(Angebot angebot, ChatNachricht nachricht, string nachrichtenAccess, bool isNew);
         List<ChatNachricht> GetNachrichten(Angebot angebot);
     }
 }

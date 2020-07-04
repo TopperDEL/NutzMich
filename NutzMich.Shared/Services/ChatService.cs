@@ -45,7 +45,7 @@ namespace NutzMich.Shared.Services
                 var nachricht = await LoadNachrichtAsync(nachrichtItem.Key);
                 if (nachricht != null)
                 {
-                    _chatBufferService.BufferNachricht(angebot, nachricht, null);
+                    _chatBufferService.BufferNachricht(angebot, nachricht, null, true);
                     neueNachrichten.Add(nachricht);
                 }
             }
@@ -54,6 +54,23 @@ namespace NutzMich.Shared.Services
                 return neueNachrichten;
             else
                 return _chatBufferService.GetNachrichten(angebot).OrderByDescending(n => n.SendeDatum).ToList();
+        }
+
+        private async Task<ChatNachricht> LoadNachrichtAsync(string key)
+        {
+            await InitWriteConnectionAsync();
+
+            var nachrichtDownload = await _writeConnection.ObjectService.DownloadObjectAsync(_writeConnection.Bucket, key, new DownloadOptions(), false);
+            await nachrichtDownload.StartDownloadAsync();
+
+            if (nachrichtDownload.Completed)
+            {
+                var nachricht = Newtonsoft.Json.JsonConvert.DeserializeObject<ChatNachricht>(Encoding.UTF8.GetString(nachrichtDownload.DownloadedBytes));
+                await _writeConnection.ObjectService.DeleteObjectAsync(_writeConnection.Bucket, key);
+                return nachricht;
+            }
+            else
+                return null;
         }
 
         public async Task SendNachrichtAsync(Angebot angebot, ChatNachricht nachricht, string accessGrant, bool includeForeignAccess = false)
@@ -84,24 +101,7 @@ namespace NutzMich.Shared.Services
             var nachrichtUpload = await foreignConnection.ObjectService.UploadObjectAsync(foreignConnection.Bucket, "Nachrichten/" + nachricht.EmpfaengerAnbieterID + "/" + nachricht.AngebotID + "/" + nachricht.SenderAnbieterID + "/" + nachricht.Id, new UploadOptions() { Expires = DateTime.Now.AddDays(7) }, Encoding.UTF8.GetBytes(nachrichtJson), false);
             await nachrichtUpload.StartUploadAsync();
 
-            _chatBufferService.BufferNachricht(angebot, nachricht, accessGrantToUse);
-        }
-
-        private async Task<ChatNachricht> LoadNachrichtAsync(string key)
-        {
-            await InitWriteConnectionAsync();
-
-            var nachrichtDownload = await _writeConnection.ObjectService.DownloadObjectAsync(_writeConnection.Bucket, key, new DownloadOptions(), false);
-            await nachrichtDownload.StartDownloadAsync();
-
-            if (nachrichtDownload.Completed)
-            {
-                var nachricht = Newtonsoft.Json.JsonConvert.DeserializeObject<ChatNachricht>(Encoding.UTF8.GetString(nachrichtDownload.DownloadedBytes));
-                await _writeConnection.ObjectService.DeleteObjectAsync(_writeConnection.Bucket, key);
-                return nachricht;
-            }
-            else
-                return null;
+            _chatBufferService.BufferNachricht(angebot, nachricht, accessGrantToUse, false);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace NutzMich.Shared.Services
                 _buffer = new List<ChatInfo>();
         }
 
-        public void BufferNachricht(Angebot angebot, ChatNachricht nachricht, string nachrichtenAccess)
+        public void BufferNachricht(Angebot angebot, ChatNachricht nachricht, string nachrichtenAccess, bool isNew)
         {
             ChatInfo newChat = null;
             var bufferedEntry = _buffer.Where(b => b.AngebotID == angebot.Id).FirstOrDefault();
