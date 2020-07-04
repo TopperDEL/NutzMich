@@ -19,8 +19,14 @@ namespace NutzMich.Shared.Services
         {
             _angebotService = angebotService;
             _chatPollingService = chatPollingService;
+            _chatPollingService.NachrichtErhalten += _chatPollingService_NachrichtErhalten;
             _chatBufferService = chatBufferService;
             _chatBufferService.NewChatCreated += _chatBufferService_NewChatCreated;
+        }
+
+        private async void _chatPollingService_NachrichtErhalten(Contracts.Models.Angebot angebot, Models.ChatNachricht nachricht)
+        {
+            await Factory.GetNotificationService().SendNotificationAsync(nachricht.SenderAnbieterID, nachricht.Nachricht);
         }
 
         private void _chatBufferService_NewChatCreated(Models.ChatInfo newChat)

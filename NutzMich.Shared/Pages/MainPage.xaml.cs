@@ -66,8 +66,6 @@ namespace NutzMich.Pages
             }
 
             _angeboteVM.SetNotLoading();
-
-            await Factory.GetNotificationService().SendNotificationAsync("Testtitel", "Und hier ist die Nachricht!");
         }
 
         private void AngebotAnzeigen(object sender, ItemClickEventArgs e)
