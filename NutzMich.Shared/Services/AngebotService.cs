@@ -12,11 +12,15 @@ using System.IO;
 using MonkeyCache.FileStore;
 using Plugin.Connectivity;
 using Windows.Media.Protection.PlayReady;
+using System.Threading;
 
 namespace NutzMich.Shared.Services
 {
     class AngebotService : ConnectionUsingServiceBase, IAngebotService
     {
+        internal static Mutex getAngeboteMutex = new Mutex();
+        internal static Mutex loadAngebotMutex = new Mutex();
+
         ILoginService _loginService;
         IThumbnailHelper _thumbnailHelper;
 
@@ -30,45 +34,73 @@ namespace NutzMich.Shared.Services
 
         public async IAsyncEnumerable<Angebot> GetAlleAsync()
         {
-            await InitReadConnectionAsync();
-
-            var angeboteItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Angebote/", Recursive = true });
-
-            foreach (var angebot in angeboteItems.Items)
+            getAngeboteMutex.WaitOne();
+            try
             {
-                yield return await LoadAngebotAsync(angebot.Key.Replace("Angebote/",""));
+                await InitReadConnectionAsync();
+
+                var angeboteItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Angebote/", Recursive = true });
+
+                foreach (var angebot in angeboteItems.Items)
+                {
+                    yield return await LoadAngebotAsync(angebot.Key.Replace("Angebote/", ""));
+                }
+            }
+            finally
+            {
+                getAngeboteMutex.ReleaseMutex();
             }
         }
 
         public async IAsyncEnumerable<Angebot> GetMeineAsync()
         {
-            await InitReadConnectionAsync();
-
-            var angeboteItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Angebote/" + _loginService.AnbieterId + "/", Recursive = true });
-
-            foreach (var angebot in angeboteItems.Items)
+            getAngeboteMutex.WaitOne();
+            try
             {
-                yield return await LoadAngebotAsync(angebot.Key.Replace("Angebote/", ""));
+                await InitReadConnectionAsync();
+
+                var angeboteItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Angebote/" + _loginService.AnbieterId + "/", Recursive = true });
+
+                foreach (var angebot in angeboteItems.Items)
+                {
+                    yield return await LoadAngebotAsync(angebot.Key.Replace("Angebote/", ""));
+                }
+            }
+            finally
+            {
+                getAngeboteMutex.ReleaseMutex();
             }
         }
 
         public async Task<Angebot> LoadAngebotAsync(string angebotId)
         {
-            if (!Barrel.Current.IsExpired("angebot_" + angebotId) || !CrossConnectivity.Current.IsConnected)
-                return Barrel.Current.Get<Angebot>("angebot_" + angebotId);
-            await InitReadConnectionAsync();
-
-            var angebotDownload = await _readConnection.ObjectService.DownloadObjectAsync(_readConnection.Bucket, "Angebote/" + angebotId, new DownloadOptions(), false);
-            await angebotDownload.StartDownloadAsync();
-
-            if (angebotDownload.Completed)
+            loadAngebotMutex.WaitOne();
+            try
             {
-                var angebot = Newtonsoft.Json.JsonConvert.DeserializeObject<Angebot>(Encoding.UTF8.GetString(angebotDownload.DownloadedBytes));
-                Barrel.Current.Add<Angebot>("angebot_" + angebotId, angebot, TimeSpan.FromDays(180));
-                return angebot;
+                if (!Barrel.Current.IsExpired("angebot_" + angebotId) || !CrossConnectivity.Current.IsConnected)
+                    return Barrel.Current.Get<Angebot>("angebot_" + angebotId);
+                await InitReadConnectionAsync();
+
+                var angebotDownload = await _readConnection.ObjectService.DownloadObjectAsync(_readConnection.Bucket, "Angebote/" + angebotId, new DownloadOptions(), false);
+                await angebotDownload.StartDownloadAsync();
+
+                if (angebotDownload.Completed)
+                {
+                    var angebot = Newtonsoft.Json.JsonConvert.DeserializeObject<Angebot>(Encoding.UTF8.GetString(angebotDownload.DownloadedBytes));
+                    Barrel.Current.Add<Angebot>("angebot_" + angebotId, angebot, TimeSpan.FromDays(180));
+                    return angebot;
+                }
+                else
+                    return new Angebot() { Ueberschrift = "Angebot nicht mehr vorhanden" };
             }
-            else
-                return new Angebot() { Ueberschrift = "Angebot nicht mehr vorhanden" };
+            catch
+            {
+                return new Angebot() { Ueberschrift = "Fehler beim Lesen des Angebots" };
+            }
+            finally
+            {
+                loadAngebotMutex.ReleaseMutex();
+            }
         }
 
         public async Task<List<Stream>> GetAngebotImagesAsync(Angebot angebot)

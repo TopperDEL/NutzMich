@@ -81,6 +81,7 @@ namespace NutzMich.Shared.ViewModels
                  Nachrichten.Add(neueNachricht);
                  ScrollToChatNachricht?.Invoke(neueNachricht);
                  PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Ungelesen)));
+                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NeuesteNachricht)));
              });
         }
 

@@ -46,7 +46,7 @@ namespace NutzMich.Shared.Services
             var buffered = _chatBufferService.LoadBufferedChats();
             foreach(var chat in buffered)
             {
-                _chatPollingService.StartPolling(await _angebotService.LoadAngebotAsync(chat.AngebotID));
+                _chatPollingService.StartPolling(await _angebotService.LoadAngebotAsync(chat.AnbieterID + "/" + chat.AngebotID));
             }
         }
 

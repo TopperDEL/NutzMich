@@ -4,6 +4,7 @@ using NutzMich.Shared.Interfaces;
 using NutzMich.Shared.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,13 +15,11 @@ namespace NutzMich.Shared.Services
     public class ChatService : ConnectionUsingServiceBase, IChatService
     {
         private ILoginService _loginService;
-        private IAngebotService _angebotService;
         IChatBufferService _chatBufferService;
 
-        public ChatService(IIdentityService identityService, ILoginService loginService, IAngebotService angebotService, IChatBufferService chatBufferService) : base(identityService)
+        public ChatService(IIdentityService identityService, ILoginService loginService, IChatBufferService chatBufferService) : base(identityService)
         {
             _loginService = loginService;
-            _angebotService = angebotService;
             _chatBufferService = chatBufferService;
         }
 
@@ -38,7 +37,6 @@ namespace NutzMich.Shared.Services
             try
             {
                 var nachrichtenItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Nachrichten/" + _loginService.AnbieterId + "/" + angebot.Id + "/", Recursive = true });
-
                 foreach (var nachrichtItem in nachrichtenItems.Items)
                 {
                     if (nachrichtItem.IsPrefix || nachrichtItem.Key.Contains("Token"))

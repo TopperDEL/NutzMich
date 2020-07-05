@@ -19,6 +19,7 @@ using NutzMich.Pages;
 using Windows.UI.Core;
 using NutzMich.Shared.Pages;
 using NutzMich.Shared.Services;
+using System.Threading.Tasks;
 
 namespace NutzMich
 {
@@ -37,6 +38,16 @@ namespace NutzMich
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            this.UnhandledException += App_UnhandledException;
+            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+        }
+
+        private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        {
+        }
+
+        private void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
         }
 
         /// <summary>

@@ -8,11 +8,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Uno.Extensions.Specialized;
 using System.Linq;
+using System.Diagnostics;
 
 namespace NutzMich.Shared.Services
 {
     public class ChatPollingService : IChatPollingService
     {
+        internal static Semaphore getNachrichtenMutex;
+
         private IChatService _chatService;
         private Dictionary<Angebot, CancellationTokenSource> _pollingTasks;
 
@@ -20,6 +23,7 @@ namespace NutzMich.Shared.Services
 
         public ChatPollingService(IChatService chatService)
         {
+            getNachrichtenMutex = new Semaphore(1,1);
             _chatService = chatService;
             _pollingTasks = new Dictionary<Angebot, CancellationTokenSource>();
         }
@@ -49,10 +53,12 @@ namespace NutzMich.Shared.Services
             List<ChatNachricht> nachrichten = new List<ChatNachricht>();
             while (!token.IsCancellationRequested)
             {
+                getNachrichtenMutex.WaitOne();
                 try
                 {
                     var nachrichtenNeu = await _chatService.GetNachrichtenAsync(angebot, true);
-                    if (nachrichtenNeu.Count() > nachrichten.Count())
+
+                    if (nachrichtenNeu.Count() > 0)
                     {
                         foreach (var nachricht in nachrichtenNeu)
                         {
@@ -67,7 +73,11 @@ namespace NutzMich.Shared.Services
                 catch 
                 { 
                 }
-                await Task.Delay(1000);
+                finally
+                {
+                    getNachrichtenMutex.Release(1);
+                }
+                await Task.Delay(2000);
             }
         }
     }
