@@ -23,8 +23,8 @@ namespace NutzMich.Shared.Services
 
             Barrel.ApplicationId = "nutzmich_monkeycache";
 
-            if (Barrel.Current.Exists("ChatListe"))
-                _buffer = Barrel.Current.Get<List<ChatInfo>>("ChatListe");
+            if (Barrel.Current.Exists("ChatListe_"+_loginService.AnbieterId))
+                _buffer = Barrel.Current.Get<List<ChatInfo>>("ChatListe_" + _loginService.AnbieterId);
             else
                 _buffer = new List<ChatInfo>();
         }
@@ -32,7 +32,13 @@ namespace NutzMich.Shared.Services
         public void BufferNachricht(Angebot angebot, ChatNachricht nachricht, string nachrichtenAccess, bool isNew)
         {
             ChatInfo newChat = null;
-            var bufferedEntry = _buffer.Where(b => b.AngebotID == angebot.Id).FirstOrDefault();
+            string gegenseiteAnbieterID;
+            if (_loginService.AnbieterId == nachricht.SenderAnbieterID)
+                gegenseiteAnbieterID = nachricht.EmpfaengerAnbieterID;
+            else
+                gegenseiteAnbieterID = nachricht.SenderAnbieterID;
+
+            var bufferedEntry = _buffer.Where(b => b.AngebotID == angebot.Id && b.GegenseiteAnbieterID == gegenseiteAnbieterID).FirstOrDefault();
             if (bufferedEntry != null)
             {
                 if (string.IsNullOrEmpty(bufferedEntry.NachrichtenAccess) && !string.IsNullOrEmpty(nachrichtenAccess))
@@ -52,10 +58,7 @@ namespace NutzMich.Shared.Services
                 newChat.AnbieterID = angebot.AnbieterId;
                 newChat.NachrichtenAccess = nachrichtenAccess;
                 newChat.Nachrichten.Add(nachricht);
-                if (_loginService.AnbieterId == nachricht.SenderAnbieterID)
-                    newChat.GegenseiteAnbieterID = nachricht.EmpfaengerAnbieterID;
-                else
-                    newChat.GegenseiteAnbieterID = nachricht.SenderAnbieterID;
+                newChat.GegenseiteAnbieterID = gegenseiteAnbieterID;
                 newChat.Ungelesen = true;
 
                 _buffer.Add(newChat);
@@ -85,7 +88,7 @@ namespace NutzMich.Shared.Services
 
         public void PersistBuffer()
         {
-            Barrel.Current.Add<List<ChatInfo>>("ChatListe", _buffer, TimeSpan.FromDays(365));
+            Barrel.Current.Add<List<ChatInfo>>("ChatListe_" + _loginService.AnbieterId, _buffer, TimeSpan.FromDays(365));
         }
     }
 }
