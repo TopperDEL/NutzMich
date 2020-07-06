@@ -30,12 +30,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IIdentityService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILoginService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\INotificationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IReservierungService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IThumbnailHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Anfrage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Angebot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AttachmentImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChatInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChatNachricht.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Reservierung.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ReservierungsZeitraum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AnfrageDialog.xaml.cs">
       <DependentUpon>AnfrageDialog.xaml</DependentUpon>
     </Compile>
@@ -54,6 +57,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\ReservierungErstellenDialog.xaml.cs">
+      <DependentUpon>ReservierungErstellenDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Resources\ChatMessageTemplateSelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AngebotService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ChatBufferService.cs" />
@@ -67,6 +73,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\IdentityService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LoginService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NotificationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ReservierungService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\TardigradeConnectionService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ThumbnailHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AnfrageViewModel.cs" />
@@ -76,6 +83,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ChatNachrichtViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ChatViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\LoginViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ReservierungViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)NutzMichStyles_Buttons.xaml">
@@ -111,6 +119,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Pages\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Pages\ReservierungErstellenDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

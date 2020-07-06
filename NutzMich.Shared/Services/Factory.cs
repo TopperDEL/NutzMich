@@ -90,6 +90,15 @@ namespace NutzMich.Shared.Services
             return _notificationService;
         }
 
+        static IReservierungService _reservierungService;
+        public static IReservierungService GetReservierungService()
+        {
+            if (_reservierungService == null)
+                _reservierungService = new ReservierungService();
+
+            return _reservierungService;
+        }
+
         public static void Reset()
         {
             _identityService = null;

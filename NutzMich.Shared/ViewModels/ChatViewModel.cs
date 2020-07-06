@@ -127,5 +127,10 @@ namespace NutzMich.Shared.ViewModels
                 }
             });
         }
+
+        public string GetChatPartnerID()
+        {
+            return _chatInfo.GegenseiteAnbieterID;
+        }
     }
 }

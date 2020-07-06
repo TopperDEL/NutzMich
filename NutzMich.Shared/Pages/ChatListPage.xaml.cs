@@ -71,6 +71,12 @@ namespace NutzMich.Shared.Pages
             await _vm.SendeNachrichtAsync();
         }
 
+        private async void ReservierungErstellen(object sender, RoutedEventArgs e)
+        {
+            ReservierungErstellenDialog dlg = new ReservierungErstellenDialog(Factory.GetReservierungService(), _vm.SelectedChat.AngebotViewModel.Angebot.Id, _vm.SelectedChat.GetChatPartnerID(), _vm.SelectedChat.AngebotViewModel.Angebot.AnbieterId);
+            var result = await dlg.ShowAsync();
+        }
+
         private async void DeleteTemp(object sender, RoutedEventArgs e)
         {
             MonkeyCache.FileStore.Barrel.Current.Empty("ChatListe");
