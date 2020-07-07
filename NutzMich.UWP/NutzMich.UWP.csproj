@@ -26,10 +26,10 @@
     </PackageReference>
     <PackageReference Include="Uno.Core" Version="2.0.0" />
     <PackageReference Include="Uno.UI">
-      <Version>3.0.0-dev.549</Version>
+      <Version>3.0.0-dev.692</Version>
     </PackageReference>
     <PackageReference Include="Uno.UI.RemoteControl">
-      <Version>3.0.0-dev.549</Version>
+      <Version>3.0.0-dev.692</Version>
     </PackageReference>
     <PackageReference Include="uplink.NET">
       <Version>2.3.1</Version>
@@ -55,7 +55,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NutzMich</RootNamespace>
     <AssemblyName>NutzMich</AssemblyName>
-    <DefaultLanguage>en-US</DefaultLanguage>
+    <DefaultLanguage>de-DE</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.17763.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>

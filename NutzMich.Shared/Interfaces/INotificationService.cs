@@ -7,6 +7,6 @@ namespace NutzMich.Shared.Interfaces
 {
     public interface INotificationService
     {
-        Task SendNotificationAsync(string title, string message);
+        Task<bool> SendChatNotificationAsync(string title, string message);
     }
 }

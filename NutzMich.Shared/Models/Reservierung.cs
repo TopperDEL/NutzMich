@@ -8,6 +8,7 @@ namespace NutzMich.Shared.Models
     [Bindable]
     public class Reservierung
     {
+        public const string TECHNISCHER_NACHRICHTENTYP = "Reservierung";
         public string Id { get; set; }
         public string AngebotID { get; set; }
         public string AnbieterID { get; set; }

@@ -98,5 +98,9 @@ namespace NutzMich.Shared.Services
                 return null;
             }
         }
+
+        public async Task ReservierungBestaetigenAsync(Reservierung reservierung)
+        {
+        }
     }
 }

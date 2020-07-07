@@ -13,5 +13,7 @@ namespace NutzMich.Shared.Interfaces
         Task<Reservierung> GetReservierungAsync(ReservierungsZeitraum zeitraum, string anbieterID, string angebotID);
         Task<string> CheckReservierungAsync(Reservierung reservierung);
         Task<bool> SaveReservierungAsync(Reservierung reservierung);
+
+        Task ReservierungBestaetigenAsync(Reservierung reservierung);
     }
 }

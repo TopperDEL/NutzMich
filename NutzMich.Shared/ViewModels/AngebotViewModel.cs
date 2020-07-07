@@ -40,10 +40,10 @@ namespace NutzMich.Shared.ViewModels
         {
             get
             {
-                if (Angebot.Beschreibung.Length > 80)
+                if (Angebot?.Beschreibung?.Length > 80)
                     return Angebot.Beschreibung.Substring(0, 80) + "...";
                 else
-                    return Angebot.Beschreibung;
+                    return Angebot?.Beschreibung;
             }
         }
 

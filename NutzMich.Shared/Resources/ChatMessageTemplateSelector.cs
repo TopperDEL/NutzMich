@@ -1,4 +1,5 @@
-﻿using NutzMich.Shared.ViewModels;
+﻿using NutzMich.Shared.Models;
+using NutzMich.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,7 +21,7 @@ namespace NutzMich.Shared.Resources
         protected override DataTemplate SelectTemplateCore(object item)
         {
             var message = (ChatNachrichtViewModel)item;
-            if (!string.IsNullOrEmpty(message.Nachricht.TechnischerNachrichtenTyp) && message.Nachricht.TechnischerNachrichtenTyp == "Reservierung")
+            if (!string.IsNullOrEmpty(message.Nachricht.TechnischerNachrichtenTyp) && message.Nachricht.TechnischerNachrichtenTyp == Reservierung.TECHNISCHER_NACHRICHTENTYP)
                 return ReservierungTemplate;
 
             return message.IchWarSender ? FromTemplate : ToTemplate;

@@ -16,11 +16,13 @@ namespace NutzMich.Shared.Services
     {
         private ILoginService _loginService;
         IChatBufferService _chatBufferService;
+        IReservierungService _reservierungService;
 
-        public ChatService(IIdentityService identityService, ILoginService loginService, IChatBufferService chatBufferService) : base(identityService)
+        public ChatService(IIdentityService identityService, ILoginService loginService, IChatBufferService chatBufferService, IReservierungService reservierungService) : base(identityService)
         {
             _loginService = loginService;
             _chatBufferService = chatBufferService;
+            _reservierungService = reservierungService;
         }
 
         public List<ChatInfo> GetChatListe()
@@ -45,6 +47,10 @@ namespace NutzMich.Shared.Services
                     var nachricht = await LoadNachrichtAsync(nachrichtItem.Key);
                     if (nachricht != null)
                     {
+                        if(!string.IsNullOrEmpty(nachricht.TechnischerNachrichtenTyp) && nachricht.TechnischerNachrichtenTyp == Reservierung.TECHNISCHER_NACHRICHTENTYP)
+                        {
+                            await _reservierungService.ReservierungBestaetigenAsync(Newtonsoft.Json.JsonConvert.DeserializeObject<Reservierung>(nachricht.Nachricht));
+                        }
                         _chatBufferService.BufferNachricht(angebot, nachricht, null, true);
                         neueNachrichten.Add(nachricht);
                     }

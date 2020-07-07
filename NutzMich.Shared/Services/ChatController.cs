@@ -1,14 +1,20 @@
 ﻿using NutzMich.Contracts.Interfaces;
 using NutzMich.Shared.Interfaces;
+using NutzMich.Shared.Models;
+using NutzMich.Shared.Pages;
+using NutzMich.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 
 namespace NutzMich.Shared.Services
 {
     public class ChatController : IChatController
     {
+        public static Frame _frameToUse;
+
         IAngebotService _angebotService;
         IChatPollingService _chatPollingService;
         IChatBufferService _chatBufferService;
@@ -26,7 +32,20 @@ namespace NutzMich.Shared.Services
 
         private async void _chatPollingService_NachrichtErhalten(Contracts.Models.Angebot angebot, Models.ChatNachricht nachricht)
         {
-            await Factory.GetNotificationService().SendNotificationAsync(nachricht.SenderAnbieterID, nachricht.Nachricht);
+            bool openChat;
+            if (!string.IsNullOrEmpty(nachricht.TechnischerNachrichtenTyp) && nachricht.TechnischerNachrichtenTyp == Reservierung.TECHNISCHER_NACHRICHTENTYP)
+            {
+                openChat = await Factory.GetNotificationService().SendChatNotificationAsync(nachricht.SenderAnbieterID, Reservierung.GetChatMessageText(nachricht.Nachricht));
+            }
+            else
+            {
+                openChat = await Factory.GetNotificationService().SendChatNotificationAsync(nachricht.SenderAnbieterID, nachricht.Nachricht);
+            }
+
+            if(openChat && _frameToUse != null)
+            {
+                _frameToUse.Navigate(typeof(ChatListPage), new AngebotViewModel(angebot));
+            }
         }
 
         private void _chatBufferService_NewChatCreated(Models.ChatInfo newChat)

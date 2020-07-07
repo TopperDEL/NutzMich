@@ -16,12 +16,18 @@ namespace NutzMich.Shared.Services
 #endif
         }
 
-        public async Task SendNotificationAsync(string title, string message)
+        public async Task<bool> SendChatNotificationAsync(string title, string message)
         {
             NotificationResult result;
             result = await NotificationManager.Instance.BuildNotification()
                 .AddDescription(title).AddTitle(message)
                 .Build().ShowAsync();
+
+            if(result == NotificationResult.Activated)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
