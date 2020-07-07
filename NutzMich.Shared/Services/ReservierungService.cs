@@ -1,4 +1,4 @@
-﻿using NutzMich.Contracts.Models;
+﻿using NutzMich.Contracts.Interfaces;
 using NutzMich.Shared.Interfaces;
 using NutzMich.Shared.Models;
 using System;
@@ -11,9 +11,13 @@ namespace NutzMich.Shared.Services
 {
     public class ReservierungService : ConnectionUsingServiceBase, IReservierungService
     {
-        public ReservierungService() : base(Factory.GetIdentityService())
-        {
+        INotificationService _notificationService;
+        IAngebotService _angebotService;
 
+        public ReservierungService(INotificationService notificationService, IAngebotService angebotService) : base(Factory.GetIdentityService())
+        {
+            _notificationService = notificationService;
+            _angebotService = angebotService;
         }
 
         public async Task<string> CheckReservierungAsync(Reservierung reservierung)
@@ -101,6 +105,11 @@ namespace NutzMich.Shared.Services
 
         public async Task ReservierungBestaetigenAsync(Reservierung reservierung)
         {
+            var angebot = await _angebotService.LoadAngebotAsync(reservierung.AnbieterID+"/"+reservierung.AngebotID);
+#if DEBUG
+            _notificationService.SendScheduledReservierungNotification("Reservierungs-Erinnerung!", "'" + angebot.Ueberschrift + "' wurde für dich morgen reserviert - denke an die Abholung!", DateTimeOffset.Now.AddSeconds(10));
+#endif
+            _notificationService.SendScheduledReservierungNotification("Reservierungs-Erinnerung!", "'" + angebot.Ueberschrift + "' wurde für dich morgen reserviert - denke an die Abholung!", reservierung.Zeitraum.Von.AddDays(-1).Date);
         }
     }
 }

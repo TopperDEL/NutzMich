@@ -8,5 +8,6 @@ namespace NutzMich.Shared.Interfaces
     public interface INotificationService
     {
         Task<bool> SendChatNotificationAsync(string title, string message);
+        void SendScheduledReservierungNotification(string title, string message, DateTimeOffset scheduledFor);
     }
 }

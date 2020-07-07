@@ -94,7 +94,7 @@ namespace NutzMich.Shared.Services
         public static IReservierungService GetReservierungService()
         {
             if (_reservierungService == null)
-                _reservierungService = new ReservierungService();
+                _reservierungService = new ReservierungService(GetNotificationService(), GetAngebotService());
 
             return _reservierungService;
         }

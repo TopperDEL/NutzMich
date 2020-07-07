@@ -29,5 +29,12 @@ namespace NutzMich.Shared.Services
             }
             return false;
         }
+
+        public void SendScheduledReservierungNotification(string title, string message, DateTimeOffset scheduledFor)
+        {
+            NotificationManager.Instance.BuildNotification()
+                .AddDescription(title).AddTitle(message)
+                .Build().ScheduleTo(scheduledFor);
+        }
     }
 }
