@@ -17,6 +17,7 @@ namespace NutzMich.Shared.Models
         public Reservierung()
         {
             Id = Guid.NewGuid().ToString();
+            Zeitraum = new ReservierungsZeitraum();
         }
     }
 }
