@@ -36,7 +36,7 @@ namespace NutzMich.Shared.ViewModels
                     return "";
                 else
                 {
-                    var nachricht = Nachrichten[Nachrichten.Count - 1].Nachricht.Nachricht;
+                    var nachricht = Nachrichten.Where(n=>string.IsNullOrEmpty(n.TechnischerNachrichtenInhalt)).Last().Nachricht.Nachricht;
                     if (nachricht.Length > 200)
                         return nachricht.Substring(0, 200) + "...";
                     else
@@ -128,9 +128,9 @@ namespace NutzMich.Shared.ViewModels
             });
         }
 
-        public string GetChatPartnerID()
+        public ChatInfo GetChatInfo()
         {
-            return _chatInfo.GegenseiteAnbieterID;
+            return _chatInfo;
         }
     }
 }

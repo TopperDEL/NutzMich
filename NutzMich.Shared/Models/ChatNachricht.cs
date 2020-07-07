@@ -12,6 +12,7 @@ namespace NutzMich.Shared.Models
         public string AngebotID { get; set; }
         public string SenderAnbieterID { get; set; }
         public string EmpfaengerAnbieterID { get; set; }
+        public string TechnischerNachrichtenTyp { get; set; }
 
         public ChatNachricht()
         {

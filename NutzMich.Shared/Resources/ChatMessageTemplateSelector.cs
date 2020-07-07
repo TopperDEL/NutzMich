@@ -12,6 +12,7 @@ namespace NutzMich.Shared.Resources
         public DataTemplate FromTemplate { get; set; }
 
         public DataTemplate ToTemplate { get; set; }
+        public DataTemplate ReservierungTemplate { get; set; }
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container) =>
             SelectTemplateCore(item);
@@ -19,6 +20,9 @@ namespace NutzMich.Shared.Resources
         protected override DataTemplate SelectTemplateCore(object item)
         {
             var message = (ChatNachrichtViewModel)item;
+            if (!string.IsNullOrEmpty(message.Nachricht.TechnischerNachrichtenTyp) && message.Nachricht.TechnischerNachrichtenTyp == "Reservierung")
+                return ReservierungTemplate;
+
             return message.IchWarSender ? FromTemplate : ToTemplate;
         }
     }

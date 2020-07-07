@@ -19,5 +19,12 @@ namespace NutzMich.Shared.Models
             Id = Guid.NewGuid().ToString();
             Zeitraum = new ReservierungsZeitraum();
         }
+
+        public static string GetChatMessageText(string nachricht)
+        {
+            Reservierung res = Newtonsoft.Json.JsonConvert.DeserializeObject<Reservierung>(nachricht);
+
+            return "Reserviert von " + res.Zeitraum.Von.ToString("d") + " bis " + res.Zeitraum.Bis.ToString("d");
+        }
     }
 }

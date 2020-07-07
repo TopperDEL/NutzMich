@@ -26,6 +26,13 @@
             </Border>
         </Grid>
     </DataTemplate>
+    <DataTemplate x:Key="ReservierungTemplate">
+        <Grid>
+            <Border CornerRadius="12" Padding="12" HorizontalAlignment="Left" Margin="0,8,16,8" Background="Orange">
+                <TextBlock Text="{Binding TechnischerNachrichtenInhalt}" TextWrapping="WrapWholeWords" Foreground="White" />
+            </Border>
+        </Grid>
+    </DataTemplate>
 
-    <local:ChatMessageTemplateSelector x:Key="ChatMessageTemplateSelector" FromTemplate="{StaticResource FromMessageTemplate}" ToTemplate="{StaticResource ToMessageTemplate}" />
+    <local:ChatMessageTemplateSelector x:Key="ChatMessageTemplateSelector" FromTemplate="{StaticResource FromMessageTemplate}" ToTemplate="{StaticResource ToMessageTemplate}" ReservierungTemplate="{StaticResource ReservierungTemplate}" />
 </ResourceDictionary>

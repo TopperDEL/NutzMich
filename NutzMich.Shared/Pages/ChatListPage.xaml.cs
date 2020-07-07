@@ -73,7 +73,7 @@ namespace NutzMich.Shared.Pages
 
         private async void ReservierungErstellen(object sender, RoutedEventArgs e)
         {
-            ReservierungErstellenDialog dlg = new ReservierungErstellenDialog(Factory.GetReservierungService(), _vm.SelectedChat.AngebotViewModel.Angebot.Id, _vm.SelectedChat.GetChatPartnerID(), _vm.SelectedChat.AngebotViewModel.Angebot.AnbieterId);
+            ReservierungErstellenDialog dlg = new ReservierungErstellenDialog(Factory.GetReservierungService(), Factory.GetChatService(), _vm.SelectedChat.AngebotViewModel.Angebot, _vm.SelectedChat.GetChatInfo());
             var result = await dlg.ShowAsync();
         }
 
