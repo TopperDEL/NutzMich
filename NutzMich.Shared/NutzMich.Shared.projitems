@@ -21,7 +21,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Converter\TrueIsCollapsedConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converter\TrueIsVisibleConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converter\EmptyStringToBooleanConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IAnfrageService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IAngebotService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IChatBufferService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IChatController.cs" />
@@ -32,16 +31,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\INotificationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IReservierungService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IThumbnailHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Anfrage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Angebot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AttachmentImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChatInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChatNachricht.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Reservierung.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ReservierungsZeitraum.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Pages\AnfrageDialog.xaml.cs">
-      <DependentUpon>AnfrageDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AngebotDetailsPage.xaml.cs">
       <DependentUpon>AngebotDetailsPage.xaml</DependentUpon>
     </Compile>
@@ -69,14 +64,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\ConnectionService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ConnectionUsingServiceBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Factory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\AnfrageService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IdentityService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\LoginService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NotificationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ReservierungService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\TardigradeConnectionService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ThumbnailHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AnfrageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AngeboteViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AngebotViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ChatListViewModel.cs" />
@@ -95,10 +88,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)NutzMichStyles_Headers.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Pages\AnfrageDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -80,16 +80,5 @@ namespace NutzMich.Shared.Pages
             On_BackRequested();
             args.Handled = true;
         }
-
-        private async void AnfrageStellen(object sender, RoutedEventArgs e)
-        {
-            var anfrageVM = new AnfrageViewModel(_angebotVM.Angebot, Factory.GetLoginService());
-            AnfrageDialog dlg = new AnfrageDialog(anfrageVM);
-            var result = await dlg.ShowAsync();
-            if(result == ContentDialogResult.Primary)
-            {
-
-            }
-        }
     }
 }
