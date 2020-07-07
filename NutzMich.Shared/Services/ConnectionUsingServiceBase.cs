@@ -9,8 +9,8 @@ namespace NutzMich.Shared.Services
     public abstract class ConnectionUsingServiceBase
     {
         protected IIdentityService _identityService;
-        protected ConnectionService _readConnection;
-        protected ConnectionService _writeConnection;
+        protected static ConnectionService _readConnection;
+        protected static ConnectionService _writeConnection;
 
         public ConnectionUsingServiceBase(IIdentityService identityService)
         {
