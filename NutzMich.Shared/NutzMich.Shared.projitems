@@ -76,6 +76,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ChatNachrichtViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ChatViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\LoginViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ReservierungsZeitraumViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ReservierungViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

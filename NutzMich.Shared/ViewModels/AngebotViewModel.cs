@@ -11,9 +11,11 @@ using System.ComponentModel;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Uno.Extensions.Specialized;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
+using System.Linq;
 
 namespace NutzMich.Shared.ViewModels
 {
@@ -22,6 +24,7 @@ namespace NutzMich.Shared.ViewModels
     {
         private IThumbnailHelper _thumbnailHelper;
         public Angebot Angebot { get; set; }
+        public ObservableCollection<ReservierungsZeitraumViewModel> Reservierungen { get; set; }
 
         public BitmapImage Thumbnail
         {
@@ -61,6 +64,7 @@ namespace NutzMich.Shared.ViewModels
             Angebot = angebot;
 
             Fotos = new ObservableCollection<AttachmentImage>();
+            Reservierungen = new ObservableCollection<ReservierungsZeitraumViewModel>();
         }
 
         public void SetIsLoading()
@@ -104,6 +108,15 @@ namespace NutzMich.Shared.ViewModels
                     }
                     count++;
                 }
+            }
+        }
+
+        public async Task LoadReservierungenAsync()
+        {
+            var reservierungen = await Factory.GetReservierungService().GetReservierungenAsync(Angebot.AnbieterId, Angebot.Id);
+            foreach(var reservierung in reservierungen.Where(r=>r.Bis >= DateTime.Now))
+            {
+                Reservierungen.Add(new ReservierungsZeitraumViewModel(reservierung));
             }
         }
     }

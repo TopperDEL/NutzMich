@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:NutzMich.Shared.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:models="using:NutzMich.Shared.Models"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:models="using:NutzMich.Shared.Models" xmlns:viewmodels="using:NutzMich.Shared.ViewModels"
     mc:Ignorable="d">
 
     <ScrollViewer Background="White">
@@ -25,11 +25,22 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBox Grid.Row="0" Text="{Binding Angebot.Beschreibung, Mode=OneWay}" Header="Beschreibung" IsReadOnly="True" BorderThickness="0" AcceptsReturn="True"/>
                 <TextBox Grid.Row="1" Text="{Binding Angebot.Zustand, Mode=OneWay}" Header="Zustand" IsReadOnly="True" BorderThickness="0" AcceptsReturn="True"/>
-                <FlipView Grid.Row="2" ItemsSource="{Binding Fotos, Mode=OneWay}" HorizontalAlignment="Center" HorizontalContentAlignment="Center">
+                <StackPanel Grid.Row="2" Orientation="Vertical">
+                    <TextBlock Text="Reservierungen" FontWeight="Bold"/>
+                    <ItemsControl ItemsSource="{Binding Reservierungen, Mode=OneWay}" Margin="10">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="viewmodels:ReservierungsZeitraumViewModel">
+                                <TextBlock Text="{Binding ZeitraumAsString}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                <FlipView Grid.Row="3" ItemsSource="{Binding Fotos, Mode=OneWay}" HorizontalAlignment="Center" HorizontalContentAlignment="Center">
                     <FlipView.ItemTemplate>
                         <DataTemplate x:DataType="models:AttachmentImage">
                             <Grid>
