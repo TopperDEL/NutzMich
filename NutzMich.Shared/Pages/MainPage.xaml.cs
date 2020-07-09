@@ -93,5 +93,10 @@ namespace NutzMich.Pages
         {
             this.Frame.Navigate(typeof(ChatListPage));
         }
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

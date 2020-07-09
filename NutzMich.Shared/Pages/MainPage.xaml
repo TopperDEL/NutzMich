@@ -14,7 +14,10 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <CommandBar Grid.Row="0" Content="NutzMich" Background="RoyalBlue" Foreground="White">
+        <CommandBar Grid.Row="0" Background="RoyalBlue" Foreground="White">
+            <CommandBar.Content>
+                <TextBlock Text="NutzMich" Margin="12"/>
+            </CommandBar.Content>
             <CommandBar.PrimaryCommands>
                 <AppBarButton Icon="Refresh" Click="Refresh" Foreground="White"/>
                 <AppBarButton Icon="Message" Click="OpenChats" Foreground="White"/>
