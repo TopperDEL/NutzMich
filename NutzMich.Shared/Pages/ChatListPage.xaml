@@ -80,13 +80,13 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="40"/>
-                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox Text="{x:Bind _vm.SelectedChat.NachrichtComposer, Mode=TwoWay}" Grid.Column="0" PlaceholderText="Leg los..." CornerRadius="12"/>
                         <Button Grid.Column="1" VerticalAlignment="Bottom" Background="RoyalBlue" Foreground="White" Click="SendeNachricht" CornerRadius="12">
                             <SymbolIcon Symbol="Send"/>
                         </Button>
-                        <Button Grid.Column="2" VerticalAlignment="Bottom" Background="RoyalBlue" Foreground="White" Click="ReservierungErstellen" CornerRadius="12">
+                        <Button Grid.Column="2" Width="40" VerticalAlignment="Bottom" Background="RoyalBlue" Foreground="White" Click="ReservierungErstellen" CornerRadius="12" Visibility="{x:Bind _vm.SelectedChat.IchBinDerAnbieter, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}">
                             <SymbolIcon Symbol="Calendar"/>
                         </Button>
                     </Grid>

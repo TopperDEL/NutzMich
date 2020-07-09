@@ -36,7 +36,7 @@ namespace NutzMich.Shared.ViewModels
                     return "";
                 else
                 {
-                    var nachricht = Nachrichten.Where(n=>string.IsNullOrEmpty(n.TechnischerNachrichtenInhalt)).Last().Nachricht.Nachricht;
+                    var nachricht = Nachrichten.Where(n => string.IsNullOrEmpty(n.TechnischerNachrichtenInhalt)).Last().Nachricht.Nachricht;
                     if (nachricht.Length > 200)
                         return nachricht.Substring(0, 200) + "...";
                     else
@@ -45,6 +45,13 @@ namespace NutzMich.Shared.ViewModels
             }
         }
         public ObservableCollection<ChatNachrichtViewModel> Nachrichten { get; set; }
+        public bool IchBinDerAnbieter
+        {
+            get
+            {
+                return AngebotViewModel.Angebot.AnbieterId == _loginService.AnbieterId;
+            }
+        }
 
         public bool Ungelesen
         {
