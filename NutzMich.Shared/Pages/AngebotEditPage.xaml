@@ -8,6 +8,7 @@
     xmlns:models="using:NutzMich.Shared.Models"
     xmlns:toolkit="uno"
     xmlns:xamarin="http://uno.ui/xamarin"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d">
 
     <ScrollViewer Background="White">
@@ -54,7 +55,12 @@
                     </GridView.ItemTemplate>
                 </GridView>
             </StackPanel>
-            <ProgressRing IsActive="{Binding Loading, Mode=OneWay}" Visibility="Visible" Background="White" Foreground="RoyalBlue" Opacity="50" Grid.RowSpan="2"/>
+            <controls:Loading IsLoading="{Binding Loading, Mode=OneWay}" Grid.RowSpan="2" Visibility="{Binding Loading, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}">
+                <controls:Loading.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.7"/>
+                </controls:Loading.Background>
+                <ProgressRing IsActive="True" Foreground="RoyalBlue" />
+            </controls:Loading>
         </Grid>
     </ScrollViewer>
 </Page>
