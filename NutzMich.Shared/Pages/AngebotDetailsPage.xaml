@@ -43,15 +43,18 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </StackPanel>
-                <FlipView Grid.Row="3" ItemsSource="{Binding Fotos, Mode=OneWay}" HorizontalAlignment="Center" HorizontalContentAlignment="Center">
-                    <FlipView.ItemTemplate>
-                        <DataTemplate x:DataType="models:AttachmentImage">
-                            <Grid>
-                                <Image Source="{Binding Image}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform"/>
-                            </Grid>
-                        </DataTemplate>
-                    </FlipView.ItemTemplate>
-                </FlipView>
+                <StackPanel Grid.Row="3" Orientation="Vertical">
+                    <TextBlock Text="Fotos" FontWeight="Bold"/>
+                    <FlipView ItemsSource="{Binding Fotos, Mode=OneWay}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="10">
+                        <FlipView.ItemTemplate>
+                            <DataTemplate x:DataType="models:AttachmentImage">
+                                <Grid>
+                                    <Image Source="{Binding Image}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform"/>
+                                </Grid>
+                            </DataTemplate>
+                        </FlipView.ItemTemplate>
+                    </FlipView>
+                </StackPanel>
             </Grid>
         </Grid>
     </ScrollViewer>
