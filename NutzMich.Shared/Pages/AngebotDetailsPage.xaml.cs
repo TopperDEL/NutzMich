@@ -62,7 +62,7 @@ namespace NutzMich.Shared.Pages
             base.OnNavigatedTo(e);
 
             this.DataContext = _angebotVM = e.Parameter as AngebotViewModel;
-            await _angebotVM.LoadReservierungenAsync();
+            await _angebotVM.LoadReservierungenAsync(true);
             await _angebotVM.LoadFotos();
         }
 

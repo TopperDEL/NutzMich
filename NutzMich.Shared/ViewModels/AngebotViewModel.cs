@@ -123,9 +123,9 @@ namespace NutzMich.Shared.ViewModels
         }
 
         private bool _reservierungenGeladen;
-        public async Task LoadReservierungenAsync()
+        public async Task LoadReservierungenAsync(bool nachladenErzwingen = false)
         {
-            if (_reservierungenGeladen)
+            if (_reservierungenGeladen && !nachladenErzwingen)
                 return;
 
             var reservierungen = await Factory.GetReservierungService().GetReservierungenAsync(Angebot.AnbieterId, Angebot.Id);
