@@ -24,7 +24,7 @@
                 </CommandBar.Content>
                 <CommandBar.PrimaryCommands>
                     <AppBarButton Icon="Save" Click="Save" Foreground="White" IsEnabled="{Binding NotLoading, Mode=OneWay}"/>
-                    <AppBarButton Icon="Cancel" Click="Cancel" Foreground="White" IsEnabled="{Binding NotLoading, Mode=OneWay}"/>
+                    <AppBarButton Icon="Back" Click="Cancel" Foreground="White" IsEnabled="{Binding NotLoading, Mode=OneWay}"/>
                 </CommandBar.PrimaryCommands>
             </CommandBar>
 
