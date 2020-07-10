@@ -30,6 +30,7 @@ namespace NutzMich.Shared.Pages
         IReservierungService _reservierungService;
         IChatService _chatService;
         ChatInfo _chatInfo;
+        public ChatNachricht BefehlsNachricht;
 
         public ReservierungErstellenDialog(IReservierungService reservierungService, IChatService chatService, Angebot angebot, ChatInfo chatInfo)
         {
@@ -61,21 +62,22 @@ namespace NutzMich.Shared.Pages
 
             await _reservierungService.SaveReservierungAsync(_vm.Reservierung);
 
-            ChatNachricht befehlsNachricht = new ChatNachricht();
-            befehlsNachricht.AngebotID = _angebot.Id;
-            befehlsNachricht.EmpfaengerAnbieterID = _vm.Reservierung.AusleiherID;
-            befehlsNachricht.TechnischerNachrichtenTyp = "Reservierung";
-            befehlsNachricht.SenderAnbieterID = _angebot.AnbieterId;
-            befehlsNachricht.Nachricht = Newtonsoft.Json.JsonConvert.SerializeObject(_vm.Reservierung);
-            befehlsNachricht.SendeDatum = DateTime.Now;
+            BefehlsNachricht = new ChatNachricht();
+            BefehlsNachricht.AngebotID = _angebot.Id;
+            BefehlsNachricht.EmpfaengerAnbieterID = _vm.Reservierung.AusleiherID;
+            BefehlsNachricht.TechnischerNachrichtenTyp = "Reservierung";
+            BefehlsNachricht.SenderAnbieterID = _angebot.AnbieterId;
+            BefehlsNachricht.Nachricht = Newtonsoft.Json.JsonConvert.SerializeObject(_vm.Reservierung);
+            BefehlsNachricht.SendeDatum = DateTime.Now;
 
-            await _chatService.SendNachrichtAsync(_angebot, befehlsNachricht, _chatInfo.NachrichtenAccess, false);
+            await _chatService.SendNachrichtAsync(_angebot, BefehlsNachricht, _chatInfo.NachrichtenAccess, false);
             deferral.Complete();
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             //Nothing to do
+            BefehlsNachricht = null;
         }
     }
 }

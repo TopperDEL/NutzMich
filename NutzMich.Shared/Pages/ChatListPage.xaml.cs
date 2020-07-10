@@ -87,6 +87,10 @@ namespace NutzMich.Shared.Pages
         {
             ReservierungErstellenDialog dlg = new ReservierungErstellenDialog(Factory.GetReservierungService(), Factory.GetChatService(), _vm.SelectedChat.AngebotViewModel.Angebot, _vm.SelectedChat.GetChatInfo());
             var result = await dlg.ShowAsync();
+            if(dlg.BefehlsNachricht != null)
+            {
+                _vm.SelectedChat.Nachrichten.Add(new ChatNachrichtViewModel(dlg.BefehlsNachricht) { IchWarSender = true });
+            }
         }
 
         private async void DeleteTemp(object sender, RoutedEventArgs e)
