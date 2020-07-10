@@ -62,7 +62,11 @@ namespace NutzMich.Pages
                 if (angebot.AnbieterId == _loginService.AnbieterId)
                     _angeboteVM.MeineAngebote.Add(new AngebotViewModel(angebot));
                 else
-                    _angeboteVM.AlleAngebote.Add(new AngebotViewModel(angebot));
+                {
+                    var angebotVM = new AngebotViewModel(angebot);
+                    _angeboteVM.AlleAngebote.Add(angebotVM);
+                    await angebotVM.LoadReservierungenAsync();
+                }
             }
 
             _angeboteVM.SetNotLoading();

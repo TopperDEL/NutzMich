@@ -9,18 +9,18 @@ namespace NutzMich.Shared.ViewModels
     [Bindable]
     public class ReservierungsZeitraumViewModel
     {
-        ReservierungsZeitraum _zeitraum;
+        public ReservierungsZeitraum Zeitraum { get; private set; }
 
         public string ZeitraumAsString
         {
             get
             {
-                return _zeitraum.Von.ToString("d") + " - " + _zeitraum.Bis.ToString("d");
+                return Zeitraum.Von.ToString("d") + " - " + Zeitraum.Bis.ToString("d");
             }
         }
         public ReservierungsZeitraumViewModel(ReservierungsZeitraum zeitraum)
         {
-            _zeitraum = zeitraum;
+            Zeitraum = zeitraum;
         }
     }
 }

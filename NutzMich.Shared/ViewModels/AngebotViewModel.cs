@@ -16,6 +16,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
 using System.Linq;
+using Windows.UI;
+using Windows.UI.Xaml.Media;
 
 namespace NutzMich.Shared.ViewModels
 {
@@ -55,8 +57,17 @@ namespace NutzMich.Shared.ViewModels
 
         }
 
+        public Verfuegbarkeit Verfuegbarkeit { get; private set; }
+
+        public string VerfuegbarkeitsDetails { get; private set; }
+        public Brush VerfuegbarkeitsAmpel{ get; private set; }
+
         public AngebotViewModel(Angebot angebot)
         {
+            Verfuegbarkeit = Verfuegbarkeit.Unbekannt;
+            VerfuegbarkeitsDetails = "";
+            VerfuegbarkeitsAmpel = new SolidColorBrush(Colors.Black);
+
             _thumbnailHelper = Factory.GetThumbnailHelper();
             Barrel.ApplicationId = "nutzmich_monkeycache";
 
@@ -111,13 +122,52 @@ namespace NutzMich.Shared.ViewModels
             }
         }
 
+        private bool _reservierungenGeladen;
         public async Task LoadReservierungenAsync()
         {
+            if (_reservierungenGeladen)
+                return;
+
             var reservierungen = await Factory.GetReservierungService().GetReservierungenAsync(Angebot.AnbieterId, Angebot.Id);
             foreach(var reservierung in reservierungen.Where(r=>r.Bis >= DateTime.Now))
             {
                 Reservierungen.Add(new ReservierungsZeitraumViewModel(reservierung));
             }
+
+            RefreshVerfügbarkeit();
+
+            _reservierungenGeladen = true;
+        }
+
+        private void RefreshVerfügbarkeit()
+        {
+            var reservierungHeute = Reservierungen.Where(r => r.Zeitraum.Von < DateTime.Now && DateTime.Now < r.Zeitraum.Bis);
+            if (reservierungHeute.Count() == 0)
+            {
+                Verfuegbarkeit = Verfuegbarkeit.Verfuegbar;
+                //Aktuell nicht verliehen
+                var nächsteZukünftige = Reservierungen.Where(r => r.Zeitraum.Von > DateTime.Now);
+                if(nächsteZukünftige.Count() != 0)
+                {
+                    VerfuegbarkeitsDetails = "Verfügbar bis " + nächsteZukünftige.OrderBy(r => r.Zeitraum.Von).First().Zeitraum.Bis.AddDays(-1).ToString("d");
+                    VerfuegbarkeitsAmpel = new SolidColorBrush(Colors.Orange);
+                }
+                else
+                {
+                    VerfuegbarkeitsDetails = "";
+                    VerfuegbarkeitsAmpel = new SolidColorBrush(Colors.DarkGreen);
+                }
+            }
+            else
+            {
+                Verfuegbarkeit = Verfuegbarkeit.Verliehen;
+                VerfuegbarkeitsDetails = "Verfügbar ab " + reservierungHeute.First().Zeitraum.Bis.AddDays(1).ToString("d");
+                VerfuegbarkeitsAmpel = new SolidColorBrush(Colors.DarkRed);
+            }
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Verfuegbarkeit)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VerfuegbarkeitsDetails)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VerfuegbarkeitsAmpel)));
         }
     }
 }

@@ -37,6 +37,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChatNachricht.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Reservierung.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ReservierungsZeitraum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Verfuegbarkeit.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AngebotDetailsPage.xaml.cs">
       <DependentUpon>AngebotDetailsPage.xaml</DependentUpon>
     </Compile>
