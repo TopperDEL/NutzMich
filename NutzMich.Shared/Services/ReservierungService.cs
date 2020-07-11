@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Security.Credentials;
 
 namespace NutzMich.Shared.Services
 {
@@ -13,11 +14,16 @@ namespace NutzMich.Shared.Services
     {
         INotificationService _notificationService;
         IAngebotService _angebotService;
+        ILoginService _loginService;
+        private PasswordVault _vault = new PasswordVault();
 
-        public ReservierungService(INotificationService notificationService, IAngebotService angebotService) : base(Factory.GetIdentityService())
+        private const string NUTZ_MICH_RES = "NUTZ_MICH_RES";
+
+        public ReservierungService(INotificationService notificationService, IAngebotService angebotService, ILoginService loginService) : base(Factory.GetIdentityService())
         {
             _notificationService = notificationService;
             _angebotService = angebotService;
+            _loginService = loginService;
         }
 
         public async Task<string> CheckReservierungAsync(Reservierung reservierung)
@@ -106,10 +112,42 @@ namespace NutzMich.Shared.Services
         public async Task ReservierungBestaetigenAsync(Reservierung reservierung)
         {
             var angebot = await _angebotService.LoadAngebotAsync(reservierung.AnbieterID+"/"+reservierung.AngebotID);
+
+            if (_loginService.AnbieterId != reservierung.AnbieterID)
+            {
 #if DEBUG
-            _notificationService.SendScheduledReservierungNotification("Reservierungs-Erinnerung!", "'" + angebot.Ueberschrift + "' wurde für dich morgen reserviert - denke an die Abholung!", DateTimeOffset.Now.AddSeconds(10));
+                _notificationService.SendScheduledReservierungNotification("Reservierungs-Erinnerung!", "'" + angebot.Ueberschrift + "' wurde für dich morgen reserviert - denke an die Abholung!", DateTimeOffset.Now.AddSeconds(10));
 #endif
-            _notificationService.SendScheduledReservierungNotification("Reservierungs-Erinnerung!", "'" + angebot.Ueberschrift + "' wurde für dich morgen reserviert - denke an die Abholung!", reservierung.Zeitraum.Von.AddDays(-1).Date);
+                _notificationService.SendScheduledReservierungNotification("Reservierungs-Erinnerung!", "'" + angebot.Ueberschrift + "' wurde für dich morgen reserviert - denke an die Abholung!", reservierung.Zeitraum.Von.AddDays(-1).Date);
+            }
+
+            List<Reservierung> reservierungen = new List<Reservierung>();
+            try
+            {
+                var reservierungenVault = _vault.Retrieve(NUTZ_MICH_RES, _loginService.AnbieterId);
+                var savedRes = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Reservierung>>(reservierungenVault.Password);
+                reservierungen.AddRange(savedRes);
+                _vault.Remove(reservierungenVault);
+            }
+            catch { }
+
+            reservierungen.Add(reservierung);
+
+            _vault.Add(new PasswordCredential(NUTZ_MICH_RES, _loginService.AnbieterId, Newtonsoft.Json.JsonConvert.SerializeObject(reservierungen)));
+        }
+
+        public List<Reservierung> GetBestaetigteReservierungen()
+        {
+            List<Reservierung> reservierungen = new List<Reservierung>();
+            try
+            {
+                var reservierungenVault = _vault.Retrieve(NUTZ_MICH_RES, _loginService.AnbieterId);
+                var savedRes = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Reservierung>>(reservierungenVault.Password);
+                reservierungen.AddRange(savedRes);
+            }
+            catch { }
+
+            return reservierungen;
         }
     }
 }

@@ -98,9 +98,9 @@ namespace NutzMich.Pages
             this.Frame.Navigate(typeof(ChatListPage));
         }
 
-        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        private void Reservierungen(object sender, RoutedEventArgs e)
         {
-
+            this.Frame.Navigate(typeof(ReservierungenPage));
         }
     }
 }

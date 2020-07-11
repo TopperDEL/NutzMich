@@ -15,5 +15,7 @@ namespace NutzMich.Shared.Interfaces
         Task<bool> SaveReservierungAsync(Reservierung reservierung);
 
         Task ReservierungBestaetigenAsync(Reservierung reservierung);
+
+        List<Reservierung> GetBestaetigteReservierungen();
     }
 }

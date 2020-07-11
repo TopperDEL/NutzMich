@@ -21,6 +21,7 @@
             <CommandBar.PrimaryCommands>
                 <AppBarButton Icon="Refresh" Click="Refresh" Foreground="White"/>
                 <AppBarButton Icon="Message" Click="OpenChats" Foreground="White"/>
+                <AppBarButton Icon="Bookmarks" Click="Reservierungen" Foreground="White"/>
             </CommandBar.PrimaryCommands>
         </CommandBar>
         <Pivot Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Row="1">

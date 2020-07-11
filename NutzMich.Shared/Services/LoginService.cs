@@ -70,7 +70,14 @@ namespace NutzMich.Shared.Services
         {
             get
             {
-                return _vault.Retrieve(NUTZ_MICH, MAILHASH)?.Password;
+                try
+                {
+                    return _vault.Retrieve(NUTZ_MICH, MAILHASH)?.Password;
+                }
+                catch
+                {
+                    return "";
+                }
             }
         }
 

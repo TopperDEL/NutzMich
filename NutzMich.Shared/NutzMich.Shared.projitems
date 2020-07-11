@@ -53,6 +53,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\ReservierungenPage.xaml.cs">
+      <DependentUpon>ReservierungenPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Pages\ReservierungErstellenDialog.xaml.cs">
       <DependentUpon>ReservierungErstellenDialog.xaml</DependentUpon>
     </Compile>
@@ -77,6 +80,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ChatNachrichtViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ChatViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\LoginViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ReservierungenViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ReservierungsZeitraumViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ReservierungViewModel.cs" />
   </ItemGroup>
@@ -110,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Pages\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Pages\ReservierungenPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

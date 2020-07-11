@@ -60,7 +60,16 @@ namespace NutzMich.Shared.Pages
                 return;
             }
 
-            await _reservierungService.SaveReservierungAsync(_vm.Reservierung);
+            var saved = await _reservierungService.SaveReservierungAsync(_vm.Reservierung);
+            if(!saved)
+            {
+                args.Cancel = true;
+                MessageDialog error = new MessageDialog("Fehler beim Speichern der Reservierung - bitte später noch einmal versuchen.", "Fehler");
+                await error.ShowAsync();
+                deferral.Complete();
+                return;
+            }
+            await _reservierungService.ReservierungBestaetigenAsync(_vm.Reservierung);
 
             BefehlsNachricht = new ChatNachricht();
             BefehlsNachricht.AngebotID = _angebot.Id;
