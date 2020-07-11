@@ -43,7 +43,8 @@ namespace NutzMich.Shared.Services
 
                 foreach (var angebot in angeboteItems.Items)
                 {
-                    yield return await LoadAngebotAsync(angebot.Key.Replace("Angebote/", ""));
+                    if (!angebot.Key.Contains("Reservierung"))
+                        yield return await LoadAngebotAsync(angebot.Key.Replace("Angebote/", ""));
                 }
             }
             finally
