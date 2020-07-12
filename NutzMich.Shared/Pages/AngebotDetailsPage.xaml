@@ -48,9 +48,17 @@
                     <FlipView ItemsSource="{Binding Fotos, Mode=OneWay}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="10">
                         <FlipView.ItemTemplate>
                             <DataTemplate x:DataType="models:AttachmentImage">
-                                <Grid>
-                                    <Image Source="{Binding Image}" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform"/>
-                                </Grid>
+                                <ScrollViewer Background="White" MinHeight="200" MinWidth="200"
+                                        Name="ScrollViewerMain"
+                                        MinZoomFactor="1" 
+                                        ZoomMode="Enabled">
+                                    <Image
+                                            MaxWidth="{Binding Path=ViewportWidth, ElementName=ScrollViewerMain}"
+                                            MaxHeight="{Binding Path=ViewportHeight, ElementName=ScrollViewerMain}"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Source="{Binding Image}"/>
+                                </ScrollViewer>
                             </DataTemplate>
                         </FlipView.ItemTemplate>
                     </FlipView>
