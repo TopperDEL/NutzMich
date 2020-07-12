@@ -16,10 +16,12 @@ namespace NutzMich.Contracts.Models
         public string AnfrageAccess { get; set; }
         public string NachrichtenAccess { get; set; }
         public string ThumbnailBase64 { get; set; }
+        public int Version { get; set; }
 
         public Angebot()
         {
             Id = Guid.NewGuid().ToString();
+            Version = 1;
         }
     }
 }
