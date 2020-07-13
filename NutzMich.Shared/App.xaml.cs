@@ -66,6 +66,42 @@ namespace NutzMich
         {
         }
 
+#if WINDOWS_UWP
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            if(args.Kind == ActivationKind.ToastNotification)
+            {
+                var toastArgs = args as ToastNotificationActivatedEventArgs;
+                var arguments = toastArgs.Argument;
+                Frame rootFrame = Windows.UI.Xaml.Window.Current.Content as Frame;
+                if (rootFrame == null)
+                {
+                    // Create a Frame to act as the navigation context and navigate to the first page
+                    rootFrame = new Frame();
+
+                    rootFrame.NavigationFailed += OnNavigationFailed;
+
+                   
+                    // Place the frame in the current Window
+                    Windows.UI.Xaml.Window.Current.Content = rootFrame;
+                }
+                if (rootFrame.Content == null)
+                {
+                    // When the navigation stack isn't restored navigate to the first page,
+                    // configuring the new page by passing required information as a navigation
+                    // parameter
+                    if (Factory.GetLoginService().IsLoggedIn())
+                        rootFrame.Navigate(typeof(ChatListPage));
+                    else
+                        rootFrame.Navigate(typeof(LoginPage));
+                }
+                // Ensure the current window is active
+                Windows.UI.Xaml.Window.Current.Activate();
+            }
+            base.OnActivated(args);
+        }
+#endif
+
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
