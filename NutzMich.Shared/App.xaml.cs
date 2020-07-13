@@ -20,6 +20,7 @@ using Windows.UI.Core;
 using NutzMich.Shared.Pages;
 using NutzMich.Shared.Services;
 using System.Threading.Tasks;
+using Shiny;
 
 namespace NutzMich
 {
@@ -40,7 +41,22 @@ namespace NutzMich
             this.Suspending += OnSuspending;
             this.UnhandledException += App_UnhandledException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+
+#if WINDOWS_UWP
+            this.ShinyInit(new NutzMich.Shared.Shiny.NutzMichStartup());
+#endif
+#if __IOS__
+            Shiny.iOSShinyHost.Init(new NutzMich.Shared.Shiny.NutzMichStartup());
+#endif
         }
+
+#if __IOS__
+        public override void PerformFetch(UIKit.UIApplication application, Action<UIKit.UIBackgroundFetchResult> completionHandler)
+        {
+            Shiny.Jobs.JobManager.OnBackgroundFetch(completionHandler);
+            base.PerformFetch(application, completionHandler);
+        }
+#endif
 
         private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
         {

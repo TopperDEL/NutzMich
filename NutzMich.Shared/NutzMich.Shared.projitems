@@ -31,6 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\INotificationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IReservierungService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IThumbnailHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Jobs\BackgroundChatPollJob.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Angebot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AttachmentImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChatInfo.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\ReservierungService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\TardigradeConnectionService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ThumbnailHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Shiny\NutzMichStartup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AngeboteViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AngebotViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ChatListViewModel.cs" />

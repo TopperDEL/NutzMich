@@ -29,11 +29,11 @@ namespace NutzMich.Shared.Services
         public async Task<string> CheckReservierungAsync(Reservierung reservierung)
         {
             var reservierungen = await GetReservierungenAsync(reservierung.AnbieterID, reservierung.AngebotID);
-            foreach(var res in reservierungen)
+            foreach (var res in reservierungen)
             {
-                if((res.Von < reservierung.Zeitraum.Von && reservierung.Zeitraum.Von < res.Bis ) || //Von überschneidet sich
-                   (res.Von < reservierung.Zeitraum.Bis && reservierung.Zeitraum.Bis < res.Bis ) || //Bis überschneidet sich
-                   (reservierung.Zeitraum.Von < res.Von && res.Bis < reservierung.Zeitraum.Bis ) )  //Bestehende Reservierung würde "geschluckt"
+                if ((res.Von < reservierung.Zeitraum.Von && reservierung.Zeitraum.Von < res.Bis) || //Von überschneidet sich
+                   (res.Von < reservierung.Zeitraum.Bis && reservierung.Zeitraum.Bis < res.Bis) || //Bis überschneidet sich
+                   (reservierung.Zeitraum.Von < res.Von && res.Bis < reservierung.Zeitraum.Bis))  //Bestehende Reservierung würde "geschluckt"
                 {
                     return "In diesem Zeitraum liegt bereits eine Reservierung.";
                 }
@@ -99,7 +99,7 @@ namespace NutzMich.Shared.Services
             var download = await _readConnection.ObjectService.DownloadObjectAsync(_readConnection.Bucket, "Angebote/" + anbieterID + "/" + angebotID + "/Reservierungen/" + GetTimeStamp(zeitraum), new uplink.NET.Models.DownloadOptions(), false);
             await download.StartDownloadAsync();
 
-            if(download.Completed)
+            if (download.Completed)
             {
                 return Newtonsoft.Json.JsonConvert.DeserializeObject<Reservierung>(Encoding.UTF8.GetString(download.DownloadedBytes));
             }
@@ -111,7 +111,7 @@ namespace NutzMich.Shared.Services
 
         public async Task ReservierungBestaetigenAsync(Reservierung reservierung)
         {
-            var angebot = await _angebotService.LoadAngebotAsync(reservierung.AnbieterID+"/"+reservierung.AngebotID);
+            var angebot = await _angebotService.LoadAngebotAsync(reservierung.AnbieterID + "/" + reservierung.AngebotID);
 
             if (_loginService.AnbieterId != reservierung.AnbieterID)
             {

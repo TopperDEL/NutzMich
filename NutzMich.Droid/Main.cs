@@ -28,6 +28,12 @@ namespace NutzMich.Droid
 			ConfigureUniversalImageLoader();
 		}
 
+        public override void OnCreate()
+        {
+            base.OnCreate();
+			Shiny.AndroidShinyHost.Init(this, new NutzMich.Shared.Shiny.NutzMichStartup());
+		}
+
 		private void ConfigureUniversalImageLoader()
 		{
 			// Create global configuration and initialize ImageLoader with this config
