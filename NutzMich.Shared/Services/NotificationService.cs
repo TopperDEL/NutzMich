@@ -18,6 +18,7 @@ namespace NutzMich.Shared.Services
 
         public async Task<bool> SendChatNotificationAsync(string title, string message)
         {
+            
             NotificationResult result;
             result = await NotificationManager.Instance.BuildNotification()
                 .AddDescription(title).AddTitle(message)

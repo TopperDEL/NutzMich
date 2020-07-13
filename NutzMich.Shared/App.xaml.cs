@@ -43,10 +43,10 @@ namespace NutzMich
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
 
 #if WINDOWS_UWP
-            this.ShinyInit(new NutzMich.Shared.Shiny.NutzMichStartup());
+            this.ShinyInit(new NutzMich.Shared.ShinyInit.NutzMichStartup());
 #endif
 #if __IOS__
-            Shiny.iOSShinyHost.Init(new NutzMich.Shared.Shiny.NutzMichStartup());
+            Shiny.iOSShinyHost.Init(new NutzMich.Shared.ShinyInit.NutzMichStartup());
 #endif
         }
 

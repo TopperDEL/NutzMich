@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NutzMich.Shared.Shiny
+namespace NutzMich.Shared.ShinyInit
 {
     public class NutzMichStartup : ShinyStartup
     {

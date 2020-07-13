@@ -31,7 +31,7 @@ namespace NutzMich.Droid
         public override void OnCreate()
         {
             base.OnCreate();
-			Shiny.AndroidShinyHost.Init(this, new NutzMich.Shared.Shiny.NutzMichStartup());
+			Shiny.AndroidShinyHost.Init(this, new NutzMich.Shared.ShinyInit.NutzMichStartup());
 		}
 
 		private void ConfigureUniversalImageLoader()
