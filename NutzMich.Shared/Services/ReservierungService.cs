@@ -147,7 +147,7 @@ namespace NutzMich.Shared.Services
             }
             catch { }
 
-            return reservierungen;
+            return reservierungen.Where(r=>r.Zeitraum.Bis > DateTime.Now.AddDays(3)).ToList();
         }
     }
 }
