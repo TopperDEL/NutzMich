@@ -20,6 +20,11 @@ namespace NutzMich.Shared.ShinyInit
             Log.UseConsole();
             Log.UseDebug();
 
+            services.AddAppState<AppStateDelegate>();
+
+            services.UseNotifications<NotificationDelegate>(true, 
+                new Shiny.Notifications.NotificationCategory("Chat", new Shiny.Notifications.NotificationAction("Open", "Öffnen", Shiny.Notifications.NotificationActionType.OpenApp))); //Hier wären weitere NotificationCategories möglich
+
             services.AddSingleton(typeof(IChatService), Factory.GetChatService());
             services.AddSingleton(typeof(INotificationService), Factory.GetNotificationService());
             services.AddSingleton(typeof(IAngebotService), Factory.GetAngebotService());

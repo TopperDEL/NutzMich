@@ -116,9 +116,9 @@ namespace NutzMich.Shared.Services
             if (_loginService.AnbieterId != reservierung.AnbieterID)
             {
 #if DEBUG
-                _notificationService.SendScheduledReservierungNotification("Reservierungs-Erinnerung!", "'" + angebot.Ueberschrift + "' wurde für dich morgen reserviert - denke an die Abholung!", DateTimeOffset.Now.AddSeconds(10));
+                _notificationService.SendScheduledReservierungNotificationAsync("Reservierungs-Erinnerung!", "'" + angebot.Ueberschrift + "' wurde für dich morgen reserviert - denke an die Abholung!", DateTimeOffset.Now.AddSeconds(10));
 #endif
-                _notificationService.SendScheduledReservierungNotification("Reservierungs-Erinnerung!", "'" + angebot.Ueberschrift + "' wurde für dich morgen reserviert - denke an die Abholung!", reservierung.Zeitraum.Von.AddDays(-1).Date);
+                _notificationService.SendScheduledReservierungNotificationAsync("Reservierungs-Erinnerung!", "'" + angebot.Ueberschrift + "' wurde für dich morgen reserviert - denke an die Abholung!", reservierung.Zeitraum.Von.AddDays(-1).Date);
             }
 
             List<Reservierung> reservierungen = new List<Reservierung>();

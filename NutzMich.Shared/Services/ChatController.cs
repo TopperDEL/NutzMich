@@ -13,8 +13,6 @@ namespace NutzMich.Shared.Services
 {
     public class ChatController : IChatController
     {
-        public static Frame _frameToUse;
-
         IAngebotService _angebotService;
         IChatPollingService _chatPollingService;
         IChatBufferService _chatBufferService;
@@ -32,19 +30,13 @@ namespace NutzMich.Shared.Services
 
         private async void _chatPollingService_NachrichtErhalten(Contracts.Models.Angebot angebot, Models.ChatNachricht nachricht)
         {
-            bool openChat;
             if (!string.IsNullOrEmpty(nachricht.TechnischerNachrichtenTyp) && nachricht.TechnischerNachrichtenTyp == Reservierung.TECHNISCHER_NACHRICHTENTYP)
             {
-                openChat = await Factory.GetNotificationService().SendChatNotificationAsync(nachricht.SenderAnbieterID, Reservierung.GetChatMessageText(nachricht.Nachricht));
+                await Factory.GetNotificationService().SendChatNotificationAsync(nachricht.SenderAnbieterID, Reservierung.GetChatMessageText(nachricht.Nachricht), angebot.Id, nachricht.SenderAnbieterID);
             }
             else
             {
-                openChat = await Factory.GetNotificationService().SendChatNotificationAsync(nachricht.SenderAnbieterID, nachricht.Nachricht);
-            }
-
-            if(openChat && _frameToUse != null)
-            {
-                _frameToUse.Navigate(typeof(ChatListPage), new AngebotViewModel(angebot));
+                await Factory.GetNotificationService().SendChatNotificationAsync(nachricht.SenderAnbieterID, nachricht.Nachricht, angebot.Id, nachricht.SenderAnbieterID);
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using NutzMich.Shared.Interfaces;
-using Plugin.Toast;
+using NutzMich.Shared.ShinyInit;
+using Shiny.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,33 +10,28 @@ namespace NutzMich.Shared.Services
 {
     public class NotificationService : INotificationService
     {
-        public NotificationService()
+        public async Task SendChatNotificationAsync(string title, string message, string angebotID, string gegenseiteAnbieterID)
         {
-#if !__ANDROID__
-            NotificationManager.Init();
-#endif
-        }
-
-        public async Task<bool> SendChatNotificationAsync(string title, string message)
-        {
+            var noti = new Notification();
+            noti.Message = message;
+            noti.Title = title;
+            noti.Category = "Chat";
+            noti.Payload = new Dictionary<string, string>();
+            noti.Payload.Add("AngebotID", angebotID);
+            noti.Payload.Add("GegenseiteAnbieterID", gegenseiteAnbieterID);
             
-            NotificationResult result;
-            result = await NotificationManager.Instance.BuildNotification()
-                .AddDescription(title).AddTitle(message)
-                .Build().ShowAsync();
-
-            if(result == NotificationResult.Activated)
-            {
-                return true;
-            }
-            return false;
+            await AppStateDelegate.NotificationManager.Send(noti);
         }
 
-        public void SendScheduledReservierungNotification(string title, string message, DateTimeOffset scheduledFor)
+        public async Task SendScheduledReservierungNotificationAsync(string title, string message, DateTimeOffset scheduledFor)
         {
-            NotificationManager.Instance.BuildNotification()
-                .AddDescription(title).AddTitle(message)
-                .Build().ScheduleTo(scheduledFor);
+            var noti = new Notification();
+            noti.Message = message;
+            noti.Title = title;
+            noti.Category = "ReservierungsErinnerung";
+            noti.ScheduleDate = scheduledFor;
+
+            await AppStateDelegate.NotificationManager.Send(noti);
         }
     }
 }

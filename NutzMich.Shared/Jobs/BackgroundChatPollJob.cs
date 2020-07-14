@@ -50,11 +50,11 @@ namespace NutzMich.Shared.Jobs
             {
                 if (!string.IsNullOrEmpty(nachricht.TechnischerNachrichtenTyp) && nachricht.TechnischerNachrichtenTyp == Reservierung.TECHNISCHER_NACHRICHTENTYP)
                 {
-                    _notification.SendChatNotificationAsync(nachricht.SenderAnbieterID, Reservierung.GetChatMessageText(nachricht.Nachricht));
+                    _notification.SendChatNotificationAsync(nachricht.SenderAnbieterID, Reservierung.GetChatMessageText(nachricht.Nachricht), nachricht.AngebotID, nachricht.SenderAnbieterID);
                 }
                 else
                 {
-                    _notification.SendChatNotificationAsync(nachricht.SenderAnbieterID, nachricht.Nachricht);
+                    _notification.SendChatNotificationAsync(nachricht.SenderAnbieterID, nachricht.Nachricht, nachricht.AngebotID, nachricht.SenderAnbieterID);
                 }
             }
             return true;
