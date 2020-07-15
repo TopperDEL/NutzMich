@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NutzMich.Shared.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Windows.UI.Xaml.Data;
@@ -17,11 +18,13 @@ namespace NutzMich.Contracts.Models
         public string NachrichtenAccess { get; set; }
         public string ThumbnailBase64 { get; set; }
         public int Version { get; set; }
+        public List<Kategorie> Kategorien { get; set; }
 
         public Angebot()
         {
             Id = Guid.NewGuid().ToString();
             Version = 1;
+            Kategorien = new List<Kategorie>();
         }
     }
 }

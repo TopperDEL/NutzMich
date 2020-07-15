@@ -16,5 +16,6 @@ namespace NutzMich.Contracts.Interfaces
         IAsyncEnumerable<Angebot> GetAlleAsync();
         IAsyncEnumerable<Angebot> GetMeineAsync();
         Task<Angebot> LoadAngebotAsync(string angebotId);
+        Tuple<bool, string> IstAngebotFehlerhaft(Angebot angebot);
     }
 }

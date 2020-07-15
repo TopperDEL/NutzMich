@@ -162,5 +162,25 @@ namespace NutzMich.Shared.Services
             Barrel.Current.Empty("alleAngebote");
             Barrel.Current.Empty("meineAngebote");
         }
+
+        public Tuple<bool, string> IstAngebotFehlerhaft(Angebot angebot)
+        {
+            //Prüfe Titel
+            if (string.IsNullOrEmpty(angebot.Ueberschrift) || angebot.Ueberschrift.Length == 0)
+                return new Tuple<bool, string>(true, "Bitte gib deinem Angebot einen Titel.");
+            if (angebot.Ueberschrift.Length > 200)
+                return new Tuple<bool, string>(true, "Dein Titel darf nicht länger als 200 Zeichen sein.");
+
+            //Prüfe Beschreibung
+            char[] delimiters = new char[] { ' ', '\r', '\n' };
+            if(string.IsNullOrEmpty(angebot.Beschreibung) || angebot.Beschreibung.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Length <5)
+                return new Tuple<bool, string>(true, "Bitte gib deinem Angebot eine aussagekräftige Beschreibung.");
+
+            //Prüfe Kategorien
+            if (angebot.Kategorien.Count == 0 || angebot.Kategorien.Count > 5)
+                return new Tuple<bool, string>(true, "Bitte dein Angebot in mindestens eine und maximal fünf Kategorien einordnen.");
+
+            return new Tuple<bool, string>(false, "");
+        }
     }
 }

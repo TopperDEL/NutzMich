@@ -39,6 +39,16 @@
                 <TextBox Header="Zustand" Text="{Binding Angebot.Zustand, Mode=TwoWay}"
 						  AcceptsReturn="True" MinHeight="100"
                           IsEnabled="{Binding NotLoading, Mode=OneWay}"/>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Kategorien (mindestens 1, maximal 5)" FontWeight="Bold"/>
+                    <ItemsControl ItemsSource="{x:Bind MoeglicheKategorien, Mode=OneWay}" Margin="10">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="models:Kategorie">
+                                <CheckBox Content="{x:Bind Name}" Tag="{x:Bind}" Checked="KategorieHinzufuegen" Unchecked="KategorieEntfernen"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
                 <GridView ItemsSource="{Binding Fotos, Mode=OneWay}" MinHeight="400" Header="Fotos">
                     <GridView.FooterTemplate>
                         <DataTemplate>

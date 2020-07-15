@@ -36,6 +36,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\AttachmentImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChatInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChatNachricht.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Kategorie.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Reservierung.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ReservierungsZeitraum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Verfuegbarkeit.cs" />

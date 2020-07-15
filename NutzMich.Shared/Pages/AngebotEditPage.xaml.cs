@@ -1,5 +1,6 @@
 ﻿using NutzMich.Contracts.Interfaces;
 using NutzMich.Shared.Interfaces;
+using NutzMich.Shared.Models;
 using NutzMich.Shared.Services;
 using NutzMich.Shared.ViewModels;
 using Plugin.Media;
@@ -32,6 +33,7 @@ namespace NutzMich.Shared.Pages
     {
         private AngebotViewModel _angebotVM;
         private IAngebotService _angebotService;
+        public List<Kategorie> MoeglicheKategorien { get { return Kategorie.Kategorien.Select(k => new Kategorie(k.Key, k.Value)).ToList(); } }
 
         public AngebotEditPage()
         {
@@ -93,6 +95,19 @@ namespace NutzMich.Shared.Pages
 
         private async void Save(object sender, RoutedEventArgs e)
         {
+            var pruefErgebnis = _angebotService.IstAngebotFehlerhaft(_angebotVM.Angebot);
+            if(pruefErgebnis.Item1)
+            {
+                ContentDialog notSavedDlg = new ContentDialog()
+                {
+                    Title = "Fehler",
+                    Content = pruefErgebnis.Item2,
+                    CloseButtonText = "Ok"
+                };
+
+                await notSavedDlg.ShowAsync();
+                return;
+            }
             _angebotVM.SetIsLoading();
             var saved = await _angebotService.SaveAngebotAsync(_angebotVM.Angebot, _angebotVM.Fotos.ToList());
             _angebotVM.SetIsNotLoading();
@@ -141,6 +156,18 @@ namespace NutzMich.Shared.Pages
 
             var fileRead = File.OpenRead(file.Path);
             _angebotVM.Fotos.Add(new Models.AttachmentImage(fileRead));
+        }
+
+        private void KategorieHinzufuegen(object sender, RoutedEventArgs e)
+        {
+            CheckBox chk = sender as CheckBox;
+            _angebotVM.Angebot.Kategorien.Add(chk.Tag as Kategorie);
+        }
+
+        private void KategorieEntfernen(object sender, RoutedEventArgs e)
+        {
+            CheckBox chk = sender as CheckBox;
+            _angebotVM.Angebot.Kategorien.Remove(chk.Tag as Kategorie);
         }
     }
 }
