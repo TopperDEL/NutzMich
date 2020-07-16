@@ -61,5 +61,12 @@ namespace NutzMich.Shared.Pages
             On_BackRequested();
             args.Handled = true;
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            _profilVM = e.Parameter as ProfilViewModel;
+        }
     }
 }

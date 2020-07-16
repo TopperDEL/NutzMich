@@ -24,6 +24,7 @@ namespace NutzMich.Shared.ViewModels
     [Windows.UI.Xaml.Data.Bindable]
     public class AngebotViewModel : INotifyPropertyChanged
     {
+        private IProfilService _profilService;
         private IThumbnailHelper _thumbnailHelper;
         public Angebot Angebot { get; set; }
         public ObservableCollection<ReservierungsZeitraumViewModel> Reservierungen { get; set; }
@@ -52,6 +53,8 @@ namespace NutzMich.Shared.ViewModels
             }
         }
 
+        public ProfilViewModel AnbieterProfilViewmodel { get; set; }
+
         public AngebotViewModel() : this(new Angebot())
         {
 
@@ -69,6 +72,7 @@ namespace NutzMich.Shared.ViewModels
             VerfuegbarkeitsAmpel = new SolidColorBrush(Colors.Black);
 
             _thumbnailHelper = Factory.GetThumbnailHelper();
+            _profilService = Factory.GetProfilService();
             Barrel.ApplicationId = "nutzmich_monkeycache";
 
             SetIsNotLoading();
@@ -76,6 +80,13 @@ namespace NutzMich.Shared.ViewModels
 
             Fotos = new ObservableCollection<AttachmentImage>();
             Reservierungen = new ObservableCollection<ReservierungsZeitraumViewModel>();
+
+            InitAnbieterProfilAsync();
+        }
+
+        private async Task InitAnbieterProfilAsync()
+        {
+            AnbieterProfilViewmodel = new ProfilViewModel(await _profilService.GetProfilAsync(Angebot.AnbieterId));
         }
 
         public void SetIsLoading()

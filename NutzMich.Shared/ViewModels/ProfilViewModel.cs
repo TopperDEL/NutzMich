@@ -27,6 +27,7 @@ namespace NutzMich.Shared.ViewModels
         }
 
         public Visibility HatUeberMich { get { return string.IsNullOrEmpty(Profil.UeberMich) ? Visibility.Collapsed : Visibility.Visible; } }
+        public Visibility HatProfilbild { get { return string.IsNullOrEmpty(Profil.ProfilbildBase64) ? Visibility.Collapsed : Visibility.Visible; } }
 
         public ProfilViewModel(Profil profil)
         {
