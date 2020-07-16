@@ -37,8 +37,8 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Orientation="Vertical">
                     <TextBlock Text="Anbieter" FontWeight="Bold"/>
-                    <PersonPicture ProfilePicture="{x:Bind _angebotVM.AnbieterProfilViewmodel.Profilbild, Mode=OneWay}" Initials="{x:Bind _angebotVM.AnbieterProfilViewmodel.Profil.Nickname, Mode=OneWay}" DisplayName="{x:Bind _angebotVM.AnbieterProfilViewmodel.Profil.Nickname, Mode=OneWay}" Width="120" Height="120" Visibility="{x:Bind _angebotVM.AnbieterProfilViewmodel.HatProfilbild, Mode=OneWay}"  Margin="10"/>
-                    <HyperlinkButton Content="{x:Bind _angebotVM.AnbieterProfilViewmodel.Profil.Nickname, Mode=OneWay}" Margin="10" Click="ProfilDetails"/>
+                    <PersonPicture ProfilePicture="{Binding AnbieterProfilViewmodel.Profilbild, Mode=OneWay}" Initials="{Binding AnbieterProfilViewmodel.Profil.Nickname, Mode=OneWay}" DisplayName="{Binding AnbieterProfilViewmodel.Profil.Nickname, Mode=OneWay}" Width="120" Height="120" Visibility="{Binding AnbieterProfilViewmodel.HatProfilbild, Mode=OneWay}"  Margin="10"/>
+                    <HyperlinkButton Content="{Binding AnbieterProfilViewmodel.Profil.Nickname, Mode=OneWay}" Margin="10" Click="ProfilDetails"/>
                 </StackPanel>
                 <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding Angebot.Beschreibung, Mode=OneWay}" Header="Beschreibung" IsReadOnly="True" BorderThickness="0" AcceptsReturn="True"/>
                 <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Angebot.Zustand, Mode=OneWay}" Header="Zustand" IsReadOnly="True" BorderThickness="0" AcceptsReturn="True"/>

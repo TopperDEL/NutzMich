@@ -1,6 +1,7 @@
 ﻿using NutzMich.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -22,9 +23,12 @@ namespace NutzMich.Shared.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ProfilDetailsPage : Page
+    public sealed partial class ProfilDetailsPage : Page, INotifyPropertyChanged
     {
         public ProfilViewModel _profilVM;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public ProfilDetailsPage()
         {
             this.InitializeComponent();
@@ -67,6 +71,7 @@ namespace NutzMich.Shared.Pages
             base.OnNavigatedTo(e);
 
             _profilVM = e.Parameter as ProfilViewModel;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(_profilVM)));
         }
     }
 }

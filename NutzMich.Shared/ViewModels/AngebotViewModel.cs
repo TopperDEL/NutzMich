@@ -80,13 +80,12 @@ namespace NutzMich.Shared.ViewModels
 
             Fotos = new ObservableCollection<AttachmentImage>();
             Reservierungen = new ObservableCollection<ReservierungsZeitraumViewModel>();
-
-            InitAnbieterProfilAsync();
         }
 
-        private async Task InitAnbieterProfilAsync()
+        public async Task InitAnbieterProfilAsync()
         {
             AnbieterProfilViewmodel = new ProfilViewModel(await _profilService.GetProfilAsync(Angebot.AnbieterId));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AnbieterProfilViewmodel)));
         }
 
         public void SetIsLoading()
