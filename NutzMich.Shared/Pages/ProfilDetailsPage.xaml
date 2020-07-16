@@ -1,0 +1,45 @@
+﻿<Page
+    x:Class="NutzMich.Shared.Pages.ProfilDetailsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NutzMich.Shared.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:models="using:NutzMich.Shared.Models" xmlns:viewmodels="using:NutzMich.Shared.ViewModels"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer Background="White">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <CommandBar Grid.Row="0" Background="RoyalBlue" Foreground="White">
+                <!--<CommandBar.Content>
+                    <TextBlock Text="{Binding Angebot.Ueberschrift, Mode=OneWay}" Margin="12"/>
+                </CommandBar.Content>-->
+                <CommandBar.PrimaryCommands>
+                    <AppBarButton Icon="Back" Click="Back_Click" Foreground="White"/>
+                </CommandBar.PrimaryCommands>
+            </CommandBar>
+
+            <Grid Grid.Row="1" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <PersonPicture ProfilePicture="{x:Bind _profilVM.Profilbild}" Initials="{x:Bind _profilVM.Profil.Nickname}" DisplayName="{x:Bind _profilVM.Profil.Nickname}" Width="120" Height="120"/>
+                <TextBox Grid.Row="1" Text="{x:Bind _profilVM.Profil.Nickname, Mode=OneWay}" Header="Name" IsReadOnly="True" BorderThickness="0" AcceptsReturn="True"/>
+                <TextBox Grid.Row="2" Text="{x:Bind _profilVM.Profil.UeberMich, Mode=OneWay}" Header="Über mich" IsReadOnly="True" BorderThickness="0" AcceptsReturn="True" Visibility="{x:Bind _profilVM.HatUeberMich}"/>
+                <StackPanel Grid.Row="3" Orientation="Vertical">
+                    <TextBlock Text="Besonderheiten" FontWeight="Bold"/>
+                    <CheckBox Content="Nichtraucher" IsChecked="{x:Bind _profilVM.Profil.Nichtraucher}" Margin="10,0" IsEnabled="False"/>
+                    <CheckBox Content="Tierfreier Haushalt" IsChecked="{x:Bind _profilVM.Profil.TierfreierHaushalt}" Margin="10,0" IsEnabled="False"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</Page>

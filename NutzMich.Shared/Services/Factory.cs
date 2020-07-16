@@ -99,6 +99,15 @@ namespace NutzMich.Shared.Services
             return _reservierungService;
         }
 
+        static IProfilService _profilService;
+        public static IProfilService GetProfilService()
+        {
+            if (_profilService == null)
+                _profilService = new ProfilService(GetIdentityService(), GetLoginService(), GetThumbnailHelper());
+
+            return _profilService;
+        }
+
         public static void Reset()
         {
             _identityService = null;

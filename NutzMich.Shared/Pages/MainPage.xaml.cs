@@ -1,5 +1,6 @@
 ﻿using NutzMich.Contracts.Interfaces;
 using NutzMich.Shared.Interfaces;
+using NutzMich.Shared.Models;
 using NutzMich.Shared.Pages;
 using NutzMich.Shared.Services;
 using NutzMich.Shared.ViewModels;
@@ -30,6 +31,7 @@ namespace NutzMich.Pages
     {
         IAngebotService _angebotService;
         ILoginService _loginService;
+        IProfilService _profilService;
         AngeboteViewModel _angeboteVM;
 
         public MainPage()
@@ -40,6 +42,7 @@ namespace NutzMich.Pages
 
             _angebotService = Factory.GetAngebotService();
             _loginService = Factory.GetLoginService();
+            _profilService = Factory.GetProfilService();
             this.DataContext = _angeboteVM = new AngeboteViewModel();
 
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
@@ -101,6 +104,12 @@ namespace NutzMich.Pages
         private void Reservierungen(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(ReservierungenPage));
+        }
+
+        private async void ProfilPflege(object sender, RoutedEventArgs e)
+        {
+            Profil profil = await _profilService.GetProfilAsync(_loginService.AnbieterId);
+            this.Frame.Navigate(typeof(ProfilEditPage), profil);
         }
     }
 }
