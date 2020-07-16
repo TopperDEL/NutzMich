@@ -21,8 +21,10 @@ namespace NutzMich.Shared.ViewModels
         private IChatBufferService _chatBufferService;
         private IChatService _chatService;
         private ILoginService _loginService;
+        IProfilService _profilService;
         private ChatInfo _chatInfo;
         public AngebotViewModel AngebotViewModel { get; set; }
+        public ProfilViewModel GegenseiteProfilViewmodel { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public event ScrollToChatNachrichtEventHandler ScrollToChatNachricht;
@@ -61,13 +63,14 @@ namespace NutzMich.Shared.ViewModels
             }
         }
 
-        public ChatViewModel(ChatInfo chatInfo, IChatPollingService chatPollingService, IChatService chatService, ILoginService loginService, IChatBufferService chatBufferService, Angebot angebot)
+        public ChatViewModel(ChatInfo chatInfo, IChatPollingService chatPollingService, IChatService chatService, ILoginService loginService, IChatBufferService chatBufferService, IProfilService profilService, Angebot angebot)
         {
             _chatPollingService = chatPollingService;
             _chatPollingService.NachrichtErhalten += _chatPollingService_NachrichtErhalten;
             _chatService = chatService;
             _loginService = loginService;
             _chatBufferService = chatBufferService;
+            _profilService = profilService;
 
             Nachrichten = new ObservableCollection<ChatNachrichtViewModel>(chatInfo.Nachrichten.Select(c => new ChatNachrichtViewModel(c) { IchBinEmpfaenger = _loginService.AnbieterId == c.EmpfaengerAnbieterID, IchWarSender = _loginService.AnbieterId == c.SenderAnbieterID }));
 
@@ -75,6 +78,12 @@ namespace NutzMich.Shared.ViewModels
             _chatPollingService.StartPolling(angebot);
 
             _chatInfo = chatInfo;
+            InitGegenseiteAsync();
+        }
+
+        private async Task InitGegenseiteAsync()
+        {
+            GegenseiteProfilViewmodel = new ProfilViewModel(await _profilService.GetProfilAsync(_chatInfo.GegenseiteAnbieterID));
         }
 
         private async void _chatPollingService_NachrichtErhalten(Angebot angebot, ChatNachricht nachricht)

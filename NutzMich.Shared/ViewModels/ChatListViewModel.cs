@@ -43,7 +43,7 @@ namespace NutzMich.Shared.ViewModels
             {
                 Angebot angebot = await _angebotService.LoadAngebotAsync(newChat.AnbieterID + "/" + newChat.AngebotID);
 
-                Chats.Add(new ChatViewModel(newChat, Factory.GetChatPollingService(), Factory.GetChatService(), Factory.GetLoginService(), Factory.GetChatBufferService(), angebot));
+                Chats.Add(new ChatViewModel(newChat, Factory.GetChatPollingService(), Factory.GetChatService(), Factory.GetLoginService(), Factory.GetChatBufferService(), Factory.GetProfilService(), angebot));
             });
         }
 
@@ -52,7 +52,7 @@ namespace NutzMich.Shared.ViewModels
             foreach(var chatInfo in _chatService.GetChatListe())
             {
                 Angebot angebot = await _angebotService.LoadAngebotAsync(chatInfo.AnbieterID + "/" + chatInfo.AngebotID);
-                Chats.Add(new ChatViewModel(chatInfo, Factory.GetChatPollingService(), Factory.GetChatService(), Factory.GetLoginService(), Factory.GetChatBufferService(), angebot));
+                Chats.Add(new ChatViewModel(chatInfo, Factory.GetChatPollingService(), Factory.GetChatService(), Factory.GetLoginService(), Factory.GetChatBufferService(), Factory.GetProfilService(), angebot));
             }
         }
 
@@ -72,7 +72,7 @@ namespace NutzMich.Shared.ViewModels
             chatInfo.NachrichtenAccess = angebotVM.Angebot.NachrichtenAccess;
             chatInfo.GegenseiteAnbieterID = angebotVM.Angebot.AnbieterId;
 
-            var chatVM = new ChatViewModel(chatInfo, Factory.GetChatPollingService(), Factory.GetChatService(), Factory.GetLoginService(), Factory.GetChatBufferService(), angebotVM.Angebot);
+            var chatVM = new ChatViewModel(chatInfo, Factory.GetChatPollingService(), Factory.GetChatService(), Factory.GetLoginService(), Factory.GetChatBufferService(), Factory.GetProfilService(), angebotVM.Angebot);
             Chats.Add(chatVM);
             Open(chatVM);
         }
