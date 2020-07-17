@@ -16,27 +16,30 @@ namespace NutzMich.Shared.Services
         IAngebotService _angebotService;
         IChatPollingService _chatPollingService;
         IChatBufferService _chatBufferService;
+        IProfilService _profilService;
 
         public event NewChatOpenedEventHandler NewChatOpened;
 
-        public ChatController(IAngebotService angebotService, IChatPollingService chatPollingService, IChatBufferService chatBufferService)
+        public ChatController(IAngebotService angebotService, IChatPollingService chatPollingService, IChatBufferService chatBufferService, IProfilService profilService)
         {
             _angebotService = angebotService;
             _chatPollingService = chatPollingService;
             _chatPollingService.NachrichtErhalten += _chatPollingService_NachrichtErhalten;
             _chatBufferService = chatBufferService;
             _chatBufferService.NewChatCreated += _chatBufferService_NewChatCreated;
+            _profilService = profilService;
         }
 
         private async void _chatPollingService_NachrichtErhalten(Contracts.Models.Angebot angebot, Models.ChatNachricht nachricht)
         {
+            var profil = await _profilService.GetProfilAsync(nachricht.SenderAnbieterID);
             if (!string.IsNullOrEmpty(nachricht.TechnischerNachrichtenTyp) && nachricht.TechnischerNachrichtenTyp == Reservierung.TECHNISCHER_NACHRICHTENTYP)
             {
-                await Factory.GetNotificationService().SendChatNotificationAsync(nachricht.SenderAnbieterID, Reservierung.GetChatMessageText(nachricht.Nachricht), angebot.Id, nachricht.SenderAnbieterID);
+                await Factory.GetNotificationService().SendChatNotificationAsync(profil.Nickname + " - " + angebot.Ueberschrift, Reservierung.GetChatMessageText(nachricht.Nachricht), angebot.Id, nachricht.SenderAnbieterID);
             }
             else
             {
-                await Factory.GetNotificationService().SendChatNotificationAsync(nachricht.SenderAnbieterID, nachricht.Nachricht, angebot.Id, nachricht.SenderAnbieterID);
+                await Factory.GetNotificationService().SendChatNotificationAsync(profil.Nickname + " - " + angebot.Ueberschrift, nachricht.Nachricht, angebot.Id, nachricht.SenderAnbieterID);
             }
         }
 
