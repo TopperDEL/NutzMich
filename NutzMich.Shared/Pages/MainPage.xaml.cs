@@ -111,5 +111,25 @@ namespace NutzMich.Pages
             Profil profil = await _profilService.GetProfilAsync(_loginService.AnbieterId);
             this.Frame.Navigate(typeof(ProfilEditPage), profil);
         }
+
+        private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            if (args.IsSettingsSelected)
+            {
+                //contentFrame.Navigate(typeof(SampleSettingsPage));
+            }
+            else
+            {
+                var selectedItem = args.SelectedItem as NavigationViewItem;
+                if (selectedItem != null)
+                {
+                    string selectedItemTag = ((string)selectedItem.Tag);
+                    sender.Header = selectedItem.Content.ToString();
+                    string pageName = "NutzMich.Shared.Pages." + selectedItemTag;
+                    Type pageType = Type.GetType(pageName);
+                    contentFrame.Navigate(pageType);
+                }
+            }
+        }
     }
 }

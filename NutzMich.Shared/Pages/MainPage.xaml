@@ -9,7 +9,17 @@
     xmlns:toolkit="using:Uno.UI.Toolkit"
     mc:Ignorable="d">
 
-    <Grid>
+    <NavigationView PaneDisplayMode="LeftCompact" IsPaneOpen="False" IsBackButtonVisible="Collapsed" Foreground="RoyalBlue" Background="White"
+                    IsSettingsVisible="False" SelectionChanged="NavigationView_SelectionChanged">
+        <NavigationView.MenuItems>
+            <NavigationViewItem Content="Angebote" Icon="List" Tag="AlleAngebotePage"/>
+            <NavigationViewItem Content="Meine Angebote" Icon="List" Tag="MeineAngebotePage"/>
+            <NavigationViewItem Content="Nachrichten" Icon="Message" Tag="ChatListPage"/>
+            <NavigationViewItem Content="Profil" Icon="Account" Tag="ProfilEditPage"/>
+        </NavigationView.MenuItems>
+        <Frame x:Name="contentFrame"/>
+    </NavigationView>
+    <!--<Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -80,5 +90,5 @@
                 </Grid>
             </PivotItem>
         </Pivot>
-    </Grid>
+    </Grid>-->
 </Page>
