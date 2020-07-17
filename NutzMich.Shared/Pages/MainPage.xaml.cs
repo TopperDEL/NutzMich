@@ -38,6 +38,8 @@ namespace NutzMich.Pages
         {
             this.InitializeComponent();
 
+            navView.SelectedItem = navView.MenuItems.OfType<NavigationViewItem>().First();
+
             ChatViewModel._coreDispatcher = Dispatcher;
 
             _angebotService = Factory.GetAngebotService();
