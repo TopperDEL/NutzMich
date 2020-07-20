@@ -29,11 +29,6 @@ namespace NutzMich.Pages
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        IAngebotService _angebotService;
-        ILoginService _loginService;
-        IProfilService _profilService;
-        AngeboteViewModel _angeboteVM;
-
         public MainPage()
         {
             this.InitializeComponent();
@@ -42,76 +37,7 @@ namespace NutzMich.Pages
 
             ChatViewModel._coreDispatcher = Dispatcher;
 
-            _angebotService = Factory.GetAngebotService();
-            _loginService = Factory.GetLoginService();
-            _profilService = Factory.GetProfilService();
-            this.DataContext = _angeboteVM = new AngeboteViewModel();
-
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
-        }
-
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-
-            await LoadAngeboteAsync();
-        }
-
-        private async Task LoadAngeboteAsync()
-        {
-            _angeboteVM.SetLoading();
-            _angeboteVM.AlleAngebote.Clear();
-            _angeboteVM.MeineAngebote.Clear();
-            await foreach (var angebot in _angebotService.GetAlleAsync())
-            {
-                if (angebot.AnbieterId == _loginService.AnbieterId)
-                    _angeboteVM.MeineAngebote.Add(new AngebotViewModel(angebot));
-                else
-                {
-                    var angebotVM = new AngebotViewModel(angebot);
-                    _angeboteVM.AlleAngebote.Add(angebotVM);
-                    await angebotVM.LoadReservierungenAsync();
-                }
-            }
-
-            _angeboteVM.SetNotLoading();
-        }
-
-        private void AngebotAnzeigen(object sender, ItemClickEventArgs e)
-        {
-            this.Frame.Navigate(typeof(AngebotDetailsPage), e.ClickedItem);
-        }
-
-        private void AngebotBearbeiten(object sender, ItemClickEventArgs e)
-        {
-            this.Frame.Navigate(typeof(AngebotEditPage), e.ClickedItem);
-        }
-
-        private void NeuesAngebotAnlegen(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(AngebotEditPage));
-        }
-
-        private async void Refresh(object sender, RoutedEventArgs e)
-        {
-            _angebotService.Refresh();
-            await LoadAngeboteAsync();
-        }
-
-        private void OpenChats(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(ChatListPage));
-        }
-
-        private void Reservierungen(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(ReservierungenPage));
-        }
-
-        private async void ProfilPflege(object sender, RoutedEventArgs e)
-        {
-            Profil profil = await _profilService.GetProfilAsync(_loginService.AnbieterId);
-            this.Frame.Navigate(typeof(ProfilEditPage), profil);
         }
 
         private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -132,6 +58,12 @@ namespace NutzMich.Pages
                     contentFrame.Navigate(pageType);
                 }
             }
+        }
+
+        private void navView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+            if (contentFrame.CanGoBack)
+                contentFrame.GoBack();
         }
     }
 }

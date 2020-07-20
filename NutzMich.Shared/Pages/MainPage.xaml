@@ -9,8 +9,9 @@
     xmlns:toolkit="using:Uno.UI.Toolkit"
     mc:Ignorable="d">
 
-    <NavigationView PaneDisplayMode="LeftCompact" IsPaneOpen="False" IsBackButtonVisible="Collapsed" Foreground="RoyalBlue" Background="White"
-                    IsSettingsVisible="False" SelectionChanged="NavigationView_SelectionChanged">
+    <NavigationView x:Name="navView"
+                    PaneDisplayMode="LeftCompact" IsPaneOpen="False" IsBackButtonVisible="Auto" Foreground="RoyalBlue" Background="White"
+                    IsSettingsVisible="False" SelectionChanged="NavigationView_SelectionChanged" IsBackEnabled="{x:Bind Path=contentFrame.CanGoBack, Mode=OneWay}" BackRequested="navView_BackRequested">
         <NavigationView.MenuItems>
             <NavigationViewItem Content="Angebote" Icon="List" Tag="AlleAngebotePage"/>
             <NavigationViewItem Content="Meine Angebote" Icon="List" Tag="MeineAngebotePage"/>
