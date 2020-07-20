@@ -152,7 +152,7 @@ namespace NutzMich.Shared.Services
                 Barrel.Current.Empty("angebot_foto_" + count + "_" + angebot.Id);
             }
 
-            Barrel.Current.Empty("angebot_" + key);
+            Barrel.Current.Add<Angebot>("angebot_" + angebot.Id, angebot, TimeSpan.FromDays(180));
 
             return angebotUpload.Completed;
         }
