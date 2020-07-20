@@ -36,7 +36,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Orientation="Vertical">
-                    <TextBlock Text="Anbieter" FontWeight="Bold"/>
+                    <TextBlock Text="Anbieter" FontWeight="Bold" Foreground="Black"/>
                     <PersonPicture ProfilePicture="{Binding AnbieterProfilViewmodel.Profilbild, Mode=OneWay}" Initials="{Binding AnbieterProfilViewmodel.Profil.Nickname, Mode=OneWay}" DisplayName="{Binding AnbieterProfilViewmodel.Profil.Nickname, Mode=OneWay}" Width="120" Height="120" Visibility="{Binding AnbieterProfilViewmodel.HatProfilbild, Mode=OneWay}"  Margin="10"/>
                     <HyperlinkButton Content="{Binding AnbieterProfilViewmodel.Profil.Nickname, Mode=OneWay}" Margin="10" Click="ProfilDetails"/>
                 </StackPanel>
