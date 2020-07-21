@@ -6,6 +6,7 @@ using NutzMich.Shared.ViewModels;
 using Plugin.Media;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -29,11 +30,23 @@ namespace NutzMich.Shared.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class AngebotEditPage : Page
+    public sealed partial class AngebotEditPage : Page, INotifyPropertyChanged
     {
         private AngebotViewModel _angebotVM;
         private IAngebotService _angebotService;
-        public List<Kategorie> MoeglicheKategorien { get { return Kategorie.Kategorien.Select(k => new Kategorie(k.Key, k.Value)).ToList(); } }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public List<Kategorie> MoeglicheKategorien
+        {
+            get
+            {
+                if (_angebotVM != null && _angebotVM.Angebot != null)
+                    return Kategorie.Kategorien.Select(k => new Kategorie(k.Key, k.Value)).ToList();
+                else
+                    return new List<Kategorie>();
+            }
+        }
 
         public AngebotEditPage()
         {
@@ -70,6 +83,7 @@ namespace NutzMich.Shared.Pages
 
             this.DataContext = _angebotVM;
             _angebotVM.SetIsNotLoading();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MoeglicheKategorien)));
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
@@ -168,6 +182,15 @@ namespace NutzMich.Shared.Pages
         {
             CheckBox chk = sender as CheckBox;
             _angebotVM.Angebot.Kategorien.Remove(chk.Tag as Kategorie);
+        }
+
+        private void KategorieCheckBoxLoaded(object sender, RoutedEventArgs e)
+        {
+            CheckBox chk = sender as CheckBox;
+            if (_angebotVM.Angebot.Kategorien.Where(k=>k.ID == (chk.Tag as Kategorie).ID).Count() == 1)
+                chk.IsChecked = true;
+            else
+                chk.IsChecked = false;
         }
     }
 }

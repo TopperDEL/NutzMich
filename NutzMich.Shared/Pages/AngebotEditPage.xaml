@@ -44,7 +44,7 @@
                     <ItemsControl ItemsSource="{x:Bind MoeglicheKategorien, Mode=OneWay}" Margin="10">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="models:Kategorie">
-                                <CheckBox Content="{x:Bind Name}" Tag="{x:Bind}" Checked="KategorieHinzufuegen" Unchecked="KategorieEntfernen"/>
+                                <CheckBox Content="{x:Bind Name}" Loaded="KategorieCheckBoxLoaded" Tag="{x:Bind}" Checked="KategorieHinzufuegen" Unchecked="KategorieEntfernen"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
