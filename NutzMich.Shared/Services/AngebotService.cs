@@ -115,7 +115,6 @@ namespace NutzMich.Shared.Services
 
             foreach (var image in images.Items.Where(i => !i.IsPrefix).OrderBy(i => i.Key))
             {
-                var bytes = Barrel.Current.Get<byte[]>(image.Key);
                 if (!Barrel.Current.IsExpired(image.Key) || !CrossConnectivity.Current.IsConnected)
                     result.Add(new MemoryStream(Barrel.Current.Get<byte[]>(image.Key)));
                 else
