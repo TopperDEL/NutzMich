@@ -197,5 +197,34 @@ namespace NutzMich.Shared.Pages
             else
                 chk.IsChecked = false;
         }
+
+        private void Fotos_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var removed = e.RemovedItems.FirstOrDefault();
+            if(removed != null && removed is AttachmentImageViewModel)
+            {
+                var vm = removed as AttachmentImageViewModel;
+                vm.IstSelektiert = Visibility.Collapsed;
+                vm.Refresh();
+            }
+
+            var added = e.AddedItems.FirstOrDefault();
+            if (added != null && added is AttachmentImageViewModel)
+            {
+                var vm = added as AttachmentImageViewModel;
+                vm.IstSelektiert = Visibility.Visible;
+                if (_angebotVM.Fotos.IndexOf(vm) == 0 || _angebotVM.Fotos.Count == 1)
+                    vm.KannNachVorne = Visibility.Collapsed;
+                else
+                    vm.KannNachVorne = Visibility.Visible;
+
+                if (_angebotVM.Fotos.IndexOf(vm) == _angebotVM.Fotos.Count - 1 || _angebotVM.Fotos.Count == 1)
+                    vm.KannNachHinten = Visibility.Collapsed;
+                else
+                    vm.KannNachHinten = Visibility.Visible;
+
+                vm.Refresh();
+            }
+        }
     }
 }

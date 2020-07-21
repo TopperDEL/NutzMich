@@ -1,6 +1,7 @@
 ﻿using NutzMich.Shared.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -9,8 +10,8 @@ using Windows.UI.Xaml.Media;
 
 namespace NutzMich.Shared.ViewModels
 {
-    [Bindable]
-    public class AttachmentImageViewModel
+    [Windows.UI.Xaml.Data.Bindable]
+    public class AttachmentImageViewModel:INotifyPropertyChanged
     {
         public AttachmentImage AttachmentImage { get; set; }
 
@@ -26,6 +27,19 @@ namespace NutzMich.Shared.ViewModels
             KannNachVorne = Visibility.Collapsed;
             KannNachHinten = Visibility.Collapsed;
             IstSelektiert = Visibility.Collapsed;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void Refresh()
+        {
+            if(PropertyChanged!= null)
+            {
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(KannNachHinten)));
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(KannNachVorne)));
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(IstSelektiert)));
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(RahmenBrush)));
+            }
         }
     }
 }

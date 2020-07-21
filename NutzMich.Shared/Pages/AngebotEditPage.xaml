@@ -49,7 +49,7 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </StackPanel>
-                <GridView ItemsSource="{Binding Fotos, Mode=OneWay}" MinHeight="400" Header="Fotos">
+                <GridView ItemsSource="{Binding Fotos, Mode=OneWay}" MinHeight="400" Header="Fotos" SelectionChanged="Fotos_SelectionChanged">
                     <GridView.FooterTemplate>
                         <DataTemplate>
                             <Button Width="100" Height="50" Padding="15" Click="AddPhoto" >
@@ -61,11 +61,11 @@
                     </GridView.FooterTemplate>
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="viewmodels:AttachmentImageViewModel">
-                            <Border BorderBrush="{Binding RahmenBrush}" BorderThickness="2" CornerRadius="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Border BorderBrush="{Binding RahmenBrush, Mode=OneWay}" BorderThickness="2" CornerRadius="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Grid>
                                     <Image Source="{Binding AttachmentImage.Image}" Stretch="UniformToFill" Width="130" Height="100" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-                                    <Grid Visibility="{Binding IstSelektiert}">
+                                    <Grid Visibility="{Binding IstSelektiert, Mode=OneWay}">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="40"/>
                                             <RowDefinition Height="20"/>
@@ -76,12 +76,12 @@
                                             <ColumnDefinition Width="65"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <Button Grid.Row="0" Grid.Column="0" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding KannNachVorne}">
+                                        <Button Grid.Row="0" Grid.Column="0" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding KannNachVorne, Mode=OneWay}">
                                             <Button.Content>
                                                 <SymbolIcon Symbol="Back"/>
                                             </Button.Content>
                                         </Button>
-                                        <Button Grid.Row="0" Grid.Column="1" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding KannNachHinten}">
+                                        <Button Grid.Row="0" Grid.Column="1" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding KannNachHinten, Mode=OneWay}">
                                             <Button.Content>
                                                 <SymbolIcon Symbol="Forward"/>
                                             </Button.Content>
