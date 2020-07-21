@@ -8,7 +8,7 @@
     xmlns:models="using:NutzMich.Shared.Models"
     xmlns:toolkit="uno"
     xmlns:xamarin="http://uno.ui/xamarin"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:viewmodels="using:NutzMich.Shared.ViewModels"
     mc:Ignorable="d">
 
     <ScrollViewer Background="White">
@@ -60,9 +60,44 @@
                         </DataTemplate>
                     </GridView.FooterTemplate>
                     <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="models:AttachmentImage">
-                            <Border BorderBrush="RoyalBlue" BorderThickness="2" CornerRadius="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <Image Source="{Binding Image}" Stretch="UniformToFill" Width="130" Height="70" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <DataTemplate x:DataType="viewmodels:AttachmentImageViewModel">
+                            <Border BorderBrush="{Binding RahmenBrush}" BorderThickness="2" CornerRadius="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Grid>
+                                    <Image Source="{Binding AttachmentImage.Image}" Stretch="UniformToFill" Width="130" Height="100" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                                    <Grid Visibility="{Binding IstSelektiert}">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="20"/>
+                                            <RowDefinition Height="40"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="65"/>
+                                            <ColumnDefinition Width="65"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button Grid.Row="0" Grid.Column="0" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding KannNachVorne}">
+                                            <Button.Content>
+                                                <SymbolIcon Symbol="Back"/>
+                                            </Button.Content>
+                                        </Button>
+                                        <Button Grid.Row="0" Grid.Column="1" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding KannNachHinten}">
+                                            <Button.Content>
+                                                <SymbolIcon Symbol="Forward"/>
+                                            </Button.Content>
+                                        </Button>
+                                        <Button Grid.Row="2" Grid.Column="0" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                            <Button.Content>
+                                                <SymbolIcon Symbol="Rotate"/>
+                                            </Button.Content>
+                                        </Button>
+                                        <Button Grid.Row="2" Grid.Column="1" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                            <Button.Content>
+                                                <SymbolIcon Symbol="Delete"/>
+                                            </Button.Content>
+                                        </Button>
+                                    </Grid>
+                                </Grid>
                             </Border>
                         </DataTemplate>
                     </GridView.ItemTemplate>

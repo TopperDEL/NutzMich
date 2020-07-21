@@ -96,6 +96,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ShinyInit\NutzMichStartup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AngeboteViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AngebotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AttachmentImageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ChatListViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ChatNachrichtViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ChatViewModel.cs" />

@@ -39,7 +39,7 @@ namespace NutzMich.Shared.ViewModels
                     return new BitmapImage(new Uri(@"ms-appx:///Assets/ProductPlaceholder.jpg"));
             }
         }
-        public ObservableCollection<AttachmentImage> Fotos { get; private set; }
+        public ObservableCollection<AttachmentImageViewModel> Fotos { get; private set; }
         public bool Loading { get; set; }
         public bool NotLoading { get; set; }
         public string BeschreibungShort
@@ -78,7 +78,7 @@ namespace NutzMich.Shared.ViewModels
             SetIsNotLoading();
             Angebot = angebot;
 
-            Fotos = new ObservableCollection<AttachmentImage>();
+            Fotos = new ObservableCollection<AttachmentImageViewModel>();
             Reservierungen = new ObservableCollection<ReservierungsZeitraumViewModel>();
         }
 
@@ -117,14 +117,14 @@ namespace NutzMich.Shared.ViewModels
                     if (!Barrel.Current.IsExpired("angebot_foto_" + count + "_" + Angebot.Id) || !CrossConnectivity.Current.IsConnected)
                     {
                         var mstream = new MemoryStream(Barrel.Current.Get<byte[]>("angebot_foto_" + count + "_" + Angebot.Id));
-                        Fotos.Add(new AttachmentImage(mstream));
+                        Fotos.Add(new AttachmentImageViewModel(new AttachmentImage(mstream)));
                     }
                     else
                     {
                         byte[] data = new byte[image.Length];
                         image.Read(data, 0, (int)image.Length);
 
-                        Fotos.Add(new AttachmentImage(image));
+                        Fotos.Add(new AttachmentImageViewModel(new AttachmentImage(image)));
                         Barrel.Current.Add<byte[]>("angebot_foto_" + count + "_" + Angebot.Id, data, TimeSpan.FromDays(365));
                     }
                     count++;

@@ -123,7 +123,7 @@ namespace NutzMich.Shared.Pages
                 return;
             }
             _angebotVM.SetIsLoading();
-            var saved = await _angebotService.SaveAngebotAsync(_angebotVM.Angebot, _angebotVM.Fotos.ToList());
+            var saved = await _angebotService.SaveAngebotAsync(_angebotVM.Angebot, _angebotVM.Fotos.Select(s=>s.AttachmentImage).ToList());
             _angebotVM.SetIsNotLoading();
 
             if (saved)
@@ -169,7 +169,7 @@ namespace NutzMich.Shared.Pages
                 return;
 
             var fileRead = File.OpenRead(file.Path);
-            _angebotVM.Fotos.Add(new Models.AttachmentImage(fileRead));
+            _angebotVM.Fotos.Add(new AttachmentImageViewModel(new Models.AttachmentImage(fileRead)));
         }
 
         private void KategorieHinzufuegen(object sender, RoutedEventArgs e)
