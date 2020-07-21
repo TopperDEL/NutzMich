@@ -17,7 +17,8 @@
             <NavigationViewItem Content="Start" Icon="Home" Tag="AlleAngebotePage"/>
             <NavigationViewItem Content="Meine Angebote" Icon="ContactInfo" Tag="MeineAngebotePage"/>
             <NavigationViewItem Content="Nachrichten" Icon="Mail" Tag="ChatListPage"/>
-            <NavigationViewItem Content="Profil" Icon="Account" Tag="ProfilEditPage"/>
+            <NavigationViewItem Content="Profil" Icon="Contact" Tag="ProfilEditPage">
+            </NavigationViewItem>
         </NavigationView.MenuItems>
         <Frame x:Name="contentFrame"/>
     </NavigationView>

@@ -13,6 +13,7 @@ using MonkeyCache.FileStore;
 using Plugin.Connectivity;
 using Windows.Media.Protection.PlayReady;
 using System.Threading;
+using Uno.Extensions;
 
 namespace NutzMich.Shared.Services
 {
@@ -114,7 +115,11 @@ namespace NutzMich.Shared.Services
 
             foreach (var image in images.Items.Where(i => !i.IsPrefix).OrderBy(i => i.Key))
             {
-                result.Add(new DownloadStream(_readConnection.Bucket, (int)image.SystemMetaData.ContentLength, image.Key));
+                var bytes = Barrel.Current.Get<byte[]>(image.Key);
+                if (!Barrel.Current.IsExpired(image.Key) || !CrossConnectivity.Current.IsConnected)
+                    result.Add(new MemoryStream(Barrel.Current.Get<byte[]>(image.Key)));
+                else
+                    result.Add(new DownloadStream(_readConnection.Bucket, (int)image.SystemMetaData.ContentLength, image.Key));
             }
 
             return result;
@@ -145,14 +150,16 @@ namespace NutzMich.Shared.Services
             foreach (var image in images)
             {
                 image.Stream.Position = 0;
-                var imageUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, "Fotos/" + _loginService.AnbieterId + "/" + angebot.Id.ToString() + "/" + count, new UploadOptions(), image.Stream, false);
+                string fotoKey = "Fotos/" + _loginService.AnbieterId + "/" + angebot.Id.ToString() + "/" + count;
+                var imageUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, fotoKey, new UploadOptions(), image.Stream, false);
                 await imageUpload.StartUploadAsync();
                 count++;
 
-                Barrel.Current.Empty("angebot_foto_" + count + "_" + angebot.Id);
+                image.Stream.Position = 0;
+                Barrel.Current.Add<byte[]>(fotoKey, image.Stream.ToMemoryStream().ToArray(), TimeSpan.FromDays(365));
             }
 
-            Barrel.Current.Add<Angebot>("angebot_" + angebot.Id, angebot, TimeSpan.FromDays(180));
+            Barrel.Current.Add<Angebot>("angebot_" + key.Replace("Angebote/", ""), angebot, TimeSpan.FromDays(180));
 
             return angebotUpload.Completed;
         }
