@@ -148,8 +148,21 @@ namespace NutzMich.Shared.Services
             int count = 1;
             foreach (var image in images)
             {
-                image.Stream.Position = 0;
                 string fotoKey = "Fotos/" + _loginService.AnbieterId + "/" + angebot.Id.ToString() + "/" + count;
+
+                //Prüfen, ob das hochzuladende Bild schon existiert
+                try
+                {
+                    var existingObject = await _writeConnection.ObjectService.GetObjectAsync(_writeConnection.Bucket, fotoKey);
+                    //Es existiert - wenn die Dateigröße gleich ist, dann nicht nochmal hochladen
+                    if (existingObject.SystemMetaData.ContentLength == image.Stream.Length)
+                    {
+                        count++;
+                        continue;
+                    }
+                }
+                catch { } //Dann existiert es noch nicht
+                image.Stream.Position = 0;
                 var imageUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, fotoKey, new UploadOptions(), image.Stream, false);
                 await imageUpload.StartUploadAsync();
                 count++;
@@ -179,7 +192,7 @@ namespace NutzMich.Shared.Services
 
             //Prüfe Beschreibung
             char[] delimiters = new char[] { ' ', '\r', '\n' };
-            if(string.IsNullOrEmpty(angebot.Beschreibung) || angebot.Beschreibung.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Length <5)
+            if (string.IsNullOrEmpty(angebot.Beschreibung) || angebot.Beschreibung.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Length < 5)
                 return new Tuple<bool, string>(true, "Bitte gib deinem Angebot eine aussagekräftige Beschreibung.");
 
             //Prüfe Kategorien
