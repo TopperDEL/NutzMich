@@ -42,6 +42,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Reservierung.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ReservierungsZeitraum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Verfuegbarkeit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\AlleAngebotePage.xaml.cs">
+      <DependentUpon>AlleAngebotePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AngebotDetailsPage.xaml.cs">
       <DependentUpon>AngebotDetailsPage.xaml</DependentUpon>
     </Compile>
@@ -56,6 +59,9 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\MeineAngebotePage.xaml.cs">
+      <DependentUpon>MeineAngebotePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Pages\ProfilDetailsPage.xaml.cs">
       <DependentUpon>ProfilDetailsPage.xaml</DependentUpon>
@@ -112,6 +118,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Pages\AlleAngebotePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Pages\AngebotDetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -129,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Pages\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Pages\MeineAngebotePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

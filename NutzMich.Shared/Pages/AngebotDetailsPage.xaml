@@ -36,14 +36,14 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Orientation="Vertical">
-                    <TextBlock Text="Anbieter" FontWeight="Bold"/>
+                    <TextBlock Text="Anbieter" FontWeight="Bold" Foreground="Black"/>
                     <PersonPicture ProfilePicture="{Binding AnbieterProfilViewmodel.Profilbild, Mode=OneWay}" Initials="{Binding AnbieterProfilViewmodel.Profil.Nickname, Mode=OneWay}" DisplayName="{Binding AnbieterProfilViewmodel.Profil.Nickname, Mode=OneWay}" Width="120" Height="120" Visibility="{Binding AnbieterProfilViewmodel.HatProfilbild, Mode=OneWay}"  Margin="10"/>
                     <HyperlinkButton Content="{Binding AnbieterProfilViewmodel.Profil.Nickname, Mode=OneWay}" Margin="10" Click="ProfilDetails"/>
                 </StackPanel>
                 <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding Angebot.Beschreibung, Mode=OneWay}" Header="Beschreibung" IsReadOnly="True" BorderThickness="0" AcceptsReturn="True"/>
                 <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Angebot.Zustand, Mode=OneWay}" Header="Zustand" IsReadOnly="True" BorderThickness="0" AcceptsReturn="True"/>
                 <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Vertical">
-                    <TextBlock Text="Reservierungen" FontWeight="Bold"/>
+                    <TextBlock Text="Reservierungen" FontWeight="Bold" Foreground="Black"/>
                     <ItemsControl ItemsSource="{Binding Reservierungen, Mode=OneWay}" Margin="10">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="viewmodels:ReservierungsZeitraumViewModel">
@@ -53,7 +53,7 @@
                     </ItemsControl>
                 </StackPanel>
                 <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical">
-                    <TextBlock Text="Fotos" FontWeight="Bold"/>
+                    <TextBlock Text="Fotos" FontWeight="Bold" Foreground="Black"/>
                     <FlipView ItemsSource="{Binding Fotos, Mode=OneWay}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="10">
                         <FlipView.ItemTemplate>
                             <DataTemplate x:DataType="models:AttachmentImage">

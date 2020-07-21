@@ -12,6 +12,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -29,87 +30,68 @@ namespace NutzMich.Pages
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        IAngebotService _angebotService;
-        ILoginService _loginService;
-        IProfilService _profilService;
-        AngeboteViewModel _angeboteVM;
-
         public MainPage()
         {
             this.InitializeComponent();
 
+            navView.SelectedItem = navView.MenuItems.OfType<NavigationViewItem>().First();
+
             ChatViewModel._coreDispatcher = Dispatcher;
 
-            _angebotService = Factory.GetAngebotService();
-            _loginService = Factory.GetLoginService();
-            _profilService = Factory.GetProfilService();
-            this.DataContext = _angeboteVM = new AngeboteViewModel();
-
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+
+            KeyboardAccelerator GoBack = new KeyboardAccelerator();
+            GoBack.Key = VirtualKey.GoBack;
+            GoBack.Invoked += BackInvoked;
+            KeyboardAccelerator AltLeft = new KeyboardAccelerator();
+            AltLeft.Key = VirtualKey.Left;
+            AltLeft.Invoked += BackInvoked;
+            this.KeyboardAccelerators.Add(GoBack);
+            this.KeyboardAccelerators.Add(AltLeft);
+            // ALT routes here
+            AltLeft.Modifiers = VirtualKeyModifiers.Menu;
         }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        private bool On_BackRequested()
         {
-            base.OnNavigatedTo(e);
-
-            await LoadAngeboteAsync();
-        }
-
-        private async Task LoadAngeboteAsync()
-        {
-            _angeboteVM.SetLoading();
-            _angeboteVM.AlleAngebote.Clear();
-            _angeboteVM.MeineAngebote.Clear();
-            await foreach (var angebot in _angebotService.GetAlleAsync())
+            if (contentFrame.CanGoBack)
             {
-                if (angebot.AnbieterId == _loginService.AnbieterId)
-                    _angeboteVM.MeineAngebote.Add(new AngebotViewModel(angebot));
-                else
+                contentFrame.GoBack();
+                return true;
+            }
+            return false;
+        }
+
+        private void BackInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+        {
+            On_BackRequested();
+            args.Handled = true;
+        }
+
+
+        private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            if (args.IsSettingsSelected)
+            {
+                //contentFrame.Navigate(typeof(SampleSettingsPage));
+            }
+            else
+            {
+                var selectedItem = args.SelectedItem as NavigationViewItem;
+                if (selectedItem != null)
                 {
-                    var angebotVM = new AngebotViewModel(angebot);
-                    _angeboteVM.AlleAngebote.Add(angebotVM);
-                    await angebotVM.LoadReservierungenAsync();
+                    string selectedItemTag = ((string)selectedItem.Tag);
+                    sender.Header = selectedItem.Content.ToString();
+                    string pageName = "NutzMich.Shared.Pages." + selectedItemTag;
+                    Type pageType = Type.GetType(pageName);
+                    contentFrame.Navigate(pageType);
                 }
             }
-
-            _angeboteVM.SetNotLoading();
         }
 
-        private void AngebotAnzeigen(object sender, ItemClickEventArgs e)
+        private void navView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
-            this.Frame.Navigate(typeof(AngebotDetailsPage), e.ClickedItem);
-        }
-
-        private void AngebotBearbeiten(object sender, ItemClickEventArgs e)
-        {
-            this.Frame.Navigate(typeof(AngebotEditPage), e.ClickedItem);
-        }
-
-        private void NeuesAngebotAnlegen(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(AngebotEditPage));
-        }
-
-        private async void Refresh(object sender, RoutedEventArgs e)
-        {
-            _angebotService.Refresh();
-            await LoadAngeboteAsync();
-        }
-
-        private void OpenChats(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(ChatListPage));
-        }
-
-        private void Reservierungen(object sender, RoutedEventArgs e)
-        {
-            this.Frame.Navigate(typeof(ReservierungenPage));
-        }
-
-        private async void ProfilPflege(object sender, RoutedEventArgs e)
-        {
-            Profil profil = await _profilService.GetProfilAsync(_loginService.AnbieterId);
-            this.Frame.Navigate(typeof(ProfilEditPage), profil);
+            On_BackRequested();
         }
     }
 }

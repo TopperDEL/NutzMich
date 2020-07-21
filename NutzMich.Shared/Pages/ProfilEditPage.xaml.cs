@@ -30,6 +30,7 @@ namespace NutzMich.Shared.Pages
     {
         public ProfilViewModel _profilVM;
         IProfilService _profilService;
+        ILoginService _loginService;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -38,6 +39,7 @@ namespace NutzMich.Shared.Pages
             this.InitializeComponent();
 
             _profilService = Factory.GetProfilService();
+            _loginService = Factory.GetLoginService();
 
             KeyboardAccelerator GoBack = new KeyboardAccelerator();
             GoBack.Key = VirtualKey.GoBack;
@@ -72,11 +74,12 @@ namespace NutzMich.Shared.Pages
             args.Handled = true;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
-            _profilVM = new ProfilViewModel(e.Parameter as Profil);
+            Profil profil = await _profilService.GetProfilAsync(_loginService.AnbieterId);
+            _profilVM = new ProfilViewModel(profil);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(_profilVM)));
         }
 
