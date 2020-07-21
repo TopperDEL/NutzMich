@@ -175,19 +175,24 @@ namespace NutzMich.Shared.Pages
         private void KategorieHinzufuegen(object sender, RoutedEventArgs e)
         {
             CheckBox chk = sender as CheckBox;
-            _angebotVM.Angebot.Kategorien.Add(chk.Tag as Kategorie);
+            var ID = (chk.Tag as Kategorie).ID;
+            if (!_angebotVM.Angebot.Kategorien.Contains(ID))
+                _angebotVM.Angebot.Kategorien.Add(ID);
         }
 
         private void KategorieEntfernen(object sender, RoutedEventArgs e)
         {
             CheckBox chk = sender as CheckBox;
-            _angebotVM.Angebot.Kategorien.Remove(chk.Tag as Kategorie);
+            var ID = (chk.Tag as Kategorie).ID;
+            if (_angebotVM.Angebot.Kategorien.Contains(ID))
+                _angebotVM.Angebot.Kategorien.Remove(ID);
         }
 
         private void KategorieCheckBoxLoaded(object sender, RoutedEventArgs e)
         {
             CheckBox chk = sender as CheckBox;
-            if (_angebotVM.Angebot.Kategorien.Where(k=>k.ID == (chk.Tag as Kategorie).ID).Count() == 1)
+            var ID = (chk.Tag as Kategorie).ID;
+            if (_angebotVM.Angebot.Kategorien.Contains(ID))
                 chk.IsChecked = true;
             else
                 chk.IsChecked = false;

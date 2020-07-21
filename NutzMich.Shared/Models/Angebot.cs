@@ -18,13 +18,13 @@ namespace NutzMich.Contracts.Models
         public string NachrichtenAccess { get; set; }
         public string ThumbnailBase64 { get; set; }
         public int Version { get; set; }
-        public List<Kategorie> Kategorien { get; set; }
+        public List<string> Kategorien { get; set; }
 
         public Angebot()
         {
             Id = Guid.NewGuid().ToString();
             Version = 1;
-            Kategorien = new List<Kategorie>();
+            Kategorien = new List<string>();
         }
     }
 }
