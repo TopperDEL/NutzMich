@@ -3,6 +3,7 @@ using NutzMich.Shared.Interfaces;
 using NutzMich.Shared.Models;
 using NutzMich.Shared.Services;
 using NutzMich.Shared.ViewModels;
+using Plugin.ImageEdit;
 using Plugin.Media;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Uno.Extensions;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
@@ -206,7 +208,7 @@ namespace NutzMich.Shared.Pages
                 else
                     foto.RahmenBrush = new SolidColorBrush(Colors.Blue);
 
-                foto.Refresh();
+                foto.RefreshBindings();
             }
         }
 
@@ -236,9 +238,16 @@ namespace NutzMich.Shared.Pages
             MarkiereErstesFotoAlsGalleriebild();
         }
 
-        private void RotatePhoto(object sender, RoutedEventArgs e)
+        private async void RotatePhoto(object sender, RoutedEventArgs e)
         {
-
+            var vm = (sender as Button).Tag as AttachmentImageViewModel;
+            vm.AttachmentImage.Stream.Position = 0;
+            var mstream = vm.AttachmentImage.Stream.ToMemoryStream();
+            var array = mstream.ToArray();
+            var image = await CrossImageEdit.Current.CreateImageAsync(array);
+            image.Rotate(90);
+            vm.AttachmentImage.ReplaceImage(new MemoryStream(image.ToJpeg()));
+            vm.RefreshBindings();
         }
 
         private void KategorieHinzufuegen(object sender, RoutedEventArgs e)
@@ -274,7 +283,7 @@ namespace NutzMich.Shared.Pages
             {
                 var vm = removed as AttachmentImageViewModel;
                 vm.IstSelektiert = Visibility.Collapsed;
-                vm.Refresh();
+                vm.RefreshBindings();
             }
 
             var added = e.AddedItems.FirstOrDefault();
@@ -292,7 +301,7 @@ namespace NutzMich.Shared.Pages
                 else
                     vm.KannNachHinten = Visibility.Visible;
 
-                vm.Refresh();
+                vm.RefreshBindings();
             }
         }
     }

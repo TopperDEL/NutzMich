@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Text;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace NutzMich.Shared.Models
 {
-    public class AttachmentImage
+    public class AttachmentImage:INotifyPropertyChanged
     {
         public Stream Stream { get; private set; }
         private BitmapImage _image = null;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public BitmapImage Image
         {
             get
@@ -34,6 +38,14 @@ namespace NutzMich.Shared.Models
         public AttachmentImage(Stream stream)
         {
             Stream = stream;
+        }
+
+        public void ReplaceImage(Stream newStream)
+        {
+            Stream = newStream;
+            _image = null;
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Image)));
         }
     }
 }

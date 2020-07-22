@@ -31,7 +31,7 @@ namespace NutzMich.Shared.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void Refresh()
+        public void RefreshBindings(bool imageChanged = false)
         {
             if(PropertyChanged!= null)
             {
@@ -39,6 +39,8 @@ namespace NutzMich.Shared.ViewModels
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(KannNachVorne)));
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(IstSelektiert)));
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(RahmenBrush)));
+                if(imageChanged)
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(AttachmentImage)));
             }
         }
     }
