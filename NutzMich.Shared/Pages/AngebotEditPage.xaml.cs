@@ -172,6 +172,49 @@ namespace NutzMich.Shared.Pages
             _angebotVM.Fotos.Add(new AttachmentImageViewModel(new Models.AttachmentImage(fileRead)));
         }
 
+        private async void DeletePhoto(object sender, RoutedEventArgs e)
+        {
+            ContentDialog deleteDlg = new ContentDialog()
+            {
+                Title = "Löschen?",
+                Content = "Dieses Foto wirklich löschen?",
+                PrimaryButtonText = "Ja",
+                SecondaryButtonText = "Nein"
+            };
+
+            var res = await deleteDlg.ShowAsync();
+            if(res == ContentDialogResult.Primary)
+            {
+                var vm = (sender as Button).Tag as AttachmentImageViewModel;
+                _angebotVM.Fotos.Remove(vm);
+                //_angebotVM.GeloeschteFotos(vm.AttachmentImage.)
+            }
+        }
+
+        private void MovePhotoBack(object sender, RoutedEventArgs e)
+        {
+            var vm = (sender as Button).Tag as AttachmentImageViewModel;
+            var currentIndex = _angebotVM.Fotos.IndexOf(vm);
+            if(currentIndex != 0)
+            {
+                currentIndex--;
+                _angebotVM.Fotos.Remove(vm);
+                _angebotVM.Fotos.Insert(currentIndex, vm);
+            }
+        }
+
+        private void MovePhotoForward(object sender, RoutedEventArgs e)
+        {
+            var vm = (sender as Button).Tag as AttachmentImageViewModel;
+            var currentIndex = _angebotVM.Fotos.IndexOf(vm);
+            if (currentIndex != _angebotVM.Fotos.Count - 1)
+            {
+                currentIndex++;
+                _angebotVM.Fotos.Remove(vm);
+                _angebotVM.Fotos.Insert(currentIndex, vm);
+            }
+        }
+
         private void KategorieHinzufuegen(object sender, RoutedEventArgs e)
         {
             CheckBox chk = sender as CheckBox;

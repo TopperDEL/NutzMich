@@ -76,12 +76,12 @@
                                             <ColumnDefinition Width="65"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <Button Grid.Row="0" Grid.Column="0" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding KannNachVorne, Mode=OneWay}">
+                                        <Button Grid.Row="0" Grid.Column="0" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding KannNachVorne, Mode=OneWay}" Click="MovePhotoBack" Tag="{Binding}">
                                             <Button.Content>
                                                 <SymbolIcon Symbol="Back"/>
                                             </Button.Content>
                                         </Button>
-                                        <Button Grid.Row="0" Grid.Column="1" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding KannNachHinten, Mode=OneWay}">
+                                        <Button Grid.Row="0" Grid.Column="1" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding KannNachHinten, Mode=OneWay}" Click="MovePhotoForward" Tag="{Binding}">
                                             <Button.Content>
                                                 <SymbolIcon Symbol="Forward"/>
                                             </Button.Content>
@@ -91,7 +91,7 @@
                                                 <SymbolIcon Symbol="Rotate"/>
                                             </Button.Content>
                                         </Button>
-                                        <Button Grid.Row="2" Grid.Column="1" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                        <Button Grid.Row="2" Grid.Column="1" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="DeletePhoto" Tag="{Binding}">
                                             <Button.Content>
                                                 <SymbolIcon Symbol="Delete"/>
                                             </Button.Content>
