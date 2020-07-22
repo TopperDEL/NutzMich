@@ -13,6 +13,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
+using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -84,6 +85,7 @@ namespace NutzMich.Shared.Pages
             this.DataContext = _angebotVM;
             _angebotVM.SetIsNotLoading();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MoeglicheKategorien)));
+            MarkiereErstesFotoAlsGalleriebild();
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
@@ -170,6 +172,8 @@ namespace NutzMich.Shared.Pages
 
             var fileRead = File.OpenRead(file.Path);
             _angebotVM.Fotos.Add(new AttachmentImageViewModel(new Models.AttachmentImage(fileRead)));
+
+            MarkiereErstesFotoAlsGalleriebild();
         }
 
         private async void DeletePhoto(object sender, RoutedEventArgs e)
@@ -189,6 +193,21 @@ namespace NutzMich.Shared.Pages
                 _angebotVM.Fotos.Remove(vm);
                 //_angebotVM.GeloeschteFotos(vm.AttachmentImage.)
             }
+
+            MarkiereErstesFotoAlsGalleriebild();
+        }
+
+        private void MarkiereErstesFotoAlsGalleriebild()
+        {
+            foreach(var foto in _angebotVM.Fotos)
+            {
+                if (_angebotVM.Fotos.IndexOf(foto) == 0)
+                    foto.RahmenBrush = new SolidColorBrush(Colors.Orange);
+                else
+                    foto.RahmenBrush = new SolidColorBrush(Colors.Blue);
+
+                foto.Refresh();
+            }
         }
 
         private void MovePhotoBack(object sender, RoutedEventArgs e)
@@ -201,6 +220,7 @@ namespace NutzMich.Shared.Pages
                 _angebotVM.Fotos.Remove(vm);
                 _angebotVM.Fotos.Insert(currentIndex, vm);
             }
+            MarkiereErstesFotoAlsGalleriebild();
         }
 
         private void MovePhotoForward(object sender, RoutedEventArgs e)
@@ -213,6 +233,7 @@ namespace NutzMich.Shared.Pages
                 _angebotVM.Fotos.Remove(vm);
                 _angebotVM.Fotos.Insert(currentIndex, vm);
             }
+            MarkiereErstesFotoAlsGalleriebild();
         }
 
         private void RotatePhoto(object sender, RoutedEventArgs e)
