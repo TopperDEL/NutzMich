@@ -86,7 +86,7 @@
                                                 <SymbolIcon Symbol="Forward"/>
                                             </Button.Content>
                                         </Button>
-                                        <Button Grid.Row="2" Grid.Column="0" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                        <Button Grid.Row="2" Grid.Column="0" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="RotatePhoto" Tag="{Binding}">
                                             <Button.Content>
                                                 <SymbolIcon Symbol="Rotate"/>
                                             </Button.Content>

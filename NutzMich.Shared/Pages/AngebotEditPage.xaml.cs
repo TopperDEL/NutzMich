@@ -215,6 +215,11 @@ namespace NutzMich.Shared.Pages
             }
         }
 
+        private void RotatePhoto(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void KategorieHinzufuegen(object sender, RoutedEventArgs e)
         {
             CheckBox chk = sender as CheckBox;
