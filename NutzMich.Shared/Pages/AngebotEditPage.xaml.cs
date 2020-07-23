@@ -122,13 +122,14 @@ namespace NutzMich.Shared.Pages
             };
 
             var res = await deleteDlg.ShowAsync();
-
+            _angebotVM.SetIsLoading();
             if (res == ContentDialogResult.Primary)
             {
                 var erfolg = await _angebotService.DeleteAngebotAsync(_angebotVM.Angebot);
                 if (erfolg)
                     On_BackRequested();
             }
+            _angebotVM.SetIsNotLoading();
         }
 
         private async void Save(object sender, RoutedEventArgs e)
