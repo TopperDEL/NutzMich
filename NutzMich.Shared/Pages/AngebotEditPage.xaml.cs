@@ -69,7 +69,7 @@ namespace NutzMich.Shared.Pages
             AltLeft.Modifiers = VirtualKeyModifiers.Menu;
         }
 
-        
+
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -111,10 +111,30 @@ namespace NutzMich.Shared.Pages
             args.Handled = true;
         }
 
+        private async void Delete(object sender, RoutedEventArgs e)
+        {
+            ContentDialog deleteDlg = new ContentDialog()
+            {
+                Title = "Wirklich löschen?",
+                Content = "Willst Du dieses Angebot wirklich unwiderruflich löschen?",
+                PrimaryButtonText = "Ja",
+                SecondaryButtonText = "Nein",
+            };
+
+            var res = await deleteDlg.ShowAsync();
+
+            if (res == ContentDialogResult.Primary)
+            {
+                var erfolg = await _angebotService.DeleteAngebotAsync(_angebotVM.Angebot);
+                if (erfolg)
+                    On_BackRequested();
+            }
+        }
+
         private async void Save(object sender, RoutedEventArgs e)
         {
             var pruefErgebnis = _angebotService.IstAngebotFehlerhaft(_angebotVM.Angebot);
-            if(pruefErgebnis.Item1)
+            if (pruefErgebnis.Item1)
             {
                 ContentDialog notSavedDlg = new ContentDialog()
                 {
@@ -127,7 +147,7 @@ namespace NutzMich.Shared.Pages
                 return;
             }
             _angebotVM.SetIsLoading();
-            var saved = await _angebotService.SaveAngebotAsync(_angebotVM.Angebot, _angebotVM.Fotos.Select(s=>s.AttachmentImage).ToList());
+            var saved = await _angebotService.SaveAngebotAsync(_angebotVM.Angebot, _angebotVM.Fotos.Select(s => s.AttachmentImage).ToList());
             _angebotVM.SetIsNotLoading();
 
             if (saved)
@@ -189,7 +209,7 @@ namespace NutzMich.Shared.Pages
             };
 
             var res = await deleteDlg.ShowAsync();
-            if(res == ContentDialogResult.Primary)
+            if (res == ContentDialogResult.Primary)
             {
                 var vm = (sender as Button).Tag as AttachmentImageViewModel;
                 _angebotVM.Fotos.Remove(vm);
@@ -201,7 +221,7 @@ namespace NutzMich.Shared.Pages
 
         private void MarkiereErstesFotoAlsGalleriebild()
         {
-            foreach(var foto in _angebotVM.Fotos)
+            foreach (var foto in _angebotVM.Fotos)
             {
                 if (_angebotVM.Fotos.IndexOf(foto) == 0)
                     foto.RahmenBrush = new SolidColorBrush(Colors.Orange);
@@ -216,7 +236,7 @@ namespace NutzMich.Shared.Pages
         {
             var vm = (sender as Button).Tag as AttachmentImageViewModel;
             var currentIndex = _angebotVM.Fotos.IndexOf(vm);
-            if(currentIndex != 0)
+            if (currentIndex != 0)
             {
                 currentIndex--;
                 _angebotVM.Fotos.Remove(vm);
@@ -279,7 +299,7 @@ namespace NutzMich.Shared.Pages
         private void Fotos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var removed = e.RemovedItems.FirstOrDefault();
-            if(removed != null && removed is AttachmentImageViewModel)
+            if (removed != null && removed is AttachmentImageViewModel)
             {
                 var vm = removed as AttachmentImageViewModel;
                 vm.IstSelektiert = Visibility.Collapsed;

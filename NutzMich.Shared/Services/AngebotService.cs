@@ -201,5 +201,33 @@ namespace NutzMich.Shared.Services
 
             return new Tuple<bool, string>(false, "");
         }
+
+        public async Task<bool> DeleteAngebotAsync(Angebot angebot)
+        {
+            await InitWriteConnectionAsync();
+
+            try
+            {
+                List<string> prefixes = new List<string>();
+                prefixes.Add("Angebote/" + angebot.AnbieterId+"/");
+                prefixes.Add("Fotos/" + angebot.AnbieterId + "/");
+                prefixes.Add("Nachrichten/" + angebot.AnbieterId + "/");
+
+                foreach (var prefix in prefixes)
+                {
+                    var angebotObjekte = await _writeConnection.ObjectService.ListObjectsAsync(_writeConnection.Bucket, new ListObjectsOptions() { Recursive = true, Prefix = prefix });
+                    foreach (var obj in angebotObjekte.Items.Where(i => !i.IsPrefix && i.Key.Contains(angebot.Id)))
+                    {
+                        await _writeConnection.ObjectService.DeleteObjectAsync(_writeConnection.Bucket, obj.Key);
+                    }
+                }
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

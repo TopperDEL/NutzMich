@@ -11,6 +11,7 @@ namespace NutzMich.Contracts.Interfaces
     public interface IAngebotService
     {
         Task<bool> SaveAngebotAsync(Angebot angebot, List<AttachmentImage> images);
+        Task<bool> DeleteAngebotAsync(Angebot angebot);
         Task<List<Stream>> GetAngebotImagesAsync(Angebot angebot);
         void Refresh();
         IAsyncEnumerable<Angebot> GetAlleAsync();

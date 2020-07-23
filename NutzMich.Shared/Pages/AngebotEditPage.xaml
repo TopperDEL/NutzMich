@@ -23,6 +23,7 @@
                     <TextBlock Text="Angebot bearbeiten" Margin="12"/>
                 </CommandBar.Content>
                 <CommandBar.PrimaryCommands>
+                    <AppBarButton Icon="Delete" Click="Delete" Foreground="White" IsEnabled="{Binding NotLoading, Mode=OneWay}"/>
                     <AppBarButton Icon="Save" Click="Save" Foreground="White" IsEnabled="{Binding NotLoading, Mode=OneWay}"/>
                     <AppBarButton Icon="Back" Click="Cancel" Foreground="White" IsEnabled="{Binding NotLoading, Mode=OneWay}"/>
                 </CommandBar.PrimaryCommands>
