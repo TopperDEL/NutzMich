@@ -21,6 +21,9 @@ namespace NutzMich.Shared.Services
     {
         internal static Mutex getAngeboteMutex = new Mutex();
         internal static Mutex loadAngebotMutex = new Mutex();
+        internal const string ANGEBOTSSTAUS = "NUTZMICH:ANGEBOTSSTATUS";
+        internal const string ANGEBOT_INAKTIV = "Inaktiv";
+        internal const string ANGEBOT_AKTIV = "Aktiv";
 
         ILoginService _loginService;
         IThumbnailHelper _thumbnailHelper;
@@ -40,12 +43,16 @@ namespace NutzMich.Shared.Services
             {
                 await InitReadConnectionAsync();
 
-                var angeboteItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Angebote/", Recursive = true });
+                var angeboteItems = await _readConnection.ObjectService.ListObjectsAsync(_readConnection.Bucket, new ListObjectsOptions() { Prefix = "Angebote/", Recursive = true, Custom = true });
 
                 foreach (var angebot in angeboteItems.Items)
                 {
-                    if (!angebot.Key.Contains("Reservierung"))
-                        yield return await LoadAngebotAsync(angebot.Key.Replace("Angebote/", ""));
+                    bool istAktiv = angebot.CustomMetaData.Entries.Where(m => m.Key == ANGEBOTSSTAUS && m.Value == ANGEBOT_INAKTIV).Count() == 0;
+                    if (angebot.Key.Contains(_loginService.AnbieterId) || istAktiv)
+                    {
+                        if (!angebot.Key.Contains("Reservierung"))
+                            yield return await LoadAngebotAsync(angebot.Key.Replace("Angebote/", ""));
+                    }
                 }
             }
             finally
@@ -124,7 +131,7 @@ namespace NutzMich.Shared.Services
             return result;
         }
 
-        public async Task<bool> SaveAngebotAsync(Angebot angebot, List<AttachmentImage> images)
+        public async Task<bool> SaveAngebotAsync(Angebot angebot, List<AttachmentImage> images, bool angebotAktiv = true)
         {
             await InitWriteConnectionAsync();
 
@@ -142,7 +149,13 @@ namespace NutzMich.Shared.Services
 
             string key = "Angebote/" + _loginService.AnbieterId + "/" + angebot.Id.ToString();
 
-            var angebotUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, key, new UploadOptions(), angebotJSONbytes, false);
+            var customMeta = new CustomMetadata();
+            if (angebotAktiv)
+                customMeta.Entries.Add(new CustomMetadataEntry() { Key = ANGEBOTSSTAUS, Value = ANGEBOT_AKTIV });
+            else
+                customMeta.Entries.Add(new CustomMetadataEntry() { Key = ANGEBOTSSTAUS, Value = ANGEBOT_INAKTIV });
+
+            var angebotUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, key, new UploadOptions(), angebotJSONbytes, customMeta, false);
             await angebotUpload.StartUploadAsync();
 
             int count = 1;
@@ -228,6 +241,15 @@ namespace NutzMich.Shared.Services
             }
 
             return true;
+        }
+
+        public async Task<bool> IstAngebotAktivAsync(Angebot angebot)
+        {
+            await InitReadConnectionAsync();
+
+            var angebotObject = await _readConnection.ObjectService.GetObjectAsync(_readConnection.Bucket, "Angebote/" + angebot.AnbieterId + "/" + angebot.Id);
+
+            return angebotObject.CustomMetaData.Entries.Where(m => m.Key == ANGEBOTSSTAUS && m.Value == ANGEBOT_INAKTIV).Count() == 0;
         }
     }
 }

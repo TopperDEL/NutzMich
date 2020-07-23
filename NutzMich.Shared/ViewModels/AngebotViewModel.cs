@@ -55,6 +55,8 @@ namespace NutzMich.Shared.ViewModels
 
         public ProfilViewModel AnbieterProfilViewmodel { get; set; }
 
+        public bool IstInaktiv { get; set; }
+
         public AngebotViewModel() : this(new Angebot())
         {
 
@@ -147,6 +149,11 @@ namespace NutzMich.Shared.ViewModels
             RefreshVerfügbarkeit();
 
             _reservierungenGeladen = true;
+        }
+
+        public async Task LoadAngebotsStatus()
+        {
+            IstInaktiv = !await Factory.GetAngebotService().IstAngebotAktivAsync(Angebot);
         }
 
         private void RefreshVerfügbarkeit()

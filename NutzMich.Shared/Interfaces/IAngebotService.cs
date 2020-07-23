@@ -10,7 +10,7 @@ namespace NutzMich.Contracts.Interfaces
 {
     public interface IAngebotService
     {
-        Task<bool> SaveAngebotAsync(Angebot angebot, List<AttachmentImage> images);
+        Task<bool> SaveAngebotAsync(Angebot angebot, List<AttachmentImage> images, bool angebotAktiv = true);
         Task<bool> DeleteAngebotAsync(Angebot angebot);
         Task<List<Stream>> GetAngebotImagesAsync(Angebot angebot);
         void Refresh();
@@ -18,5 +18,6 @@ namespace NutzMich.Contracts.Interfaces
         IAsyncEnumerable<Angebot> GetMeineAsync();
         Task<Angebot> LoadAngebotAsync(string angebotId);
         Tuple<bool, string> IstAngebotFehlerhaft(Angebot angebot);
+        Task<bool> IstAngebotAktivAsync(Angebot angebot);
     }
 }

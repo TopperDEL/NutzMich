@@ -80,6 +80,7 @@ namespace NutzMich.Shared.Pages
                 _angebotVM = e.Parameter as AngebotViewModel;
                 _angebotVM.SetIsLoading();
                 await _angebotVM.LoadFotos();
+                await _angebotVM.LoadAngebotsStatus();
             }
             else
                 _angebotVM = new AngebotViewModel();
@@ -132,6 +133,42 @@ namespace NutzMich.Shared.Pages
             _angebotVM.SetIsNotLoading();
         }
 
+        private async void Deaktivieren(object sender, RoutedEventArgs e)
+        {
+            ContentDialog questionDlg = new ContentDialog()
+            {
+                Title = "Deaktivieren",
+                Content = "Angebot wirlich deaktivieren? Es erscheint dann nicht mehr in den Suchergebnissen.",
+                PrimaryButtonText = "Ja",
+                SecondaryButtonText = "Nein"
+            };
+
+            var res = await questionDlg.ShowAsync();
+            if (res == ContentDialogResult.Primary)
+            {
+                _angebotVM.IstInaktiv = true;
+                Save(sender, e);
+            }
+        }
+
+        private async void Aktivieren(object sender, RoutedEventArgs e)
+        {
+            ContentDialog questionDlg = new ContentDialog()
+            {
+                Title = "Aktivieren",
+                Content = "Angebot wirlich wieder aktivieren? Es erscheint dann wieder in den Suchergebnissen.",
+                PrimaryButtonText = "Ja",
+                SecondaryButtonText = "Nein"
+            };
+
+            var res = await questionDlg.ShowAsync();
+            if (res == ContentDialogResult.Primary)
+            {
+                _angebotVM.IstInaktiv = false;
+                Save(sender, e);
+            }
+        }
+
         private async void Save(object sender, RoutedEventArgs e)
         {
             var pruefErgebnis = _angebotService.IstAngebotFehlerhaft(_angebotVM.Angebot);
@@ -148,7 +185,7 @@ namespace NutzMich.Shared.Pages
                 return;
             }
             _angebotVM.SetIsLoading();
-            var saved = await _angebotService.SaveAngebotAsync(_angebotVM.Angebot, _angebotVM.Fotos.Select(s => s.AttachmentImage).ToList());
+            var saved = await _angebotService.SaveAngebotAsync(_angebotVM.Angebot, _angebotVM.Fotos.Select(s => s.AttachmentImage).ToList(), !_angebotVM.IstInaktiv);
             _angebotVM.SetIsNotLoading();
 
             if (saved)
