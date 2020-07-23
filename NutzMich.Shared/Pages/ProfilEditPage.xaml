@@ -36,7 +36,7 @@
                 <TextBox Grid.Row="1" Text="{x:Bind _profilVM.Profil.Nickname, Mode=TwoWay}" Header="Name" BorderThickness="0" AcceptsReturn="True" MaxLength="50"/>
                 <TextBox Grid.Row="2" Text="{x:Bind _profilVM.Profil.UeberMich, Mode=TwoWay}" Header="Über mich (freiwillige Angabe)" BorderThickness="0" AcceptsReturn="True"/>
                 <StackPanel Grid.Row="3" Orientation="Vertical">
-                    <TextBlock Text="Besonderheiten" FontWeight="Bold"/>
+                    <TextBlock Text="Besonderheiten" FontWeight="Bold" Foreground="Black"/>
                     <CheckBox Content="Nichtraucher" IsChecked="{x:Bind _profilVM.Profil.Nichtraucher,Mode=TwoWay}" Margin="10,0"/>
                     <CheckBox Content="Tierfreier Haushalt" IsChecked="{x:Bind _profilVM.Profil.TierfreierHaushalt,Mode=TwoWay}" Margin="10,0"/>
                 </StackPanel>
