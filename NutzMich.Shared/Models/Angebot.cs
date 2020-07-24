@@ -19,12 +19,14 @@ namespace NutzMich.Contracts.Models
         public string ThumbnailBase64 { get; set; }
         public int Version { get; set; }
         public List<string> Kategorien { get; set; }
+        public DateTime EingestelltAm { get; set; }
 
         public Angebot()
         {
             Id = Guid.NewGuid().ToString();
             Version = 1;
             Kategorien = new List<string>();
+            EingestelltAm = DateTime.MinValue;
         }
     }
 }

@@ -40,7 +40,7 @@ namespace NutzMich.Shared.Jobs
             var buffered = _chatBufferService.LoadBufferedChats();
             foreach (var chat in buffered)
             {
-                var nachrichten = await _chatService.GetNachrichtenAsync(await _angebotService.LoadAngebotAsync(chat.AnbieterID + "/" + chat.AngebotID), true);
+                var nachrichten = await _chatService.GetNachrichtenAsync(await _angebotService.LoadAngebotAsync(chat.AnbieterID + "/" + chat.AngebotID, DateTime.MinValue), true);
                 foreach (var nachricht in nachrichten)
                 {
                     erhalteneNachrichten.Add(nachricht);

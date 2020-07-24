@@ -22,6 +22,7 @@ namespace NutzMich.Shared.Services
         internal static Mutex getAngeboteMutex = new Mutex();
         internal static Mutex loadAngebotMutex = new Mutex();
         internal const string ANGEBOTSSTAUS = "NUTZMICH:ANGEBOTSSTATUS";
+        internal const string ANGEBOT_VERSION_VOM = "NUTZMICH:ANGEBOT_VERSION_VOM";
         internal const string ANGEBOT_INAKTIV = "Inaktiv";
         internal const string ANGEBOT_AKTIV = "Aktiv";
 
@@ -50,8 +51,12 @@ namespace NutzMich.Shared.Services
                     bool istAktiv = angebot.CustomMetaData.Entries.Where(m => m.Key == ANGEBOTSSTAUS && m.Value == ANGEBOT_INAKTIV).Count() == 0;
                     if (angebot.Key.Contains(_loginService.AnbieterId) || istAktiv)
                     {
+                        DateTime angebotVom = DateTime.MinValue;
+                        var angebotVomMeta = angebot.CustomMetaData.Entries.Where(c => c.Key == ANGEBOT_VERSION_VOM).FirstOrDefault();
+                        if (angebotVomMeta != null)
+                            angebotVom = DateTime.Parse(angebotVomMeta.Value);
                         if (!angebot.Key.Contains("Reservierung"))
-                            yield return await LoadAngebotAsync(angebot.Key.Replace("Angebote/", ""));
+                            yield return await LoadAngebotAsync(angebot.Key.Replace("Angebote/", ""), angebotVom);
                     }
                 }
             }
@@ -72,7 +77,11 @@ namespace NutzMich.Shared.Services
 
                 foreach (var angebot in angeboteItems.Items)
                 {
-                    yield return await LoadAngebotAsync(angebot.Key.Replace("Angebote/", ""));
+                    DateTime angebotVom = DateTime.MinValue;
+                    var angebotVomMeta = angebot.CustomMetaData.Entries.Where(c => c.Key == ANGEBOT_VERSION_VOM).FirstOrDefault();
+                    if (angebotVomMeta != null)
+                        angebotVom = DateTime.Parse(angebotVomMeta.Value);
+                    yield return await LoadAngebotAsync(angebot.Key.Replace("Angebote/", ""), angebotVom);
                 }
             }
             finally
@@ -81,15 +90,16 @@ namespace NutzMich.Shared.Services
             }
         }
 
-        public async Task<Angebot> LoadAngebotAsync(string angebotId, bool ohnePuffer = false)
+        public async Task<Angebot> LoadAngebotAsync(string angebotId, DateTime angebotsVersion)
         {
             loadAngebotMutex.WaitOne();
             try
             {
-                if (!ohnePuffer)
+                if (!Barrel.Current.IsExpired("angebot_" + angebotId) || !CrossConnectivity.Current.IsConnected)
                 {
-                    if (!Barrel.Current.IsExpired("angebot_" + angebotId) || !CrossConnectivity.Current.IsConnected)
-                        return Barrel.Current.Get<Angebot>("angebot_" + angebotId);
+                    var angebot = Barrel.Current.Get<Angebot>("angebot_" + angebotId);
+                    if (angebot.EingestelltAm >= angebotsVersion)
+                        return angebot;
                 }
                 await InitReadConnectionAsync();
 
@@ -158,6 +168,8 @@ namespace NutzMich.Shared.Services
             else
                 customMeta.Entries.Add(new CustomMetadataEntry() { Key = ANGEBOTSSTAUS, Value = ANGEBOT_INAKTIV });
 
+            customMeta.Entries.Add(new CustomMetadataEntry() { Key = ANGEBOT_VERSION_VOM, Value = DateTime.UtcNow.ToString() });
+
             var angebotUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, key, new UploadOptions(), angebotJSONbytes, customMeta, false);
             await angebotUpload.StartUploadAsync();
 
@@ -225,7 +237,7 @@ namespace NutzMich.Shared.Services
             try
             {
                 List<string> prefixes = new List<string>();
-                prefixes.Add("Angebote/" + angebot.AnbieterId+"/");
+                prefixes.Add("Angebote/" + angebot.AnbieterId + "/");
                 prefixes.Add("Fotos/" + angebot.AnbieterId + "/");
                 prefixes.Add("Nachrichten/" + angebot.AnbieterId + "/");
 

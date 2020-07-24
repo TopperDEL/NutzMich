@@ -111,7 +111,7 @@ namespace NutzMich.Shared.Services
 
         public async Task ReservierungBestaetigenAsync(Reservierung reservierung)
         {
-            var angebot = await _angebotService.LoadAngebotAsync(reservierung.AnbieterID + "/" + reservierung.AngebotID);
+            var angebot = await _angebotService.LoadAngebotAsync(reservierung.AnbieterID + "/" + reservierung.AngebotID, DateTime.MinValue);
 
             if (_loginService.AnbieterId != reservierung.AnbieterID)
             {

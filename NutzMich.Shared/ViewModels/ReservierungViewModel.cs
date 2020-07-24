@@ -24,7 +24,7 @@ namespace NutzMich.Shared.ViewModels
 
         public async Task LoadAngebotAsync()
         {
-            AngebotVM = new AngebotViewModel(await Factory.GetAngebotService().LoadAngebotAsync(Reservierung.AnbieterID + "/" + Reservierung.AngebotID));
+            AngebotVM = new AngebotViewModel(await Factory.GetAngebotService().LoadAngebotAsync(Reservierung.AnbieterID + "/" + Reservierung.AngebotID, DateTime.MinValue));
         }
     }
 }

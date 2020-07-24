@@ -41,7 +41,7 @@ namespace NutzMich.Shared.ViewModels
         {
             await ChatViewModel._coreDispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
-                Angebot angebot = await _angebotService.LoadAngebotAsync(newChat.AnbieterID + "/" + newChat.AngebotID);
+                Angebot angebot = await _angebotService.LoadAngebotAsync(newChat.AnbieterID + "/" + newChat.AngebotID, DateTime.MinValue);
 
                 Chats.Add(new ChatViewModel(newChat, Factory.GetChatPollingService(), Factory.GetChatService(), Factory.GetLoginService(), Factory.GetChatBufferService(), Factory.GetProfilService(), angebot));
             });
@@ -51,7 +51,7 @@ namespace NutzMich.Shared.ViewModels
         {
             foreach(var chatInfo in _chatService.GetChatListe())
             {
-                Angebot angebot = await _angebotService.LoadAngebotAsync(chatInfo.AnbieterID + "/" + chatInfo.AngebotID);
+                Angebot angebot = await _angebotService.LoadAngebotAsync(chatInfo.AnbieterID + "/" + chatInfo.AngebotID, DateTime.MinValue);
                 Chats.Add(new ChatViewModel(chatInfo, Factory.GetChatPollingService(), Factory.GetChatService(), Factory.GetLoginService(), Factory.GetChatBufferService(), Factory.GetProfilService(), angebot));
             }
         }
