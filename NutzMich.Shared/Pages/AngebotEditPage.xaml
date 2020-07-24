@@ -19,9 +19,6 @@
             </Grid.RowDefinitions>
 
             <CommandBar Grid.Row="0" Background="RoyalBlue" Foreground="White">
-                <CommandBar.Content>
-                    <TextBlock Text="Angebot bearbeiten" Margin="12"/>
-                </CommandBar.Content>
                 <CommandBar.PrimaryCommands>
                     <AppBarButton Icon="Play" Click="Aktivieren" Foreground="White" IsEnabled="{Binding NotLoading, Mode=OneWay}" Visibility="{Binding IstInaktiv, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}"/>
                     <AppBarButton Icon="Stop" Click="Deaktivieren" Foreground="White" IsEnabled="{Binding NotLoading, Mode=OneWay}" Visibility="{Binding IstInaktiv, Mode=OneWay, Converter={StaticResource TrueIsCollapsedConverter}}"/>
