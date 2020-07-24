@@ -106,12 +106,18 @@
                     </GridView.ItemTemplate>
                 </GridView>
             </StackPanel>
-            <controls:Loading IsLoading="{Binding Loading, Mode=OneWay}" Grid.RowSpan="2" Visibility="{Binding Loading, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}">
-                <controls:Loading.Background>
-                    <SolidColorBrush Color="Black" Opacity="0.7"/>
-                </controls:Loading.Background>
-                <ProgressRing IsActive="True" Foreground="RoyalBlue" />
-            </controls:Loading>
+            <Grid Grid.RowSpan="2" Visibility="{Binding Loading,Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}">
+                <controls:Loading IsLoading="{Binding Loading, Mode=OneWay}" Grid.RowSpan="2" Visibility="{Binding Loading, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}">
+                    <controls:Loading.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.7"/>
+                    </controls:Loading.Background>
+                </controls:Loading>
+                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding Loading,Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}">
+                    <ProgressRing IsActive="{Binding Loading, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                                  Foreground="RoyalBlue"
+                                  Visibility="{Binding Loading,Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}"/>
+                </StackPanel>
+            </Grid>
         </Grid>
     </ScrollViewer>
 </Page>

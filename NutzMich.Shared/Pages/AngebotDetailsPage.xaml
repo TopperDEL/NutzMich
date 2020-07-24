@@ -5,6 +5,7 @@
     xmlns:local="using:NutzMich.Shared.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:models="using:NutzMich.Shared.Models" xmlns:viewmodels="using:NutzMich.Shared.ViewModels"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" 
     mc:Ignorable="d">
 
     <ScrollViewer Background="White">
@@ -82,6 +83,17 @@
                             </DataTemplate>
                         </FlipView.ItemTemplate>
                     </FlipView>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.RowSpan="2" Visibility="{Binding Loading,Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}">
+                <controls:Loading IsLoading="{Binding Loading, Mode=OneWay}" Grid.RowSpan="2" Visibility="{Binding Loading, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}">
+                    <controls:Loading.Background>
+                        <SolidColorBrush Color="Black" Opacity="0.7"/>
+                    </controls:Loading.Background>
+                </controls:Loading>
+                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding Loading,Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}">
+                    <ProgressRing IsActive="{Binding Loading, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                  Foreground="RoyalBlue"/>
                 </StackPanel>
             </Grid>
         </Grid>

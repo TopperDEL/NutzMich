@@ -65,11 +65,13 @@ namespace NutzMich.Shared.Pages
             base.OnNavigatedTo(e);
 
             this.DataContext = _angebotVM = e.Parameter as AngebotViewModel;
+            _angebotVM.SetIsLoading();
             await _angebotVM.InitAnbieterProfilAsync(); 
             await _angebotVM.LoadReservierungenAsync(true);
             await _angebotVM.LoadFotos();
             _angebotVM.RefreshBindings();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(_angebotVM)));
+            _angebotVM.SetIsNotLoading();
         }
 
         private bool On_BackRequested()
