@@ -16,7 +16,7 @@ namespace NutzMich.Contracts.Interfaces
         void Refresh();
         IAsyncEnumerable<Angebot> GetAlleAsync();
         IAsyncEnumerable<Angebot> GetMeineAsync();
-        Task<Angebot> LoadAngebotAsync(string angebotId);
+        Task<Angebot> LoadAngebotAsync(string angebotId, bool ohnePuffer = false);
         Tuple<bool, string> IstAngebotFehlerhaft(Angebot angebot);
         Task<bool> IstAngebotAktivAsync(Angebot angebot);
     }

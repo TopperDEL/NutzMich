@@ -81,13 +81,16 @@ namespace NutzMich.Shared.Services
             }
         }
 
-        public async Task<Angebot> LoadAngebotAsync(string angebotId)
+        public async Task<Angebot> LoadAngebotAsync(string angebotId, bool ohnePuffer = false)
         {
             loadAngebotMutex.WaitOne();
             try
             {
-                if (!Barrel.Current.IsExpired("angebot_" + angebotId) || !CrossConnectivity.Current.IsConnected)
-                    return Barrel.Current.Get<Angebot>("angebot_" + angebotId);
+                if (!ohnePuffer)
+                {
+                    if (!Barrel.Current.IsExpired("angebot_" + angebotId) || !CrossConnectivity.Current.IsConnected)
+                        return Barrel.Current.Get<Angebot>("angebot_" + angebotId);
+                }
                 await InitReadConnectionAsync();
 
                 var angebotDownload = await _readConnection.ObjectService.DownloadObjectAsync(_readConnection.Bucket, "Angebote/" + angebotId, new DownloadOptions(), false);

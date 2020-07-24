@@ -3,6 +3,7 @@ using NutzMich.Shared.Services;
 using NutzMich.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -24,9 +25,11 @@ namespace NutzMich.Shared.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class AngebotDetailsPage : Page
+    public sealed partial class AngebotDetailsPage : Page, INotifyPropertyChanged
     {
         AngebotViewModel _angebotVM;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public AngebotDetailsPage()
         {
@@ -65,6 +68,8 @@ namespace NutzMich.Shared.Pages
             await _angebotVM.InitAnbieterProfilAsync(); 
             await _angebotVM.LoadReservierungenAsync(true);
             await _angebotVM.LoadFotos();
+            _angebotVM.RefreshBindings();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(_angebotVM)));
         }
 
         private bool On_BackRequested()

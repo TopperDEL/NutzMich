@@ -57,6 +57,14 @@ namespace NutzMich.Shared.ViewModels
 
         public bool IstInaktiv { get; set; }
 
+        public List<Kategorie> Kategorien
+        {
+            get
+            {
+                return Angebot.Kategorien.Select(k => new Kategorie(k, Kategorie.Kategorien[k])).ToList();
+            }
+        }
+
         public AngebotViewModel() : this(new Angebot())
         {
 
@@ -185,6 +193,11 @@ namespace NutzMich.Shared.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Verfuegbarkeit)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VerfuegbarkeitsDetails)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VerfuegbarkeitsAmpel)));
+        }
+
+        public void RefreshBindings()
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Kategorien)));
         }
     }
 }

@@ -43,7 +43,7 @@
 						  AcceptsReturn="True" MinHeight="100"
                           IsEnabled="{Binding NotLoading, Mode=OneWay}"/>
                 <StackPanel Orientation="Vertical">
-                    <TextBlock Text="Kategorien (mindestens 1, maximal 5)" FontWeight="Bold"/>
+                    <TextBlock Text="Kategorien (mindestens 1, maximal 5)" Foreground="Black" FontWeight="Bold"/>
                     <ItemsControl ItemsSource="{x:Bind MoeglicheKategorien, Mode=OneWay}" Margin="10">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="models:Kategorie">

@@ -79,8 +79,8 @@ namespace NutzMich.Shared.Pages
             {
                 _angebotVM = e.Parameter as AngebotViewModel;
                 _angebotVM.SetIsLoading();
-                await _angebotVM.LoadFotos();
                 await _angebotVM.LoadAngebotsStatus();
+                await _angebotVM.LoadFotos();
             }
             else
                 _angebotVM = new AngebotViewModel();

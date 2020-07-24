@@ -29,6 +29,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -52,7 +53,17 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </StackPanel>
-                <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical">
+                <StackPanel Grid.Row="3" Orientation="Vertical">
+                    <TextBlock Text="Kategorien" Foreground="Black" FontWeight="Bold"/>
+                    <ItemsControl ItemsSource="{x:Bind _angebotVM.Kategorien, Mode=OneWay}" Margin="10">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="models:Kategorie">
+                                <TextBlock Text="{x:Bind Name}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical">
                     <TextBlock Text="Fotos" FontWeight="Bold" Foreground="Black"/>
                     <FlipView ItemsSource="{Binding Fotos, Mode=OneWay}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="10">
                         <FlipView.ItemTemplate>
