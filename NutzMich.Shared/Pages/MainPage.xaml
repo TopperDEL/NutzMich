@@ -10,9 +10,9 @@
     mc:Ignorable="d">
 
     <NavigationView x:Name="navView"
-                    PaneDisplayMode="LeftCompact" IsPaneOpen="False" IsBackButtonVisible="Auto" Foreground="White"
+                    PaneDisplayMode="LeftCompact" IsPaneOpen="False" IsBackButtonVisible="Auto" Foreground="RoyalBlue"
                     IsSettingsVisible="False" SelectionChanged="NavigationView_SelectionChanged" IsBackEnabled="{x:Bind Path=contentFrame.CanGoBack, Mode=OneWay}" BackRequested="navView_BackRequested"
-                    Background="RoyalBlue">
+                    Background="White">
         
         <NavigationView.MenuItems>
             <NavigationViewItem Content="Start" Icon="Home" Tag="AlleAngebotePage"/>
