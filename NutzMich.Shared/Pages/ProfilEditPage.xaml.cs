@@ -1,4 +1,5 @@
-﻿using NutzMich.Shared.Interfaces;
+﻿using NutzMich.Pages;
+using NutzMich.Shared.Interfaces;
 using NutzMich.Shared.Models;
 using NutzMich.Shared.Services;
 using NutzMich.Shared.ViewModels;
@@ -66,6 +67,13 @@ namespace NutzMich.Shared.Pages
                 return true;
             }
             return false;
+        }
+
+        private void Logout(object sender, RoutedEventArgs e)
+        {
+            _loginService.Logout();
+            Frame rootFrame = Windows.UI.Xaml.Window.Current.Content as Frame;
+            rootFrame.Navigate(typeof(LoginPage));
         }
 
         private void BackInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)

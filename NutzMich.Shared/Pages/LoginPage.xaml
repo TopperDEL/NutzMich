@@ -13,9 +13,15 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="email" Header="E-mail" Grid.Row="0" Text="{Binding Email, Mode=TwoWay}"/>
-        <PasswordBox x:Name="password" Header="Passwort" Grid.Row="1" Password="{Binding Password, Mode=TwoWay}"/>
-        <Button Content="Login" Click="Login" Grid.Row="2"/>
+        <Image Source="/Assets/nutzMichLogo.png" Grid.Row="0" MaxHeight="200"/>
+        <TextBox x:Name="email" Header="Benutzer" Grid.Row="1" Text="{Binding Email, Mode=TwoWay}" MaxWidth="300" BorderBrush="{StaticResource NutzmichGruen}"/>
+        <PasswordBox x:Name="password" Header="Passwort" Grid.Row="2" Password="{Binding Password, Mode=TwoWay}" MaxWidth="300" BorderBrush="{StaticResource NutzmichGruen}"/>
+        <Button Content="Anmelden" Click="Login" Grid.Row="3" HorizontalAlignment="Center" Margin="10"/>
+        <TextBlock Grid.Row="4" Text="Noch keine Zugangsdaten?" HorizontalAlignment="Center" Margin="0,30,0,0"/>
+        <Button Content="Registrieren" Click="Register" Grid.Row="5" HorizontalAlignment="Center" Margin="10"/>
     </Grid>
 </Page>

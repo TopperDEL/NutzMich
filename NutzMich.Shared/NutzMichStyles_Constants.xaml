@@ -3,6 +3,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:NutzMich.Shared" xmlns:converters="using:NutzMich.Shared.Converter">
 
+    <Color x:Key="NutzmichGruen">#90D979</Color>
+    <Color x:Key="NutzmichBlau">#9CDCF7</Color>
+    <Color x:Key="NutzmichRosa">#F79999</Color>
+    <SolidColorBrush x:Key="NutzmichGruenBrush" Color="{StaticResource NutzmichGruen}"/>
+    <SolidColorBrush x:Key="NutzmichBlauBrush" Color="{StaticResource NutzmichBlau}"/>
+    <SolidColorBrush x:Key="NutzmichRosaBrush" Color="{StaticResource NutzmichRosa}"/>
+
     <converters:EmptyStringToBoolConverter x:Key="EmptyStringToTrue"
 										   EmptyStringMeansFalse="False" />
 
@@ -13,4 +20,12 @@
 
     <CubicEase x:Key="FieldHeaderAnimationEasing"
 			   EasingMode="EaseOut" />
+
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Light">
+            <SolidColorBrush x:Key="ButtonBackground" Color="{StaticResource NutzmichBlau}"/>
+            <SolidColorBrush x:Key="ButtonForeground" Color="White"/>
+            <SolidColorBrush x:Key="ButtonBorderBrush" Color="{StaticResource NutzmichBlau}"/>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

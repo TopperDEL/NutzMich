@@ -49,5 +49,11 @@ namespace NutzMich.Shared.Pages
                 await dlg.ShowAsync();
             }
         }
+
+        private async void Register(object sender, RoutedEventArgs e)
+        {
+            MessageDialog dlg = new MessageDialog("Neuanmeldungen aktuell leider noch nicht möglich", "Fehler");
+            await dlg.ShowAsync();
+        }
     }
 }

@@ -22,6 +22,11 @@
                 <CommandBar.PrimaryCommands>
                     <AppBarButton Icon="Save" Click="Speichern" Foreground="White"/>
                     <AppBarButton Icon="Back" Click="Back_Click" Foreground="White"/>
+                    <AppBarButton Click="Logout" Foreground="White">
+                        <AppBarButton.Icon>
+                            <BitmapIcon UriSource="/Assets/logout.png"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
                 </CommandBar.PrimaryCommands>
             </CommandBar>
 
