@@ -162,6 +162,16 @@ namespace NutzMich
         private void SysManager_BackRequested(object sender, BackRequestedEventArgs e)
         {
             var frame = Windows.UI.Xaml.Window.Current.Content as Frame;
+            if(frame.Content.GetType() == typeof(MainPage))
+            {
+                var mainpage = frame.Content as MainPage;
+                if (mainpage.CanGoBack)
+                {
+                    mainpage.GoBack();
+                    e.Handled = true;
+                    return;
+                }
+            }
             if (frame.CanGoBack)
             {
                 frame.GoBack();

@@ -93,5 +93,8 @@ namespace NutzMich.Pages
         {
             On_BackRequested();
         }
+
+        public bool CanGoBack { get { return contentFrame.CanGoBack; } }
+        public void GoBack() { contentFrame.GoBack(); }
     }
 }
