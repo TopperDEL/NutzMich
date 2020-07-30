@@ -35,6 +35,13 @@ namespace NutzMich.Shared.Pages
             this.DataContext = _vm = new LoginViewModel();
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            Frame.BackStack.Clear();
+        }
+
         private async void Login(object sender, RoutedEventArgs e)
         {
             var loginService = Factory.GetLoginService();
