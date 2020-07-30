@@ -37,12 +37,37 @@ namespace NutzMich.Shared.Services
             var thumbnailBytes = new byte[thumb.Size];
             thumb.AsStream().Read(thumbnailBytes, 0, (int)thumb.Size);
 #endif
+#if __IOS__
+            var imageBytes = new byte[image.Stream.Length];
+            image.Stream.Position = 0;
+            image.Stream.Read(imageBytes, 0, (int)image.Stream.Length);
+            var thumbnailBytes = GetThumbnailBytes(imageBytes, 200, 200);
+#endif
 
             return Convert.ToBase64String(thumbnailBytes);
         }
 
 #if __IOS__
-//https://forums.xamarin.com/discussion/67531/how-to-resize-image-file-on-xamarin-forms-writeablebitmap-package-cant-be-added
+        public static UIKit.UIImage ImageFromByteArray(byte[] data)
+        {
+            if (data == null)
+            {
+                return null;
+            }
+
+            UIKit.UIImage image;
+            try
+            {
+                image = new UIKit.UIImage(Foundation.NSData.FromArray(data));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Image load failed: " + e.Message);
+                return null;
+            }
+            return image;
+        }
+        //https://forums.xamarin.com/discussion/67531/how-to-resize-image-file-on-xamarin-forms-writeablebitmap-package-cant-be-added
         public byte[] GetThumbnailBytes(byte[] imageData, float width, float height)
         {
 
@@ -70,10 +95,10 @@ namespace NutzMich.Shared.Services
             width = (float)newWidth;
             height = (float)newHeight;
 
-            UIGraphics.BeginImageContext(new SizeF(width, height));
-            originalImage.Draw(new RectangleF(0, 0, width, height));
-            var resizedImage = UIGraphics.GetImageFromCurrentImageContext();
-            UIGraphics.EndImageContext();
+            UIKit.UIGraphics.BeginImageContext(new System.Drawing.SizeF(width, height));
+            originalImage.Draw(new System.Drawing.RectangleF(0, 0, width, height));
+            var resizedImage = UIKit.UIGraphics.GetImageFromCurrentImageContext();
+            UIKit.UIGraphics.EndImageContext();
 
             var bytesImagen = resizedImage.AsJPEG().ToArray();
             resizedImage.Dispose();
