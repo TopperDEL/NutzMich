@@ -16,6 +16,7 @@
         
         <NavigationView.MenuItems>
             <NavigationViewItem Content="Start" Icon="Home" Tag="AlleAngebotePage"/>
+            <NavigationViewItem Content="Angebot einstellen" Icon="Add" Tag="AngebotEditPage"/>
             <NavigationViewItem Content="Meine Angebote" Icon="ContactInfo" Tag="MeineAngebotePage"/>
             <NavigationViewItem Content="Nachrichten" Icon="Mail" Tag="ChatListPage"/>
             <NavigationViewItem Content="Profil" Icon="Contact" Tag="ProfilEditPage">
