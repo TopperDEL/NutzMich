@@ -135,10 +135,7 @@ namespace NutzMich.Shared.Services
 
             foreach (var image in images.Items.Where(i => !i.IsPrefix).OrderBy(i => i.Key))
             {
-                if (!Barrel.Current.IsExpired(image.Key) || !CrossConnectivity.Current.IsConnected)
-                    result.Add(new MemoryStream(Barrel.Current.Get<byte[]>(image.Key)));
-                else
-                    result.Add(new DownloadStream(_readConnection.Bucket, (int)image.SystemMetaData.ContentLength, image.Key));
+                result.Add(new DownloadStream(_readConnection.Bucket, (int)image.SystemMetaData.ContentLength, image.Key));
             }
 
             return result;
