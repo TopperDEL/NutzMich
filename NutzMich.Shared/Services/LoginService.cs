@@ -32,7 +32,7 @@ namespace NutzMich.Shared.Services
             }
         }
 
-        public async Task<bool> Login(string email, string password)
+        public async Task<string> Login(string email, string password)
         {
             try
             {
@@ -48,11 +48,11 @@ namespace NutzMich.Shared.Services
                 _vault.Add(new PasswordCredential(NUTZ_MICH, READ_ACCESS, readWriteAccess[0]));
                 _vault.Add(new PasswordCredential(NUTZ_MICH, WRITE_ACCESS, readWriteAccess[1]));
 
-                return true;
+                return "";
             }
             catch(Exception ex)
             {
-                return false;
+                return ex.Message;
             }
         }
 

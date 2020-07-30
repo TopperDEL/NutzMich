@@ -8,7 +8,7 @@ namespace NutzMich.Shared.Interfaces
     public interface ILoginService
     {
         bool IsLoggedIn();
-        Task<bool> Login(string email, string password);
+        Task<string> Login(string email, string password);
         string GetReadAccess();
         string GetWriteAccess();
         string AnbieterId { get; }

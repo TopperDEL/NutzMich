@@ -39,13 +39,13 @@ namespace NutzMich.Shared.Pages
         {
             var loginService = Factory.GetLoginService();
             var loggedIn = await loginService.Login(email.Text, _vm.Password);
-            if(loggedIn)
+            if(string.IsNullOrEmpty(loggedIn))
             {
                 this.Frame.Navigate(typeof(MainPage));
             }
             else
             {
-                MessageDialog dlg = new MessageDialog("Anmeldung war nicht möglich", "Fehler");
+                MessageDialog dlg = new MessageDialog("Anmeldung war nicht möglich: " + loggedIn, "Fehler");
                 await dlg.ShowAsync();
             }
         }
