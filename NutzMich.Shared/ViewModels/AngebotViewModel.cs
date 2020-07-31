@@ -149,6 +149,7 @@ namespace NutzMich.Shared.ViewModels
                 return;
 
             var reservierungen = await Factory.GetReservierungService().GetReservierungenAsync(Angebot.AnbieterId, Angebot.Id);
+            Reservierungen.Clear();
             foreach(var reservierung in reservierungen.Where(r=>r.Bis >= DateTime.Now))
             {
                 Reservierungen.Add(new ReservierungsZeitraumViewModel(reservierung));
