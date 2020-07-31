@@ -18,7 +18,10 @@
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:AngebotViewModel">
                     <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                        <PersonPicture ProfilePicture="{x:Bind Thumbnail}" Initials="AB" DisplayName="CD" Width="80" Height="80" Margin="0,0,10,0"/>
+                        <Border CornerRadius="10">
+                            <Image Source="{x:Bind Thumbnail}" Width="80" Height="80" Margin="0,0,10,0" Stretch="UniformToFill"/>
+                        </Border>
+                        <!--<PersonPicture ProfilePicture="{x:Bind Thumbnail}" Initials="AB" DisplayName="CD" Width="80" Height="80" Margin="0,0,10,0"/>-->
                         <StackPanel Orientation="Vertical">
                             <TextBlock Text="{x:Bind Path=Angebot.Ueberschrift}" FontWeight="Bold" Foreground="{x:Bind Path=VerfuegbarkeitsAmpel, Mode=OneWay}"/>
                             <TextBlock Text="{x:Bind Path=BeschreibungShort}" TextWrapping="Wrap" MaxWidth="190"/>
