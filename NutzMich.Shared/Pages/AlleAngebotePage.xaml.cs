@@ -54,12 +54,9 @@ namespace NutzMich.Shared.Pages
             _angeboteVM.AlleAngebote.Clear();
             await foreach (var angebot in _angebotService.GetAlleAsync())
             {
-                if (angebot.AnbieterId != _loginService.AnbieterId)
-                {
-                    var angebotVM = new AngebotViewModel(angebot);
-                    _angeboteVM.AlleAngebote.Add(angebotVM);
-                    await angebotVM.LoadReservierungenAsync();
-                }
+                var angebotVM = new AngebotViewModel(angebot);
+                _angeboteVM.AlleAngebote.Add(angebotVM);
+                await angebotVM.LoadReservierungenAsync();
             }
 
             _angeboteVM.SetNotLoading();
