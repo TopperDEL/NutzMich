@@ -98,7 +98,7 @@ namespace NutzMich.Shared.Services
                 if (!Barrel.Current.IsExpired("angebot_" + angebotId) || !CrossConnectivity.Current.IsConnected)
                 {
                     var angebot = Barrel.Current.Get<Angebot>("angebot_" + angebotId);
-                    if (angebot.EingestelltAm >= angebotsVersion)
+                    if (angebot.EingestelltAm == DateTime.MinValue || angebot.EingestelltAm >= angebotsVersion)
                         return angebot;
                 }
                 await InitReadConnectionAsync();
