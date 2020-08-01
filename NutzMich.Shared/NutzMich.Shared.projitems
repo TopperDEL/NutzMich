@@ -29,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IIdentityService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILoginService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\INotificationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\INutzMichSubPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IProfilService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IReservierungService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IThumbnailHelper.cs" />

@@ -6,6 +6,7 @@ using NutzMich.Shared.Services;
 using NutzMich.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -28,7 +29,7 @@ namespace NutzMich.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage : Page, INutzMichSubPage, INotifyPropertyChanged
     {
         public MainPage()
         {
@@ -51,6 +52,8 @@ namespace NutzMich.Pages
             // ALT routes here
             AltLeft.Modifiers = VirtualKeyModifiers.Menu;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private bool On_BackRequested()
         {
@@ -85,6 +88,8 @@ namespace NutzMich.Pages
                     string pageName = "NutzMich.Shared.Pages." + selectedItemTag;
                     Type pageType = Type.GetType(pageName);
                     contentFrame.Navigate(pageType);
+
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Header)));
                 }
             }
         }
@@ -95,6 +100,18 @@ namespace NutzMich.Pages
         }
 
         public bool CanGoBack { get { return contentFrame.CanGoBack; } }
+
+        public string Header
+        {
+            get
+            {
+                if (contentFrame.Content is INutzMichSubPage)
+                    return ((INutzMichSubPage)contentFrame.Content).Header;
+                else
+                    return "";
+            }
+        }
+
         public void GoBack() { contentFrame.GoBack(); }
     }
 }

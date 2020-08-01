@@ -7,93 +7,40 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewmodels="using:NutzMich.Shared.ViewModels"
     xmlns:xamarin="http://uno.ui/xamarin"
     xmlns:toolkit="using:Uno.UI.Toolkit"
-    mc:Ignorable="d">
+    mc:Ignorable="d" x:Name="NutzMichMainPage">
 
     <NavigationView x:Name="navView"
                     PaneDisplayMode="LeftCompact" IsPaneOpen="False" IsBackButtonVisible="Auto" Foreground="RoyalBlue"
                     IsSettingsVisible="False" SelectionChanged="NavigationView_SelectionChanged" IsBackEnabled="{x:Bind Path=contentFrame.CanGoBack, Mode=OneWay}" BackRequested="navView_BackRequested"
                     Background="White">
-        
+        <NavigationView.HeaderTemplate>
+            <DataTemplate>
+                <Grid Background="{StaticResource NutzmichBlau}" Padding="5" Margin="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{Binding Header, ElementName=NutzMichMainPage, Mode=OneWay}" Foreground="Black"/>
+                    <!--<StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <Button Background="{StaticResource NutzmichBlau}" Foreground="Black">
+                            <SymbolIcon Symbol="Back"/>
+                        </Button>
+                        <Button Background="{StaticResource NutzmichBlau}" Foreground="Black">
+                            <SymbolIcon Symbol="Save"/>
+                        </Button>
+                    </StackPanel>-->
+                </Grid>
+            </DataTemplate>
+        </NavigationView.HeaderTemplate>
+
         <NavigationView.MenuItems>
-            <NavigationViewItem Content="Start" Icon="Home" Tag="AlleAngebotePage"/>
-            <NavigationViewItem Content="Angebot einstellen" Icon="Add" Tag="AngebotEditPage"/>
-            <NavigationViewItem Content="Meine Angebote" Icon="ContactInfo" Tag="MeineAngebotePage"/>
+            <NavigationViewItem Content="Start" Icon="Home" Tag="AlleAngebotePage" Foreground="{StaticResource NutzmichGruen}"/>
+            <NavigationViewItem Content="Angebot einstellen" Icon="Add" Tag="AngebotEditPage" Foreground="{StaticResource NutzmichRosa}"/>
+            <NavigationViewItem Content="Meine Angebote" Icon="ContactInfo" Tag="MeineAngebotePage" Foreground="{StaticResource NutzmichBlau}"/>
             <NavigationViewItem Content="Nachrichten" Icon="Mail" Tag="ChatListPage"/>
             <NavigationViewItem Content="Profil" Icon="Contact" Tag="ProfilEditPage">
             </NavigationViewItem>
         </NavigationView.MenuItems>
         <Frame x:Name="contentFrame"/>
     </NavigationView>
-    <!--<Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <CommandBar Grid.Row="0" Background="RoyalBlue" Foreground="White">
-            <CommandBar.Content>
-                <TextBlock Text="NutzMich" Margin="12"/>
-            </CommandBar.Content>
-            <CommandBar.PrimaryCommands>
-                <AppBarButton Icon="Refresh" Click="Refresh" Foreground="White"/>
-                <AppBarButton Icon="Message" Click="OpenChats" Foreground="White"/>
-                <AppBarButton Icon="Bookmarks" Click="Reservierungen" Foreground="White"/>
-                <AppBarButton Icon="Account" Click="ProfilPflege" Foreground="White"/>
-            </CommandBar.PrimaryCommands>
-        </CommandBar>
-        <Pivot Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Row="1">
-            <PivotItem Header="Übersicht">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <ProgressRing Grid.Row="0" Visibility="{Binding Loading, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}" IsActive="True" Foreground="RoyalBlue"/>
-                    <ListView Grid.Row="1" ItemsSource="{x:Bind _angeboteVM.AlleAngebote, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="AngebotAnzeigen">
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="viewmodels:AngebotViewModel">
-                                <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                                    <PersonPicture ProfilePicture="{x:Bind Thumbnail}" Initials="AB" DisplayName="CD" Width="80" Height="80" Margin="0,0,10,0"/>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="{x:Bind Path=Angebot.Ueberschrift}" FontWeight="Bold" Foreground="{x:Bind Path=VerfuegbarkeitsAmpel, Mode=OneWay}"/>
-                                        <TextBlock Text="{x:Bind Path=BeschreibungShort}" TextWrapping="Wrap" MaxWidth="190"/>
-                                        <TextBlock Text="{x:Bind Path=VerfuegbarkeitsDetails, Mode=OneWay}" TextWrapping="Wrap" MaxWidth="190" Foreground="{x:Bind Path=VerfuegbarkeitsAmpel, Mode=OneWay}"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </PivotItem>
-            <PivotItem Header="Meine Angebote">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Button Grid.Row="0" Click="NeuesAngebotAnlegen" HorizontalAlignment="Center" Background="Transparent">
-                        <Button.Content>
-                            <Border CornerRadius="10" BorderThickness="2" Padding="10" BorderBrush="RoyalBlue">
-                                <SymbolIcon Symbol="Add"/>
-                            </Border>
-                        </Button.Content>
-                    </Button>
-                    <ProgressRing Grid.Row="1" Visibility="{Binding Loading, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}" IsActive="True" Foreground="RoyalBlue"/>
-                    <ListView Grid.Row="2" ItemsSource="{x:Bind _angeboteVM.MeineAngebote, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="AngebotBearbeiten">
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="viewmodels:AngebotViewModel">
-                                <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                                    <PersonPicture ProfilePicture="{x:Bind Thumbnail}" Initials="AB" DisplayName="CD" Width="80" Height="80" Margin="0,0,10,0"/>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="{x:Bind Path=Angebot.Ueberschrift}" FontWeight="Bold"/>
-                                        <TextBlock Text="{x:Bind Path=BeschreibungShort}" TextWrapping="Wrap" MaxWidth="190"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </PivotItem>
-        </Pivot>
-    </Grid>-->
 </Page>
