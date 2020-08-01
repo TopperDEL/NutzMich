@@ -145,6 +145,7 @@ namespace NutzMich.Shared.Services
         {
             await InitWriteConnectionAsync();
 
+            angebot.EingestelltAm = DateTime.Now;
             angebot.AnbieterId = _loginService.AnbieterId;
             if (images.Count > 0)
                 angebot.ThumbnailBase64 = await _thumbnailHelper.ThumbnailToBase64Async(images.First());
