@@ -33,12 +33,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IReservierungService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IThumbnailHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Jobs\BackgroundChatPollJob.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\SetCommandsMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\ChangeTitleMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Angebot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AttachmentImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChatInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChatNachricht.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Kategorie.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\NutzMichCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Profil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Reservierung.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ReservierungsZeitraum.cs" />

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Input;
 using NutzMich.Contracts.Interfaces;
 using NutzMich.Shared.Interfaces;
 using NutzMich.Shared.Models;
@@ -35,6 +36,9 @@ namespace NutzMich.Pages
         public MainPage()
         {
             this.InitializeComponent();
+
+            NutzMichCommand.GoBackCommand = new RelayCommand(DoGoBack, () => CanGoBack);
+
             ((ObservableRecipient)this.DataContext).IsActive = true;
 
             navView.SelectedItem = navView.MenuItems.OfType<NavigationViewItem>().First();
@@ -56,6 +60,11 @@ namespace NutzMich.Pages
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private void DoGoBack()
+        {
+            On_BackRequested();
+        }
 
         private bool On_BackRequested()
         {

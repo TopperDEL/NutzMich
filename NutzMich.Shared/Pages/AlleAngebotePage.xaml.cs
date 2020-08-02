@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Toolkit.Mvvm.Messaging;
+using Microsoft.Toolkit.Mvvm.Input;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -39,6 +40,19 @@ namespace NutzMich.Shared.Pages
             this.InitializeComponent();
 
             Messenger.Default.Send(new ChangeTitleMessage("Alle Angebote"));
+            Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
+                {
+                    new Models.NutzMichCommand()
+                    {
+                        Symbol = Symbol.Back,
+                        Command = Models.NutzMichCommand.GoBackCommand
+                    },
+                    new Models.NutzMichCommand()
+                    {
+                        Symbol = Symbol.Refresh,
+                        Command = new AsyncRelayCommand(LoadAngeboteAsync)
+                    }
+                }));
 
             _angebotService = Factory.GetAngebotService();
             _loginService = Factory.GetLoginService();

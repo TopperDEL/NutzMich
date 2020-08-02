@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewmodels="using:NutzMich.Shared.ViewModels"
     xmlns:xamarin="http://uno.ui/xamarin"
-    xmlns:toolkit="using:Uno.UI.Toolkit"
+    xmlns:toolkit="using:Uno.UI.Toolkit" xmlns:models="using:NutzMich.Shared.Models"
     mc:Ignorable="d" x:Name="NutzMichMainPage">
     <Page.DataContext>
         <viewmodels:MainPageViewModel x:Name="ViewModel"/>
@@ -21,17 +21,23 @@
                 <Grid Background="White" Padding="5" Margin="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="32"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Text="{Binding DataContext.Title, ElementName=NutzMichMainPage, Mode=OneWay}" FontSize="18" Foreground="Black"/>
-                    <StackPanel Grid.Row="1" Orientation="Horizontal">
-                        <Button Foreground="Black" BorderThickness="0" Background="White">
-                            <SymbolIcon Symbol="Back"/>
-                        </Button>
-                        <Button Foreground="Black" BorderThickness="0" Background="White">
-                            <SymbolIcon Symbol="Save"/>
-                        </Button>
-                    </StackPanel>
+                    <ItemsControl Grid.Row="1" ItemsSource="{Binding DataContext.Commands, ElementName=NutzMichMainPage, Mode=OneWay}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="models:NutzMichCommand">
+                                <Button Foreground="Black" BorderThickness="0" Background="White" Command="{x:Bind Command}">
+                                    <SymbolIcon Symbol="{x:Bind Symbol}"/>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                     <Border Grid.RowSpan="2" BorderThickness="0,0,0,2" BorderBrush="{StaticResource NutzmichBlau}"></Border>
                 </Grid>
             </DataTemplate>
