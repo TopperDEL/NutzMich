@@ -29,11 +29,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IIdentityService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILoginService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\INotificationService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\INutzMichSubPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IProfilService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IReservierungService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IThumbnailHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Jobs\BackgroundChatPollJob.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\ChangeTitleMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Angebot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AttachmentImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChatInfo.cs" />
@@ -102,6 +102,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ChatNachrichtViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ChatViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\LoginViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProfilViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ReservierungenViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ReservierungsZeitraumViewModel.cs" />

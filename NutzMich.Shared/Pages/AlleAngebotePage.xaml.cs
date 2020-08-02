@@ -1,5 +1,6 @@
 ﻿using NutzMich.Contracts.Interfaces;
 using NutzMich.Shared.Interfaces;
+using NutzMich.Shared.Messages;
 using NutzMich.Shared.Services;
 using NutzMich.Shared.ViewModels;
 using System;
@@ -17,6 +18,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Toolkit.Mvvm.Messaging;
+
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -25,17 +28,17 @@ namespace NutzMich.Shared.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class AlleAngebotePage : Page, INutzMichSubPage
+    public sealed partial class AlleAngebotePage : Page
     {
         IAngebotService _angebotService;
         ILoginService _loginService;
         AngeboteViewModel _angeboteVM;
 
-        public string Header { get => "Alle Angebote"; }
-
         public AlleAngebotePage()
         {
             this.InitializeComponent();
+
+            Messenger.Default.Send(new ChangeTitleMessage("Alle Angebote"));
 
             _angebotService = Factory.GetAngebotService();
             _loginService = Factory.GetLoginService();

@@ -8,6 +8,9 @@
     xmlns:xamarin="http://uno.ui/xamarin"
     xmlns:toolkit="using:Uno.UI.Toolkit"
     mc:Ignorable="d" x:Name="NutzMichMainPage">
+    <Page.DataContext>
+        <viewmodels:MainPageViewModel x:Name="ViewModel"/>
+    </Page.DataContext>
 
     <NavigationView x:Name="navView"
                     PaneDisplayMode="LeftCompact" IsPaneOpen="False" IsBackButtonVisible="Auto" Foreground="RoyalBlue"
@@ -20,7 +23,7 @@
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="{Binding Header, ElementName=NutzMichMainPage, Mode=OneWay}" Foreground="Black"/>
+                    <TextBlock Grid.Row="0" Text="{Binding DataContext.Title, ElementName=NutzMichMainPage, Mode=OneWay}" Foreground="Black"/>
                     <!--<StackPanel Grid.Row="1" Orientation="Horizontal">
                         <Button Background="{StaticResource NutzmichBlau}" Foreground="Black">
                             <SymbolIcon Symbol="Back"/>

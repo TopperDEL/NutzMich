@@ -1,4 +1,6 @@
-﻿using NutzMich.Shared.Interfaces;
+﻿using Microsoft.Toolkit.Mvvm.Messaging;
+using NutzMich.Shared.Interfaces;
+using NutzMich.Shared.Messages;
 using NutzMich.Shared.Services;
 using NutzMich.Shared.ViewModels;
 using System;
@@ -26,17 +28,17 @@ namespace NutzMich.Shared.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ChatListPage : Page, INutzMichSubPage
+    public sealed partial class ChatListPage : Page
     {
         private ChatListViewModel _vm;
         private Task _gelesenMarkiertTask;
         private CancellationTokenSource _gelesenTaskCancelTokenSource;
 
-        public string Header => "Nachrichten";
-
         public ChatListPage()
         {
             this.InitializeComponent();
+
+            Messenger.Default.Send(new ChangeTitleMessage("Nachrichten"));
 
             KeyboardAccelerator GoBack = new KeyboardAccelerator();
             GoBack.Key = VirtualKey.GoBack;

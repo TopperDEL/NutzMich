@@ -1,4 +1,5 @@
-﻿using NutzMich.Contracts.Interfaces;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using NutzMich.Contracts.Interfaces;
 using NutzMich.Shared.Interfaces;
 using NutzMich.Shared.Models;
 using NutzMich.Shared.Pages;
@@ -29,11 +30,13 @@ namespace NutzMich.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page, INutzMichSubPage, INotifyPropertyChanged
+    public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
         public MainPage()
         {
             this.InitializeComponent();
+            ((ObservableRecipient)this.DataContext).IsActive = true;
+
 
             navView.SelectedItem = navView.MenuItems.OfType<NavigationViewItem>().First();
 
@@ -51,6 +54,11 @@ namespace NutzMich.Pages
             this.KeyboardAccelerators.Add(AltLeft);
             // ALT routes here
             AltLeft.Modifiers = VirtualKeyModifiers.Menu;
+        }
+
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -88,8 +96,6 @@ namespace NutzMich.Pages
                     string pageName = "NutzMich.Shared.Pages." + selectedItemTag;
                     Type pageType = Type.GetType(pageName);
                     contentFrame.Navigate(pageType);
-
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Header)));
                 }
             }
         }
@@ -100,17 +106,6 @@ namespace NutzMich.Pages
         }
 
         public bool CanGoBack { get { return contentFrame.CanGoBack; } }
-
-        public string Header
-        {
-            get
-            {
-                if (contentFrame.Content is INutzMichSubPage)
-                    return ((INutzMichSubPage)contentFrame.Content).Header;
-                else
-                    return "";
-            }
-        }
 
         public void GoBack() { contentFrame.GoBack(); }
     }

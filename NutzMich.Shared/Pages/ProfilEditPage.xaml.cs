@@ -1,5 +1,7 @@
-﻿using NutzMich.Pages;
+﻿using Microsoft.Toolkit.Mvvm.Messaging;
+using NutzMich.Pages;
 using NutzMich.Shared.Interfaces;
+using NutzMich.Shared.Messages;
 using NutzMich.Shared.Models;
 using NutzMich.Shared.Services;
 using NutzMich.Shared.ViewModels;
@@ -27,19 +29,19 @@ namespace NutzMich.Shared.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ProfilEditPage : Page, INotifyPropertyChanged, INutzMichSubPage
+    public sealed partial class ProfilEditPage : Page, INotifyPropertyChanged
     {
         public ProfilViewModel _profilVM;
         IProfilService _profilService;
         ILoginService _loginService;
-
-        public string Header => "Mein Profil";
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ProfilEditPage()
         {
             this.InitializeComponent();
+
+            Messenger.Default.Send(new ChangeTitleMessage("Mein Profil"));
 
             _profilService = Factory.GetProfilService();
             _loginService = Factory.GetLoginService();
