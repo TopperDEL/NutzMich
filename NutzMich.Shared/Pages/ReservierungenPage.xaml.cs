@@ -1,4 +1,6 @@
-﻿using NutzMich.Shared.Services;
+﻿using Microsoft.Toolkit.Mvvm.Messaging;
+using NutzMich.Shared.Messages;
+using NutzMich.Shared.Services;
 using NutzMich.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -30,6 +32,8 @@ namespace NutzMich.Shared.Pages
         public ReservierungenPage()
         {
             this.InitializeComponent();
+
+            Messenger.Default.Send(new ChangeTitleMessage("Reservierungen"));
 
             _vm = new ReservierungenViewModel(Factory.GetReservierungService());
             _vm.LoadReservierungen();

@@ -13,33 +13,35 @@
     </Page.DataContext>
 
     <NavigationView x:Name="navView"
-                    PaneDisplayMode="LeftCompact" IsPaneOpen="False" IsBackButtonVisible="Auto" Foreground="RoyalBlue"
+                    PaneDisplayMode="LeftCompact" IsPaneOpen="False" IsBackButtonVisible="Collapsed" Foreground="RoyalBlue"
                     IsSettingsVisible="False" SelectionChanged="NavigationView_SelectionChanged" IsBackEnabled="{x:Bind Path=contentFrame.CanGoBack, Mode=OneWay}" BackRequested="navView_BackRequested"
                     Background="White">
         <NavigationView.HeaderTemplate>
             <DataTemplate>
-                <Grid Background="{StaticResource NutzmichBlau}" Padding="5" Margin="0">
+                <Grid Background="White" Padding="5" Margin="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="{Binding DataContext.Title, ElementName=NutzMichMainPage, Mode=OneWay}" Foreground="Black"/>
-                    <!--<StackPanel Grid.Row="1" Orientation="Horizontal">
-                        <Button Background="{StaticResource NutzmichBlau}" Foreground="Black">
+                    <TextBlock Grid.Row="0" Text="{Binding DataContext.Title, ElementName=NutzMichMainPage, Mode=OneWay}" FontSize="18" Foreground="Black"/>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <Button Foreground="Black" BorderThickness="0" Background="White">
                             <SymbolIcon Symbol="Back"/>
                         </Button>
-                        <Button Background="{StaticResource NutzmichBlau}" Foreground="Black">
+                        <Button Foreground="Black" BorderThickness="0" Background="White">
                             <SymbolIcon Symbol="Save"/>
                         </Button>
-                    </StackPanel>-->
+                    </StackPanel>
+                    <Border Grid.RowSpan="2" BorderThickness="0,0,0,2" BorderBrush="{StaticResource NutzmichBlau}"></Border>
                 </Grid>
             </DataTemplate>
         </NavigationView.HeaderTemplate>
 
         <NavigationView.MenuItems>
-            <NavigationViewItem Content="Start" Icon="Home" Tag="AlleAngebotePage" Foreground="{StaticResource NutzmichGruen}"/>
-            <NavigationViewItem Content="Angebot einstellen" Icon="Add" Tag="AngebotEditPage" Foreground="{StaticResource NutzmichRosa}"/>
-            <NavigationViewItem Content="Meine Angebote" Icon="ContactInfo" Tag="MeineAngebotePage" Foreground="{StaticResource NutzmichBlau}"/>
+            <NavigationViewItem Content="Start" Icon="Home" Tag="AlleAngebotePage"/>
+            <NavigationViewItem Content="Angebot einstellen" Icon="Add" Tag="AngebotEditPage"/>
+            <NavigationViewItem Content="Meine Angebote" Icon="ContactInfo" Tag="MeineAngebotePage"/>
+            <NavigationViewItem Content="Reservierungen" Icon="Bookmarks" Tag="ReservierungenPage"/>
             <NavigationViewItem Content="Nachrichten" Icon="Mail" Tag="ChatListPage"/>
             <NavigationViewItem Content="Profil" Icon="Contact" Tag="ProfilEditPage">
             </NavigationViewItem>
