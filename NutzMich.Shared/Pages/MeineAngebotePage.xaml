@@ -14,11 +14,9 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Click="NeuesAngebotAnlegen" HorizontalAlignment="Center" Background="Transparent">
+        <Button Grid.Row="0" Click="NeuesAngebotAnlegen" HorizontalAlignment="Center" Background="Transparent" BorderThickness="2" BorderBrush="{StaticResource NutzmichRosa}" Foreground="{StaticResource NutzmichRosa}">
             <Button.Content>
-                <Border CornerRadius="10" BorderThickness="2" Padding="10" BorderBrush="RoyalBlue">
-                    <SymbolIcon Symbol="Add"/>
-                </Border>
+                <SymbolIcon Symbol="Add"/>
             </Button.Content>
         </Button>
         <ProgressRing Grid.Row="1" Visibility="{Binding Loading, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}" IsActive="True" Foreground="RoyalBlue"/>

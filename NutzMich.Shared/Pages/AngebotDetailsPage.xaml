@@ -15,16 +15,6 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <CommandBar Grid.Row="0" Background="RoyalBlue" Foreground="White">
-                <CommandBar.Content>
-                    <TextBlock Text="{Binding Angebot.Ueberschrift, Mode=OneWay}" Margin="12"/>
-                </CommandBar.Content>
-                <CommandBar.PrimaryCommands>
-                    <AppBarButton Icon="Back" Click="Back_Click" Foreground="White"/>
-                    <AppBarButton Icon="Message" Click="Chat_Click" Foreground="White"/>
-                </CommandBar.PrimaryCommands>
-            </CommandBar>
-
             <Grid Grid.Row="1" Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>

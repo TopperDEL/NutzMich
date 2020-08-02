@@ -9,20 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <CommandBar Grid.Row="0" Background="RoyalBlue" Foreground="White">
-            <CommandBar.Content>
-                <TextBlock Text="Reservierungen" Margin="12"/>
-            </CommandBar.Content>
-            <CommandBar.PrimaryCommands>
-                <AppBarButton Icon="Back" Click="BackClick" Foreground="White"/>
-            </CommandBar.PrimaryCommands>
-        </CommandBar>
-
-        <ListView Grid.Row="1" ItemsSource="{x:Bind _vm.Reservierungen, Mode=OneWay}" IsItemClickEnabled="False">
+        <ListView ItemsSource="{x:Bind _vm.Reservierungen, Mode=OneWay}" IsItemClickEnabled="False">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:ReservierungViewModel">
                     <StackPanel Orientation="Horizontal" Margin="0,5,0,5">

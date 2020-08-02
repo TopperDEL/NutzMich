@@ -12,20 +12,7 @@
     mc:Ignorable="d not_win">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" toolkit:VisibleBoundsPadding.PaddingMask="All">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <CommandBar Grid.Row="0" Background="RoyalBlue" Foreground="White">
-            <CommandBar.Content>
-                <TextBlock Text="Nachrichten" Margin="12"/>
-            </CommandBar.Content>
-            <CommandBar.PrimaryCommands>
-                <AppBarButton Icon="Back" Click="BackClick" Foreground="White"/>
-            </CommandBar.PrimaryCommands>
-        </CommandBar>
-        <SplitView Grid.Row="1" x:Name="Split" OpenPaneLength="220" DisplayMode="Inline" IsPaneOpen="True">
+        <SplitView x:Name="Split" OpenPaneLength="220" DisplayMode="Inline" IsPaneOpen="True">
             <SplitView.PaneBackground>
                 <win:AcrylicBrush TintColor="{ThemeResource NavPaneBackgroundColor}" BackgroundSource="HostBackdrop" TintOpacity="0.5" />
                 <not_win:SolidColorBrush Color="{ThemeResource NavPaneBackgroundColor}" />

@@ -1,4 +1,5 @@
-﻿using Microsoft.Toolkit.Mvvm.Messaging;
+﻿using Microsoft.Toolkit.Mvvm.Input;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using NutzMich.Shared.Messages;
 using NutzMich.Shared.Models;
 using NutzMich.Shared.Services;
@@ -37,27 +38,22 @@ namespace NutzMich.Shared.Pages
         {
             this.InitializeComponent();
 
-            KeyboardAccelerator GoBack = new KeyboardAccelerator();
-            GoBack.Key = VirtualKey.GoBack;
-            GoBack.Invoked += BackInvoked;
-            KeyboardAccelerator AltLeft = new KeyboardAccelerator();
-            AltLeft.Key = VirtualKey.Left;
-            AltLeft.Invoked += BackInvoked;
-            this.KeyboardAccelerators.Add(GoBack);
-            this.KeyboardAccelerators.Add(AltLeft);
-            // ALT routes here
-            AltLeft.Modifiers = VirtualKeyModifiers.Menu;
+            Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
+                {
+                    new Models.NutzMichCommand()
+                    {
+                        Symbol = Symbol.Back,
+                        Command = Models.NutzMichCommand.GoBackCommand
+                    },
+                    new Models.NutzMichCommand()
+                    {
+                        Symbol = Symbol.Message,
+                        Command = new RelayCommand(DoChat)
+                    }
+                }));
         }
 
-        private void Back_Click(object sender, RoutedEventArgs e)
-        {
-            On_BackRequested();
-        }
-
-        /// <summary>
-        /// Nur temporär!!
-        /// </summary>
-        private async void Chat_Click(object sender, RoutedEventArgs e)
+        private void DoChat()
         {
             this.Frame.Navigate(typeof(ChatListPage), _angebotVM);
         }
@@ -77,22 +73,6 @@ namespace NutzMich.Shared.Pages
             _angebotVM.RefreshBindings();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(_angebotVM)));
             _angebotVM.SetIsNotLoading();
-        }
-
-        private bool On_BackRequested()
-        {
-            if (this.Frame.CanGoBack)
-            {
-                this.Frame.GoBack();
-                return true;
-            }
-            return false;
-        }
-
-        private void BackInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
-        {
-            On_BackRequested();
-            args.Handled = true;
         }
 
         private void ProfilDetails(object sender, RoutedEventArgs e)
