@@ -37,7 +37,6 @@ namespace NutzMich.Pages
             this.InitializeComponent();
             ((ObservableRecipient)this.DataContext).IsActive = true;
 
-
             navView.SelectedItem = navView.MenuItems.OfType<NavigationViewItem>().First();
 
             ChatViewModel._coreDispatcher = Dispatcher;
@@ -54,11 +53,6 @@ namespace NutzMich.Pages
             this.KeyboardAccelerators.Add(AltLeft);
             // ALT routes here
             AltLeft.Modifiers = VirtualKeyModifiers.Menu;
-        }
-
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
