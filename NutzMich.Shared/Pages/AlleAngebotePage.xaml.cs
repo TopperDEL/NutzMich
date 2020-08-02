@@ -39,7 +39,7 @@ namespace NutzMich.Shared.Pages
         {
             this.InitializeComponent();
 
-            Messenger.Default.Send(new ChangeTitleMessage("Alle Angebote"));
+            Messenger.Default.Send(new ChangePageMessage(this, "Alle Angebote"));
             Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
                 {
                     new Models.NutzMichCommand()

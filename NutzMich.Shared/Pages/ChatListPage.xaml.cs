@@ -38,7 +38,7 @@ namespace NutzMich.Shared.Pages
         {
             this.InitializeComponent();
 
-            Messenger.Default.Send(new ChangeTitleMessage("Nachrichten"));
+            Messenger.Default.Send(new ChangePageMessage(this, "Nachrichten"));
 
             KeyboardAccelerator GoBack = new KeyboardAccelerator();
             GoBack.Key = VirtualKey.GoBack;

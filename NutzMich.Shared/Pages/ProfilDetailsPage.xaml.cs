@@ -73,7 +73,7 @@ namespace NutzMich.Shared.Pages
             base.OnNavigatedTo(e);
 
             _profilVM = e.Parameter as ProfilViewModel;
-            Messenger.Default.Send(new ChangeTitleMessage(_profilVM.Profil.Nickname));
+            Messenger.Default.Send(new ChangePageMessage(this,_profilVM.Profil.Nickname));
 
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(_profilVM)));
         }

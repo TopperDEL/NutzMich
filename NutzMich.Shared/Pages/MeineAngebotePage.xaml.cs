@@ -1,4 +1,5 @@
-﻿using Microsoft.Toolkit.Mvvm.Messaging;
+﻿using Microsoft.Toolkit.Mvvm.Input;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using NutzMich.Contracts.Interfaces;
 using NutzMich.Shared.Interfaces;
 using NutzMich.Shared.Messages;
@@ -37,7 +38,20 @@ namespace NutzMich.Shared.Pages
         {
             this.InitializeComponent();
 
-            Messenger.Default.Send(new ChangeTitleMessage("Meine Angebote"));
+            Messenger.Default.Send(new ChangePageMessage(this, "Meine Angebote"));
+            Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
+                {
+                    new Models.NutzMichCommand()
+                    {
+                        Symbol = Symbol.Back,
+                        Command = Models.NutzMichCommand.GoBackCommand
+                    },
+                    new Models.NutzMichCommand()
+                    {
+                        Symbol = Symbol.Refresh,
+                        Command = new AsyncRelayCommand(LoadAngeboteAsync)
+                    }
+                }));
 
             _angebotService = Factory.GetAngebotService();
             _loginService = Factory.GetLoginService();

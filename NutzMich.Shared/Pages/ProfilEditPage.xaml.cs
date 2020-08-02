@@ -41,7 +41,7 @@ namespace NutzMich.Shared.Pages
         {
             this.InitializeComponent();
 
-            Messenger.Default.Send(new ChangeTitleMessage("Mein Profil"));
+            Messenger.Default.Send(new ChangePageMessage(this, "Mein Profil"));
 
             _profilService = Factory.GetProfilService();
             _loginService = Factory.GetLoginService();

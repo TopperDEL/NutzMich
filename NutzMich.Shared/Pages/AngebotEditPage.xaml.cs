@@ -83,12 +83,12 @@ namespace NutzMich.Shared.Pages
                 _angebotVM.SetIsLoading();
                 await _angebotVM.LoadAngebotsStatus();
                 await _angebotVM.LoadFotos();
-                Messenger.Default.Send(new ChangeTitleMessage(_angebotVM.Angebot.Ueberschrift));
+                Messenger.Default.Send(new ChangePageMessage(this, _angebotVM.Angebot.Ueberschrift));
             }
             else
             {
                 _angebotVM = new AngebotViewModel();
-                Messenger.Default.Send(new ChangeTitleMessage("Neues Angebot"));
+                Messenger.Default.Send(new ChangePageMessage(this, "Neues Angebot"));
             }
 
             this.DataContext = _angebotVM;

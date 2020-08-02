@@ -68,7 +68,7 @@ namespace NutzMich.Shared.Pages
 
             this.DataContext = _angebotVM = e.Parameter as AngebotViewModel;
 
-            Messenger.Default.Send(new ChangeTitleMessage(_angebotVM.Angebot.Ueberschrift));
+            Messenger.Default.Send(new ChangePageMessage(this, _angebotVM.Angebot.Ueberschrift));
 
             _angebotVM.SetIsLoading();
             await _angebotVM.InitAnbieterProfilAsync(); 

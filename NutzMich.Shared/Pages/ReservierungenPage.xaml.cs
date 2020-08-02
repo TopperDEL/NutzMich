@@ -33,7 +33,7 @@ namespace NutzMich.Shared.Pages
         {
             this.InitializeComponent();
 
-            Messenger.Default.Send(new ChangeTitleMessage("Reservierungen"));
+            Messenger.Default.Send(new ChangePageMessage(this, "Reservierungen"));
 
             _vm = new ReservierungenViewModel(Factory.GetReservierungService());
             _vm.LoadReservierungen();
