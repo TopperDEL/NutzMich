@@ -1,5 +1,7 @@
-﻿using NutzMich.Contracts.Interfaces;
+﻿using Microsoft.Toolkit.Mvvm.Messaging;
+using NutzMich.Contracts.Interfaces;
 using NutzMich.Shared.Interfaces;
+using NutzMich.Shared.Messages;
 using NutzMich.Shared.Models;
 using NutzMich.Shared.Services;
 using NutzMich.Shared.ViewModels;
@@ -81,9 +83,13 @@ namespace NutzMich.Shared.Pages
                 _angebotVM.SetIsLoading();
                 await _angebotVM.LoadAngebotsStatus();
                 await _angebotVM.LoadFotos();
+                Messenger.Default.Send(new ChangeTitleMessage(_angebotVM.Angebot.Ueberschrift));
             }
             else
+            {
                 _angebotVM = new AngebotViewModel();
+                Messenger.Default.Send(new ChangeTitleMessage("Neues Angebot"));
+            }
 
             this.DataContext = _angebotVM;
             _angebotVM.SetIsNotLoading();

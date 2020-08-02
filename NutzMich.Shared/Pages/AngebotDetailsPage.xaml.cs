@@ -1,4 +1,6 @@
-﻿using NutzMich.Shared.Models;
+﻿using Microsoft.Toolkit.Mvvm.Messaging;
+using NutzMich.Shared.Messages;
+using NutzMich.Shared.Models;
 using NutzMich.Shared.Services;
 using NutzMich.Shared.ViewModels;
 using System;
@@ -65,6 +67,9 @@ namespace NutzMich.Shared.Pages
             base.OnNavigatedTo(e);
 
             this.DataContext = _angebotVM = e.Parameter as AngebotViewModel;
+
+            Messenger.Default.Send(new ChangeTitleMessage(_angebotVM.Angebot.Ueberschrift));
+
             _angebotVM.SetIsLoading();
             await _angebotVM.InitAnbieterProfilAsync(); 
             await _angebotVM.LoadReservierungenAsync(true);

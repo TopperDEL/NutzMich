@@ -1,4 +1,6 @@
-﻿using NutzMich.Shared.ViewModels;
+﻿using Microsoft.Toolkit.Mvvm.Messaging;
+using NutzMich.Shared.Messages;
+using NutzMich.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -71,6 +73,8 @@ namespace NutzMich.Shared.Pages
             base.OnNavigatedTo(e);
 
             _profilVM = e.Parameter as ProfilViewModel;
+            Messenger.Default.Send(new ChangeTitleMessage(_profilVM.Profil.Nickname));
+
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(_profilVM)));
         }
     }
