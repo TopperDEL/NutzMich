@@ -49,7 +49,7 @@ namespace NutzMich.Shared.Services
                 foreach (var angebot in angeboteItems.Items)
                 {
                     bool istAktiv = angebot.CustomMetaData.Entries.Where(m => m.Key == ANGEBOTSSTAUS && m.Value == ANGEBOT_INAKTIV).Count() == 0;
-                    if (angebot.Key.Contains(_loginService.AnbieterId) || istAktiv)
+                    if (istAktiv)
                     {
                         DateTime angebotVom = DateTime.MinValue;
                         var angebotVomMeta = angebot.CustomMetaData.Entries.Where(c => c.Key == ANGEBOT_VERSION_VOM).FirstOrDefault();
@@ -166,7 +166,7 @@ namespace NutzMich.Shared.Services
             else
                 customMeta.Entries.Add(new CustomMetadataEntry() { Key = ANGEBOTSSTAUS, Value = ANGEBOT_INAKTIV });
 
-            customMeta.Entries.Add(new CustomMetadataEntry() { Key = ANGEBOT_VERSION_VOM, Value = DateTime.UtcNow.ToString() });
+            customMeta.Entries.Add(new CustomMetadataEntry() { Key = ANGEBOT_VERSION_VOM, Value = DateTime.Now.ToString() });
 
             var angebotUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, key, new UploadOptions(), angebotJSONbytes, customMeta, false);
             await angebotUpload.StartUploadAsync();

@@ -75,10 +75,9 @@ namespace NutzMich.Shared.Pages
         {
             _angeboteVM.SetLoading();
             _angeboteVM.MeineAngebote.Clear();
-            await foreach (var angebot in _angebotService.GetAlleAsync())
+            await foreach (var angebot in _angebotService.GetMeineAsync())
             {
-                if (angebot.AnbieterId == _loginService.AnbieterId)
-                    _angeboteVM.MeineAngebote.Add(new AngebotViewModel(angebot));
+                _angeboteVM.MeineAngebote.Add(new AngebotViewModel(angebot));
             }
 
             _angeboteVM.SetNotLoading();

@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace NutzMich.Shared.Models
 {
+    public delegate bool IstSichtbarDelegate();
     public class NutzMichCommand
     {
         public Symbol Symbol { get; set; }

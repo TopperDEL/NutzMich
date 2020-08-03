@@ -59,35 +59,6 @@ namespace NutzMich.Shared.Pages
         {
             this.InitializeComponent();
 
-            Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
-                {
-                    new Models.NutzMichCommand()
-                    {
-                        Symbol = Symbol.Back,
-                        Command = Models.NutzMichCommand.GoBackCommand
-                    },
-                    new Models.NutzMichCommand()
-                    {
-                        Symbol = Symbol.Play,
-                        Command = new AsyncRelayCommand(AktivierenAsync)
-                    },
-                    new Models.NutzMichCommand()
-                    {
-                        Symbol = Symbol.Stop,
-                        Command = new AsyncRelayCommand(DeaktivierenAsync)
-                    },
-                    new Models.NutzMichCommand()
-                    {
-                        Symbol = Symbol.Delete,
-                        Command = new AsyncRelayCommand(DeleteAsync)
-                    },
-                    new Models.NutzMichCommand()
-                    {
-                        Symbol = Symbol.Save,
-                        Command = new AsyncRelayCommand(SaveAsync)
-                    }
-                }));
-
             _angebotService = Factory.GetAngebotService();
         }
 
@@ -110,6 +81,36 @@ namespace NutzMich.Shared.Pages
                 _angebotVM = new AngebotViewModel();
                 Messenger.Default.Send(new ChangePageMessage(this, "Neues Angebot"));
             }
+            var aktivierenDeaktivieren = new NutzMichCommand();
+            if(_angebotVM.IstInaktiv)
+            {
+                aktivierenDeaktivieren.Symbol = Symbol.Play;
+                aktivierenDeaktivieren.Command = new AsyncRelayCommand(AktivierenAsync);
+            }
+            else
+            {
+                aktivierenDeaktivieren.Symbol = Symbol.Stop;
+                aktivierenDeaktivieren.Command = new AsyncRelayCommand(DeaktivierenAsync);
+            }
+            Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
+                {
+                    new Models.NutzMichCommand()
+                    {
+                        Symbol = Symbol.Back,
+                        Command = Models.NutzMichCommand.GoBackCommand
+                    },
+                    aktivierenDeaktivieren,
+                    new Models.NutzMichCommand()
+                    {
+                        Symbol = Symbol.Delete,
+                        Command = new AsyncRelayCommand(DeleteAsync)
+                    },
+                    new Models.NutzMichCommand()
+                    {
+                        Symbol = Symbol.Save,
+                        Command = new AsyncRelayCommand(SaveAsync)
+                    }
+                }));
 
             this.DataContext = _angebotVM;
             _angebotVM.SetIsNotLoading();
@@ -152,7 +153,7 @@ namespace NutzMich.Shared.Pages
             if (res == ContentDialogResult.Primary)
             {
                 _angebotVM.IstInaktiv = true;
-                SaveAsync();
+                await SaveAsync();
             }
         }
 
@@ -170,7 +171,7 @@ namespace NutzMich.Shared.Pages
             if (res == ContentDialogResult.Primary)
             {
                 _angebotVM.IstInaktiv = false;
-                SaveAsync();
+                await SaveAsync();
             }
         }
 
