@@ -12,67 +12,65 @@
     xmlns:not_win="http:/uno.ui/not_win"
     mc:Ignorable="d not_win">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" toolkit:VisibleBoundsPadding.PaddingMask="All">
-        <controls:MasterDetailsView ItemsSource="{x:Bind _vm.Chats, Mode=OneWay}" CompactModeThresholdWidth="720">
-            <controls:MasterDetailsView.ItemTemplate>
-                <DataTemplate x:DataType="viewmodels:ChatViewModel">
-                    <Grid Padding="8" RowSpacing="8" ColumnSpacing="8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="64" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <PersonPicture ProfilePicture="{x:Bind AngebotViewModel.Thumbnail}" Initials="AB" DisplayName="CD" Grid.RowSpan="2" Width="60" Height="60"/>
-                        <TextBlock Text="{x:Bind GegenseiteProfilViewmodel.Profil.Nickname}" FontSize="15" FontWeight="Bold" Grid.Column="1" VerticalAlignment="Center" />
-                        <TextBlock Text="{x:Bind NeuesteNachricht, Mode=OneWay}" FontSize="15" Grid.Row="1" Grid.Column="1" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Visibility="{x:Bind Ungelesen, Mode=OneWay, Converter={StaticResource TrueIsCollapsedConverter}}" />
-                        <TextBlock Text="{x:Bind NeuesteNachricht, Mode=OneWay}" FontSize="15" Grid.Row="1" Grid.Column="1" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Visibility="{x:Bind Ungelesen, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}"
+    <controls:MasterDetailsView ItemsSource="{x:Bind _vm.Chats, Mode=OneWay}" CompactModeThresholdWidth="720">
+        <controls:MasterDetailsView.ItemTemplate>
+            <DataTemplate x:DataType="viewmodels:ChatViewModel">
+                <Grid Padding="8" RowSpacing="8" ColumnSpacing="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="64" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <PersonPicture ProfilePicture="{x:Bind AngebotViewModel.Thumbnail}" Initials="AB" DisplayName="CD" Grid.RowSpan="2" Width="60" Height="60"/>
+                    <TextBlock Text="{x:Bind GegenseiteProfilViewmodel.Profil.Nickname}" FontSize="15" FontWeight="Bold" Grid.Column="1" VerticalAlignment="Center" />
+                    <TextBlock Text="{x:Bind NeuesteNachricht, Mode=OneWay}" FontSize="15" Grid.Row="1" Grid.Column="1" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Visibility="{x:Bind Ungelesen, Mode=OneWay, Converter={StaticResource TrueIsCollapsedConverter}}" />
+                    <TextBlock Text="{x:Bind NeuesteNachricht, Mode=OneWay}" FontSize="15" Grid.Row="1" Grid.Column="1" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Visibility="{x:Bind Ungelesen, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}"
                                                Foreground="Black" FontWeight="ExtraBlack"/>
-                        <!--<TextBlock Text="9:41" FontSize="15" Grid.Column="2" /> Für Uhrzeit oder ähnliches-->
-                    </Grid>
-                </DataTemplate>
-            </controls:MasterDetailsView.ItemTemplate>
-            <controls:MasterDetailsView.DetailsTemplate>
-                <DataTemplate x:DataType="viewmodels:ChatViewModel">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
+                    <!--<TextBlock Text="9:41" FontSize="15" Grid.Column="2" /> Für Uhrzeit oder ähnliches-->
+                </Grid>
+            </DataTemplate>
+        </controls:MasterDetailsView.ItemTemplate>
+        <controls:MasterDetailsView.DetailsTemplate>
+            <DataTemplate x:DataType="viewmodels:ChatViewModel">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
-                        <Grid Grid.Row="0" Padding="12,20,12,20">
-                            <ListView ItemsSource="{x:Bind Nachrichten, Mode=OneWay}" ItemTemplateSelector="{StaticResource ChatMessageTemplateSelector}">
-                                <ListView.ItemContainerStyle>
-                                    <Style TargetType="ListViewItem">
-                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                    </Style>
-                                </ListView.ItemContainerStyle>
-                            </ListView>
-                        </Grid>
-                        <Grid Grid.Row="1" Margin="20">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="40"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBox Text="{x:Bind NachrichtComposer, Mode=TwoWay}" Grid.Column="0" PlaceholderText="Leg los..." CornerRadius="12" Margin="5">
-                                <TextBox.HeaderTemplate>
-                                    <DataTemplate></DataTemplate>
-                                </TextBox.HeaderTemplate>
-                            </TextBox>
-                            <Button Grid.Column="1" VerticalAlignment="Center" Background="{StaticResource NutzmichGruen}" Foreground="White" Click="SendeNachricht" CornerRadius="12" BorderThickness="0">
-                                <SymbolIcon Symbol="Send"/>
-                            </Button>
-                            <Button Grid.Column="2" Width="40" VerticalAlignment="Center" Background="{StaticResource NutzmichGruen}" Foreground="White" Click="ReservierungErstellen" CornerRadius="12" Visibility="{x:Bind IchBinDerAnbieter, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}" BorderThickness="0">
-                                <SymbolIcon Symbol="Calendar"/>
-                            </Button>
-                        </Grid>
+                    <Grid Grid.Row="0" Padding="12,20,12,20">
+                        <ListView ItemsSource="{x:Bind Nachrichten, Mode=OneWay}" ItemTemplateSelector="{StaticResource ChatMessageTemplateSelector}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
                     </Grid>
-                </DataTemplate>
-            </controls:MasterDetailsView.DetailsTemplate>
-        </controls:MasterDetailsView>
-    </Grid>
+                    <Grid Grid.Row="1" Margin="20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Text="{x:Bind NachrichtComposer, Mode=TwoWay}" Grid.Column="0" PlaceholderText="Leg los..." CornerRadius="12" Margin="5">
+                            <TextBox.HeaderTemplate>
+                                <DataTemplate></DataTemplate>
+                            </TextBox.HeaderTemplate>
+                        </TextBox>
+                        <Button Grid.Column="1" VerticalAlignment="Center" Background="{StaticResource NutzmichGruen}" Foreground="White" Click="SendeNachricht" CornerRadius="12" BorderThickness="0">
+                            <SymbolIcon Symbol="Send"/>
+                        </Button>
+                        <Button Grid.Column="2" Width="40" VerticalAlignment="Center" Background="{StaticResource NutzmichGruen}" Foreground="White" Click="ReservierungErstellen" CornerRadius="12" Visibility="{x:Bind IchBinDerAnbieter, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}" BorderThickness="0">
+                            <SymbolIcon Symbol="Calendar"/>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </DataTemplate>
+        </controls:MasterDetailsView.DetailsTemplate>
+    </controls:MasterDetailsView>
 </Page>
