@@ -42,6 +42,14 @@ namespace NutzMich.Shared.Pages
 
             _profilVM = e.Parameter as ProfilViewModel;
             Messenger.Default.Send(new ChangePageMessage(this,_profilVM.Profil.Nickname));
+            Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
+                {
+                    new Models.NutzMichCommand()
+                    {
+                        Symbol = Symbol.Back,
+                        Command = Models.NutzMichCommand.GoBackCommand
+                    }
+                }));
 
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(_profilVM)));
         }

@@ -39,17 +39,14 @@ namespace NutzMich.Shared.Pages
             this.InitializeComponent();
 
             Messenger.Default.Send(new ChangePageMessage(this, "Nachrichten"));
-
-            KeyboardAccelerator GoBack = new KeyboardAccelerator();
-            GoBack.Key = VirtualKey.GoBack;
-            GoBack.Invoked += BackInvoked;
-            KeyboardAccelerator AltLeft = new KeyboardAccelerator();
-            AltLeft.Key = VirtualKey.Left;
-            AltLeft.Invoked += BackInvoked;
-            this.KeyboardAccelerators.Add(GoBack);
-            this.KeyboardAccelerators.Add(AltLeft);
-            // ALT routes here
-            AltLeft.Modifiers = VirtualKeyModifiers.Menu;
+            Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
+                {
+                    new Models.NutzMichCommand()
+                    {
+                        Symbol = Symbol.Back,
+                        Command = Models.NutzMichCommand.GoBackCommand
+                    }
+                }));
 
             _vm = new ChatListViewModel(Factory.GetChatService(), Factory.GetAngebotService(), Factory.GetChatController());
             _gelesenTaskCancelTokenSource = new CancellationTokenSource();
@@ -71,7 +68,7 @@ namespace NutzMich.Shared.Pages
             if(e.Parameter is AngebotViewModel)
             {
                 _vm.EnsureAndOpenChat(e.Parameter as AngebotViewModel);
-                Split.IsPaneOpen = false;
+                //Split.IsPaneOpen = false;
             }
         }
 
@@ -81,7 +78,7 @@ namespace NutzMich.Shared.Pages
             _gelesenTaskCancelTokenSource.Cancel();
         }
 
-        private void PaneToggle(object sender, PointerRoutedEventArgs e) => Split.IsPaneOpen = !Split.IsPaneOpen;
+        //private void PaneToggle(object sender, PointerRoutedEventArgs e) => Split.IsPaneOpen = !Split.IsPaneOpen;
 
         private async void SendeNachricht(object sender, RoutedEventArgs e)
         {
@@ -98,36 +95,10 @@ namespace NutzMich.Shared.Pages
             }
         }
 
-        private async void DeleteTemp(object sender, RoutedEventArgs e)
-        {
-            MonkeyCache.FileStore.Barrel.Current.Empty("ChatListe");
-        }
-
-        private void BackClick(object sender, RoutedEventArgs e)
-        {
-            On_BackRequested();
-        }
-
-        private bool On_BackRequested()
-        {
-            if (this.Frame.CanGoBack)
-            {
-                this.Frame.GoBack();
-                return true;
-            }
-            return false;
-        }
-
-        private void BackInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
-        {
-            On_BackRequested();
-            args.Handled = true;
-        }
-
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            _vm.SelectedChatChanged(ChatList.SelectedItem as ChatViewModel);
-            Split.IsPaneOpen = false;
+            //_vm.SelectedChatChanged(ChatList.SelectedItem as ChatViewModel);
+            //Split.IsPaneOpen = false;
         }
     }
 }
