@@ -13,7 +13,7 @@
     mc:Ignorable="d not_win">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" toolkit:VisibleBoundsPadding.PaddingMask="All">
-        <controls:MasterDetailsView ItemsSource="{x:Bind _vm.Chats, Mode=OneWay}" CompactModeThresholdWidth="200">
+        <controls:MasterDetailsView ItemsSource="{x:Bind _vm.Chats, Mode=OneWay}" CompactModeThresholdWidth="720">
             <controls:MasterDetailsView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:ChatViewModel">
                     <Grid Padding="8" RowSpacing="8" ColumnSpacing="8">
@@ -32,7 +32,6 @@
                         <TextBlock Text="{x:Bind NeuesteNachricht, Mode=OneWay}" FontSize="15" Grid.Row="1" Grid.Column="1" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Visibility="{x:Bind Ungelesen, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}"
                                                Foreground="Black" FontWeight="ExtraBlack"/>
                         <!--<TextBlock Text="9:41" FontSize="15" Grid.Column="2" /> Für Uhrzeit oder ähnliches-->
-                        <!--<Button Content="Del" Click="DeleteTemp"/>-->
                     </Grid>
                 </DataTemplate>
             </controls:MasterDetailsView.ItemTemplate>
