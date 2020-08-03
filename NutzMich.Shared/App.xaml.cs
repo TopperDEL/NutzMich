@@ -91,7 +91,7 @@ namespace NutzMich
                     // configuring the new page by passing required information as a navigation
                     // parameter
                     if (Factory.GetLoginService().IsLoggedIn())
-                        rootFrame.Navigate(typeof(ChatListPage));
+                        rootFrame.Navigate(typeof(NachrichtenPage));
                     else
                         rootFrame.Navigate(typeof(LoginPage));
                 }

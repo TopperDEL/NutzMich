@@ -13,21 +13,6 @@
 
     <ScrollViewer Background="White">
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <CommandBar Grid.Row="0" Background="RoyalBlue" Foreground="White">
-                <CommandBar.PrimaryCommands>
-                    <AppBarButton Icon="Play" Click="Aktivieren" Foreground="White" IsEnabled="{Binding NotLoading, Mode=OneWay}" Visibility="{Binding IstInaktiv, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}"/>
-                    <AppBarButton Icon="Stop" Click="Deaktivieren" Foreground="White" IsEnabled="{Binding NotLoading, Mode=OneWay}" Visibility="{Binding IstInaktiv, Mode=OneWay, Converter={StaticResource TrueIsCollapsedConverter}}"/>
-                    <AppBarButton Icon="Delete" Click="Delete" Foreground="White" IsEnabled="{Binding NotLoading, Mode=OneWay}"/>
-                    <AppBarButton Icon="Save" Click="Save" Foreground="White" IsEnabled="{Binding NotLoading, Mode=OneWay}"/>
-                    <AppBarButton Icon="Back" Click="Cancel" Foreground="White" IsEnabled="{Binding NotLoading, Mode=OneWay}"/>
-                </CommandBar.PrimaryCommands>
-            </CommandBar>
-
             <StackPanel Grid.Row="1" Margin="10"
 						VerticalAlignment="Top" HorizontalAlignment="Stretch">
                 <TextBox Header="Überschrift" Text="{Binding Angebot.Ueberschrift, Mode=TwoWay}"

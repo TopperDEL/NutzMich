@@ -54,8 +54,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\AngebotEditPage.xaml.cs">
       <DependentUpon>AngebotEditPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Pages\ChatListPage.xaml.cs">
-      <DependentUpon>ChatListPage.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\NachrichtenPage.xaml.cs">
+      <DependentUpon>NachrichtenPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
@@ -135,7 +135,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Pages\ChatListPage.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Pages\NachrichtenPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -50,6 +50,11 @@ namespace NutzMich.Shared.Pages
                     {
                         Symbol = Symbol.Refresh,
                         Command = new AsyncRelayCommand(LoadAngeboteAsync)
+                    },
+                    new Models.NutzMichCommand()
+                    {
+                        Symbol = Symbol.Add,
+                        Command = new RelayCommand(NeuesAngebotAnlegen)
                     }
                 }));
 
@@ -84,7 +89,7 @@ namespace NutzMich.Shared.Pages
             this.Frame.Navigate(typeof(AngebotEditPage), e.ClickedItem);
         }
 
-        private void NeuesAngebotAnlegen(object sender, RoutedEventArgs e)
+        private void NeuesAngebotAnlegen()
         {
             this.Frame.Navigate(typeof(AngebotEditPage));
         }

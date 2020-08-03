@@ -1,4 +1,5 @@
-﻿using Microsoft.Toolkit.Mvvm.Messaging;
+﻿using Microsoft.Toolkit.Mvvm.Input;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using NutzMich.Contracts.Interfaces;
 using NutzMich.Shared.Interfaces;
 using NutzMich.Shared.Messages;
@@ -13,6 +14,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Uno.Extensions;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -57,18 +59,36 @@ namespace NutzMich.Shared.Pages
         {
             this.InitializeComponent();
 
-            _angebotService = Factory.GetAngebotService();
+            Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
+                {
+                    new Models.NutzMichCommand()
+                    {
+                        Symbol = Symbol.Back,
+                        Command = Models.NutzMichCommand.GoBackCommand
+                    },
+                    new Models.NutzMichCommand()
+                    {
+                        Symbol = Symbol.Play,
+                        Command = new AsyncRelayCommand(AktivierenAsync)
+                    },
+                    new Models.NutzMichCommand()
+                    {
+                        Symbol = Symbol.Stop,
+                        Command = new AsyncRelayCommand(DeaktivierenAsync)
+                    },
+                    new Models.NutzMichCommand()
+                    {
+                        Symbol = Symbol.Delete,
+                        Command = new AsyncRelayCommand(DeleteAsync)
+                    },
+                    new Models.NutzMichCommand()
+                    {
+                        Symbol = Symbol.Save,
+                        Command = new AsyncRelayCommand(SaveAsync)
+                    }
+                }));
 
-            KeyboardAccelerator GoBack = new KeyboardAccelerator();
-            GoBack.Key = VirtualKey.GoBack;
-            GoBack.Invoked += BackInvoked;
-            KeyboardAccelerator AltLeft = new KeyboardAccelerator();
-            AltLeft.Key = VirtualKey.Left;
-            AltLeft.Invoked += BackInvoked;
-            this.KeyboardAccelerators.Add(GoBack);
-            this.KeyboardAccelerators.Add(AltLeft);
-            // ALT routes here
-            AltLeft.Modifiers = VirtualKeyModifiers.Menu;
+            _angebotService = Factory.GetAngebotService();
         }
 
 
@@ -97,28 +117,7 @@ namespace NutzMich.Shared.Pages
             MarkiereErstesFotoAlsGalleriebild();
         }
 
-        private void Back_Click(object sender, RoutedEventArgs e)
-        {
-            On_BackRequested();
-        }
-
-        private bool On_BackRequested()
-        {
-            if (this.Frame.CanGoBack)
-            {
-                this.Frame.GoBack();
-                return true;
-            }
-            return false;
-        }
-
-        private void BackInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
-        {
-            On_BackRequested();
-            args.Handled = true;
-        }
-
-        private async void Delete(object sender, RoutedEventArgs e)
+        private async Task DeleteAsync()
         {
             ContentDialog deleteDlg = new ContentDialog()
             {
@@ -134,12 +133,12 @@ namespace NutzMich.Shared.Pages
             {
                 var erfolg = await _angebotService.DeleteAngebotAsync(_angebotVM.Angebot);
                 if (erfolg)
-                    On_BackRequested();
+                    Models.NutzMichCommand.GoBackCommand.Execute(null);
             }
             _angebotVM.SetIsNotLoading();
         }
 
-        private async void Deaktivieren(object sender, RoutedEventArgs e)
+        private async Task DeaktivierenAsync()
         {
             ContentDialog questionDlg = new ContentDialog()
             {
@@ -153,11 +152,11 @@ namespace NutzMich.Shared.Pages
             if (res == ContentDialogResult.Primary)
             {
                 _angebotVM.IstInaktiv = true;
-                Save(sender, e);
+                SaveAsync();
             }
         }
 
-        private async void Aktivieren(object sender, RoutedEventArgs e)
+        private async Task AktivierenAsync()
         {
             ContentDialog questionDlg = new ContentDialog()
             {
@@ -171,11 +170,11 @@ namespace NutzMich.Shared.Pages
             if (res == ContentDialogResult.Primary)
             {
                 _angebotVM.IstInaktiv = false;
-                Save(sender, e);
+                SaveAsync();
             }
         }
 
-        private async void Save(object sender, RoutedEventArgs e)
+        private async Task SaveAsync()
         {
             var pruefErgebnis = _angebotService.IstAngebotFehlerhaft(_angebotVM.Angebot);
             if (pruefErgebnis.Item1)
@@ -197,7 +196,7 @@ namespace NutzMich.Shared.Pages
             if (saved)
             {
                 _angebotService.Refresh();
-                On_BackRequested();
+                Models.NutzMichCommand.GoBackCommand.Execute(null);
             }
             else
             {
@@ -210,11 +209,6 @@ namespace NutzMich.Shared.Pages
 
                 await notSavedDlg.ShowAsync();
             }
-        }
-
-        private void Cancel(object sender, RoutedEventArgs e)
-        {
-            On_BackRequested();
         }
 
         private async void AddPhoto(object sender, RoutedEventArgs e)

@@ -49,7 +49,7 @@
             <NavigationViewItem Content="Angebot einstellen" Icon="Add" Tag="AngebotEditPage"/>
             <NavigationViewItem Content="Meine Angebote" Icon="ContactInfo" Tag="MeineAngebotePage"/>
             <NavigationViewItem Content="Reservierungen" Icon="Bookmarks" Tag="ReservierungenPage"/>
-            <NavigationViewItem Content="Nachrichten" Icon="Mail" Tag="ChatListPage"/>
+            <NavigationViewItem Content="Nachrichten" Icon="Mail" Tag="NachrichtenPage"/>
             <NavigationViewItem Content="Profil" Icon="Contact" Tag="ProfilEditPage">
             </NavigationViewItem>
         </NavigationView.MenuItems>

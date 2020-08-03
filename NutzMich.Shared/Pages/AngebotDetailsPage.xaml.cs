@@ -55,7 +55,7 @@ namespace NutzMich.Shared.Pages
 
         private void DoChat()
         {
-            this.Frame.Navigate(typeof(ChatListPage), _angebotVM);
+            this.Frame.Navigate(typeof(NachrichtenPage), _angebotVM);
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
