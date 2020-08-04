@@ -39,7 +39,7 @@
                     <ItemsControl ItemsSource="{Binding Reservierungen, Mode=OneWay}" Margin="10">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="viewmodels:ReservierungsZeitraumViewModel">
-                                <TextBlock Text="{Binding ZeitraumAsString}"/>
+                                <TextBlock Text="{Binding ZeitraumAsString}" Foreground="Black"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
@@ -49,7 +49,7 @@
                     <ItemsControl ItemsSource="{x:Bind _angebotVM.Kategorien, Mode=OneWay}" Margin="10">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="models:Kategorie">
-                                <TextBlock Text="{x:Bind Name}"/>
+                                <TextBlock Text="{x:Bind Name}" Foreground="Black"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

@@ -20,9 +20,15 @@
             <TextBox Grid.Row="1" Text="{x:Bind _profilVM.Profil.Nickname, Mode=OneWay}" Header="Name" IsReadOnly="True" BorderThickness="0" AcceptsReturn="True"/>
             <TextBox Grid.Row="2" Text="{x:Bind _profilVM.Profil.UeberMich, Mode=OneWay}" Header="Über mich" IsReadOnly="True" BorderThickness="0" AcceptsReturn="True" Visibility="{x:Bind _profilVM.HatUeberMich}"/>
             <StackPanel Grid.Row="3" Orientation="Vertical">
-                <TextBlock Text="Besonderheiten" FontWeight="Bold"/>
-                <CheckBox Content="Nichtraucher" IsChecked="{x:Bind _profilVM.Profil.Nichtraucher}" Margin="10,0" IsEnabled="False"/>
-                <CheckBox Content="Tierfreier Haushalt" IsChecked="{x:Bind _profilVM.Profil.TierfreierHaushalt}" Margin="10,0" IsEnabled="False"/>
+                <TextBlock Text="Besonderheiten" FontWeight="Bold" Foreground="Black"/>
+                <StackPanel Orientation="Horizontal" Visibility="{x:Bind _profilVM.Profil.Nichtraucher, Converter={StaticResource TrueIsVisibleConverter}}" Margin="5">
+                    <SymbolIcon Symbol="Accept" Foreground="{StaticResource NutzmichGruen}"/>
+                    <TextBlock Text="Nichtraucher" Margin="10,0" Foreground="Black"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Visibility="{x:Bind _profilVM.Profil.TierfreierHaushalt, Converter={StaticResource TrueIsVisibleConverter}}" Margin="5">
+                    <SymbolIcon Symbol="Accept" Foreground="{StaticResource NutzmichGruen}"/>
+                    <TextBlock Text="Tierfreier Haushalt" Margin="10,0" Foreground="Black" />
+                </StackPanel>
             </StackPanel>
         </Grid>
     </ScrollViewer>
