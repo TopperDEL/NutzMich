@@ -29,6 +29,7 @@ namespace NutzMich.Shared.ShinyInit
             services.AddSingleton(typeof(INotificationService), Factory.GetNotificationService());
             services.AddSingleton(typeof(IAngebotService), Factory.GetAngebotService());
             services.AddSingleton(typeof(IChatBufferService), Factory.GetChatBufferService());
+            services.AddSingleton(typeof(ILoginService), Factory.GetLoginService());
 
             var job = new JobInfo(typeof(BackgroundChatPollJob), "BackgroundChatPollJob")
             {

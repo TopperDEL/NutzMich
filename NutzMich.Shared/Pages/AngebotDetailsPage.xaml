@@ -83,7 +83,7 @@
                 </controls:Loading>
                 <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding Loading,Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}">
                     <ProgressRing IsActive="{Binding Loading, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                  Foreground="RoyalBlue"/>
+                                  Foreground="{StaticResource NutzmichGruen}"/>
                 </StackPanel>
             </Grid>
         </Grid>

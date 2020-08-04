@@ -16,17 +16,22 @@ namespace NutzMich.Shared.Jobs
         INotificationService _notification;
         IAngebotService _angebotService;
         IChatBufferService _chatBufferService;
+        ILoginService _loginService;
 
-        public BackgroundChatPollJob(IChatService chatService, INotificationService notification, IAngebotService angebotService, IChatBufferService chatBufferService)
+        public BackgroundChatPollJob(IChatService chatService, INotificationService notification, IAngebotService angebotService, IChatBufferService chatBufferService, ILoginService loginService)
         {
             _chatService = chatService;
             _notification = notification;
             _angebotService = angebotService;
             _chatBufferService = chatBufferService;
+            _loginService = loginService;
         }
 
         public async Task<bool> Run(JobInfo jobInfo, CancellationToken cancelToken)
         {
+            if (!_loginService.IsLoggedIn())
+                return true;
+
             var erhalteneNachrichten = new List<ChatNachricht>();
             await foreach (var angebot in _angebotService.GetMeineAsync())
             {

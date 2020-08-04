@@ -13,5 +13,7 @@ namespace NutzMich.Shared.Models
         public ICommand Command { get; set; }
 
         public static ICommand GoBackCommand;
+
+        public bool NurWennAngemeldet { get; set; }
     }
 }

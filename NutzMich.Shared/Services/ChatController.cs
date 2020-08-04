@@ -17,10 +17,11 @@ namespace NutzMich.Shared.Services
         IChatPollingService _chatPollingService;
         IChatBufferService _chatBufferService;
         IProfilService _profilService;
+        ILoginService _loginService;
 
         public event NewChatOpenedEventHandler NewChatOpened;
 
-        public ChatController(IAngebotService angebotService, IChatPollingService chatPollingService, IChatBufferService chatBufferService, IProfilService profilService)
+        public ChatController(IAngebotService angebotService, IChatPollingService chatPollingService, IChatBufferService chatBufferService, IProfilService profilService, ILoginService loginService)
         {
             _angebotService = angebotService;
             _chatPollingService = chatPollingService;
@@ -28,6 +29,7 @@ namespace NutzMich.Shared.Services
             _chatBufferService = chatBufferService;
             _chatBufferService.NewChatCreated += _chatBufferService_NewChatCreated;
             _profilService = profilService;
+            _loginService = loginService;
         }
 
         private async void _chatPollingService_NachrichtErhalten(Contracts.Models.Angebot angebot, Models.ChatNachricht nachricht)
@@ -50,6 +52,9 @@ namespace NutzMich.Shared.Services
 
         public async Task ActivateForegroundChatPollingAsync()
         {
+            if (!_loginService.IsLoggedIn())
+                return;
+
             await DeactivateForegroundChatPollingAsync();
 
             await foreach (var angebot in _angebotService.GetMeineAsync())
@@ -66,6 +71,9 @@ namespace NutzMich.Shared.Services
 
         public async Task DeactivateForegroundChatPollingAsync()
         {
+            if (!_loginService.IsLoggedIn())
+                return;
+
             await foreach (var angebot in _angebotService.GetMeineAsync())
             {
                 _chatPollingService.EndPolling(angebot);

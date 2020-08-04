@@ -31,7 +31,7 @@ namespace NutzMich.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page, INotifyPropertyChanged
+    public sealed partial class MainPage : Page
     {
         public MainPage()
         {
@@ -45,8 +45,6 @@ namespace NutzMich.Pages
 
             ChatViewModel._coreDispatcher = Dispatcher;
 
-            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
-
             KeyboardAccelerator GoBack = new KeyboardAccelerator();
             GoBack.Key = VirtualKey.GoBack;
             GoBack.Invoked += BackInvoked;
@@ -58,8 +56,6 @@ namespace NutzMich.Pages
             // ALT routes here
             AltLeft.Modifiers = VirtualKeyModifiers.Menu;
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private void DoGoBack()
         {
@@ -82,6 +78,13 @@ namespace NutzMich.Pages
             args.Handled = true;
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if(e.Parameter != null && e.Parameter is bool && ((bool)e.Parameter) == true)
+                Frame.BackStack.Clear();
+        }
 
         private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
@@ -98,7 +101,14 @@ namespace NutzMich.Pages
                     sender.Header = selectedItem.Content.ToString();
                     string pageName = "NutzMich.Shared.Pages." + selectedItemTag;
                     Type pageType = Type.GetType(pageName);
-                    contentFrame.Navigate(pageType);
+                    if (pageName.Contains("LoginPage"))
+                    {
+                        this.Frame.Navigate(pageType);
+                    }
+                    else
+                    {
+                        contentFrame.Navigate(pageType);
+                    }
                 }
             }
         }

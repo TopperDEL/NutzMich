@@ -48,7 +48,8 @@ namespace NutzMich.Shared.Pages
                     new Models.NutzMichCommand()
                     {
                         Symbol = Symbol.Message,
-                        Command = new RelayCommand(DoChat)
+                        Command = new RelayCommand(DoChat),
+                        NurWennAngemeldet = true
                     }
                 }));
         }

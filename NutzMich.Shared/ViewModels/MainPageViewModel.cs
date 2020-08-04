@@ -2,6 +2,7 @@
 using Microsoft.Toolkit.Mvvm.Messaging;
 using NutzMich.Shared.Messages;
 using NutzMich.Shared.Models;
+using NutzMich.Shared.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,8 +21,11 @@ namespace NutzMich.Shared.ViewModels
         private Page currentPage;
         public Page CurrentPage { get => currentPage; set => SetProperty(ref currentPage, value); }
 
+        public bool IstEingeloggt { get; set; }
+
         public MainPageViewModel()
         {
+            IstEingeloggt = Factory.GetLoginService().IsLoggedIn();
         }
 
         public void Receive(ChangePageMessage message)
@@ -35,6 +39,9 @@ namespace NutzMich.Shared.ViewModels
             Commands.Clear();
             foreach(var command in message.Value)
             {
+                if (command.NurWennAngemeldet && !IstEingeloggt)
+                    continue;
+
                 Commands.Add(command);
             }
         }

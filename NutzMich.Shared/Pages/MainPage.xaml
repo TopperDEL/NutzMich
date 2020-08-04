@@ -13,7 +13,7 @@
     </Page.DataContext>
 
     <NavigationView x:Name="navView"
-                    PaneDisplayMode="LeftCompact" IsPaneOpen="False" IsBackButtonVisible="Collapsed" Foreground="RoyalBlue"
+                    PaneDisplayMode="LeftCompact" IsPaneOpen="False" IsBackButtonVisible="Collapsed" Foreground="{StaticResource NutzmichBlau}"
                     IsSettingsVisible="False" SelectionChanged="NavigationView_SelectionChanged" IsBackEnabled="{x:Bind Path=contentFrame.CanGoBack, Mode=OneWay}" BackRequested="navView_BackRequested"
                     
                     Background="White">
@@ -46,12 +46,12 @@
 
         <NavigationView.MenuItems>
             <NavigationViewItem Content="Start" Icon="Home" Tag="AlleAngebotePage"/>
-            <NavigationViewItem Content="Angebot einstellen" Icon="Add" Tag="AngebotEditPage"/>
-            <NavigationViewItem Content="Meine Angebote" Icon="ContactInfo" Tag="MeineAngebotePage"/>
-            <NavigationViewItem Content="Reservierungen" Icon="Bookmarks" Tag="ReservierungenPage"/>
-            <NavigationViewItem Content="Nachrichten" Icon="Mail" Tag="NachrichtenPage"/>
-            <NavigationViewItem Content="Profil" Icon="Contact" Tag="ProfilEditPage">
-            </NavigationViewItem>
+            <NavigationViewItem Content="Angebot einstellen" Icon="Add" Tag="AngebotEditPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
+            <NavigationViewItem Content="Meine Angebote" Icon="ContactInfo" Tag="MeineAngebotePage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
+            <NavigationViewItem Content="Reservierungen" Icon="Bookmarks" Tag="ReservierungenPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
+            <NavigationViewItem Content="Nachrichten" Icon="Mail" Tag="NachrichtenPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
+            <NavigationViewItem Content="Profil" Icon="Contact" Tag="ProfilEditPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
+            <NavigationViewItem Content="Anmelden" Icon="Contact" Tag="LoginPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsCollapsedConverter}}"/>
         </NavigationView.MenuItems>
         <Frame x:Name="contentFrame"/>
     </NavigationView>

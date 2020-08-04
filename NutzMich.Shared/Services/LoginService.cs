@@ -50,7 +50,7 @@ namespace NutzMich.Shared.Services
 
                 return "";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return ex.Message;
             }
@@ -58,12 +58,26 @@ namespace NutzMich.Shared.Services
 
         public string GetReadAccess()
         {
-            return _vault.Retrieve(NUTZ_MICH, READ_ACCESS)?.Password;
+            try
+            {
+                return _vault.Retrieve(NUTZ_MICH, READ_ACCESS)?.Password;
+            }
+            catch
+            {
+                return IdentityService.DEFAULT_ACCESS_READ;
+            }
         }
 
         public string GetWriteAccess()
         {
-            return _vault.Retrieve(NUTZ_MICH, WRITE_ACCESS)?.Password;
+            try
+            {
+                return _vault.Retrieve(NUTZ_MICH, WRITE_ACCESS)?.Password;
+            }
+            catch
+            {
+                return IdentityService.DEFAULT_ACCESS_READ;
+            }
         }
 
         public string AnbieterId

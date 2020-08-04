@@ -110,10 +110,10 @@ namespace NutzMich
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
 #if DEBUG
-			if (System.Diagnostics.Debugger.IsAttached)
-			{
-				// this.DebugSettings.EnableFrameRateCounter = true;
-			}
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
+                // this.DebugSettings.EnableFrameRateCounter = true;
+            }
 #endif
             Frame rootFrame = Windows.UI.Xaml.Window.Current.Content as Frame;
 
@@ -143,10 +143,7 @@ namespace NutzMich
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    if(Factory.GetLoginService().IsLoggedIn())
-                        rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                    else
-                        rootFrame.Navigate(typeof(LoginPage), e.Arguments);
+                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
                 // Ensure the current window is active
                 Windows.UI.Xaml.Window.Current.Activate();
@@ -162,7 +159,7 @@ namespace NutzMich
         private void SysManager_BackRequested(object sender, BackRequestedEventArgs e)
         {
             var frame = Windows.UI.Xaml.Window.Current.Content as Frame;
-            if(frame.Content.GetType() == typeof(MainPage))
+            if (frame.Content.GetType() == typeof(MainPage))
             {
                 var mainpage = frame.Content as MainPage;
                 if (mainpage.CanGoBack)
@@ -253,7 +250,7 @@ namespace NutzMich
 					}
                 )
 #if DEBUG
-				.AddConsole(LogLevel.Debug);
+                .AddConsole(LogLevel.Debug);
 #else
                 .AddConsole(LogLevel.Information);
 #endif

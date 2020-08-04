@@ -49,12 +49,14 @@ namespace NutzMich.Shared.Pages
                     new Models.NutzMichCommand()
                     {
                         Symbol = Symbol.Refresh,
-                        Command = new AsyncRelayCommand(LoadAngeboteAsync)
+                        Command = new AsyncRelayCommand(LoadAngeboteAsync),
+                        NurWennAngemeldet = true
                     },
                     new Models.NutzMichCommand()
                     {
                         Symbol = Symbol.Add,
-                        Command = new RelayCommand(NeuesAngebotAnlegen)
+                        Command = new RelayCommand(NeuesAngebotAnlegen),
+                        NurWennAngemeldet = true
                     }
                 }));
 

@@ -54,12 +54,14 @@ namespace NutzMich.Shared.Pages
                     new Models.NutzMichCommand()
                     {
                         Symbol = Symbol.Save,
-                        Command = new AsyncRelayCommand(SaveAsync)
+                        Command = new AsyncRelayCommand(SaveAsync),
+                        NurWennAngemeldet = true
                     },
                     new Models.NutzMichCommand()
                     {
                         Symbol = Symbol.LeaveChat,
-                        Command = new RelayCommand(Logout)
+                        Command = new RelayCommand(Logout),
+                        NurWennAngemeldet = true
                     }
                 }));
 
@@ -71,7 +73,7 @@ namespace NutzMich.Shared.Pages
         {
             _loginService.Logout();
             Frame rootFrame = Windows.UI.Xaml.Window.Current.Content as Frame;
-            rootFrame.Navigate(typeof(LoginPage));
+            rootFrame.Navigate(typeof(MainPage), true);
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)

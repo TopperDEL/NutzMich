@@ -86,11 +86,13 @@ namespace NutzMich.Shared.Pages
             {
                 aktivierenDeaktivieren.Symbol = Symbol.Play;
                 aktivierenDeaktivieren.Command = new AsyncRelayCommand(AktivierenAsync);
+                aktivierenDeaktivieren.NurWennAngemeldet = true;
             }
             else
             {
                 aktivierenDeaktivieren.Symbol = Symbol.Stop;
                 aktivierenDeaktivieren.Command = new AsyncRelayCommand(DeaktivierenAsync);
+                aktivierenDeaktivieren.NurWennAngemeldet = true;
             }
             Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
                 {
@@ -103,12 +105,14 @@ namespace NutzMich.Shared.Pages
                     new Models.NutzMichCommand()
                     {
                         Symbol = Symbol.Delete,
-                        Command = new AsyncRelayCommand(DeleteAsync)
+                        Command = new AsyncRelayCommand(DeleteAsync),
+                        NurWennAngemeldet = true
                     },
                     new Models.NutzMichCommand()
                     {
                         Symbol = Symbol.Save,
-                        Command = new AsyncRelayCommand(SaveAsync)
+                        Command = new AsyncRelayCommand(SaveAsync),
+                        NurWennAngemeldet = true
                     }
                 }));
 
