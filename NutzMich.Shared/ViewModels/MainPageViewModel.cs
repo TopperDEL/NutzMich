@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace NutzMich.Shared.ViewModels
 {
+    public delegate void CurrentPageChangedEventHandler(Page newPage);
     public class MainPageViewModel : ObservableRecipient, IRecipient<ChangePageMessage>, IRecipient<SetCommandsMessage>
     {
         private string title;
@@ -23,6 +24,8 @@ namespace NutzMich.Shared.ViewModels
 
         public bool IstEingeloggt { get; set; }
 
+        public event CurrentPageChangedEventHandler CurrentPageChanged;
+
         public MainPageViewModel()
         {
             IstEingeloggt = Factory.GetLoginService().IsLoggedIn();
@@ -30,6 +33,9 @@ namespace NutzMich.Shared.ViewModels
 
         public void Receive(ChangePageMessage message)
         {
+            if (CurrentPage != message.Value.Item1)
+                CurrentPageChanged?.Invoke(message.Value.Item1);
+
             CurrentPage = message.Value.Item1;
             Title = message.Value.Item2;
         }

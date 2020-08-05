@@ -121,5 +121,14 @@ namespace NutzMich.Pages
         public bool CanGoBack { get { return contentFrame.CanGoBack; } }
 
         public void GoBack() { contentFrame.GoBack(); }
+
+        private void ViewModel_CurrentPageChanged(Page newPage)
+        {
+            var newPageName = newPage.GetType().ToString();
+            var itemList = navView.MenuItems.OfType<NavigationViewItem>().ToList();
+            var selected = itemList.Where(m => newPageName.Contains(m.Tag as string)).FirstOrDefault();
+            if (selected != null)
+                navView.SelectedItem = selected;
+        }
     }
 }
