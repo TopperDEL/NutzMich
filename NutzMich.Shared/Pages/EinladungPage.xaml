@@ -1,0 +1,33 @@
+﻿<Page
+    x:Class="NutzMich.Shared.Pages.EinladungPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NutzMich.Shared.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Vertical" Padding="20">
+            <TextBlock Text="Hinweis" FontWeight="Bold" Foreground="Black"/>
+            <TextBlock Text="Hier kannst du weitere Benutzer zu NutzMich einladen. Erstelle für jeden neu einzuladenden Benutzer ein eigenes Anmeldetoken. Dieses Token ist 2 Wochen gültig und kann nur einmal verwendet werden." TextWrapping="WrapWholeWords"
+                       Foreground="Black"/>
+            <TextBlock Text="Jeder neue Benutzer, den du zum Netzwerk hinzugefügt hat, ist mit dir verknüpft. So möchten wir sicherstellen, dass die Personen im NutzMich-Netzwerk vertrauenswürdig sind." TextWrapping="WrapWholeWords"
+                       Foreground="Black"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Neues Anmeldetoken generieren" Command="{x:Bind _vm.ErzeugeToken}"/>
+        </StackPanel>
+        <TextBlock Grid.Row="2" Text="{x:Bind _vm.Token, Mode=OneWay}" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Margin="20" Visibility="{x:Bind _vm.TokenErzeugt, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}"
+                   Foreground="Black"/>
+        <TextBlock Grid.Row="3" Text="Gib diesen Code an den neu anzumeldenden Benutzer weiter." TextWrapping="WrapWholeWords" HorizontalAlignment="Center" Visibility="{x:Bind _vm.TokenErzeugt, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}"
+                   Foreground="Black"/>
+    </Grid>
+</Page>

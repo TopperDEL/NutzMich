@@ -45,7 +45,7 @@ namespace NutzMich.Shared.Pages
         private async void Login(object sender, RoutedEventArgs e)
         {
             var loginService = Factory.GetLoginService();
-            var loggedIn = await loginService.Login(email.Text, _vm.Password);
+            var loggedIn = await loginService.LoginAsync(email.Text, _vm.Password);
             if(string.IsNullOrEmpty(loggedIn))
             {
                 this.Frame.Navigate(typeof(MainPage));
@@ -57,10 +57,9 @@ namespace NutzMich.Shared.Pages
             }
         }
 
-        private async void Register(object sender, RoutedEventArgs e)
+        private void Register(object sender, RoutedEventArgs e)
         {
-            MessageDialog dlg = new MessageDialog("Neuanmeldungen aktuell leider noch nicht möglich", "Fehler");
-            await dlg.ShowAsync();
+            this.Frame.Navigate(typeof(RegistrierenPage));
         }
     }
 }

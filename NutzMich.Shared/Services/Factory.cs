@@ -108,6 +108,15 @@ namespace NutzMich.Shared.Services
             return _profilService;
         }
 
+        static ITokenService _tokenService;
+        public static ITokenService GetTokenService()
+        {
+            if (_tokenService == null)
+                _tokenService = new TokenService();
+
+            return _tokenService;
+        }
+
         public static void Reset()
         {
             _identityService = null;

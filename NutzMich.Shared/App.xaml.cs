@@ -155,7 +155,6 @@ namespace NutzMich
             Factory.GetChatController().DeactivateBackgroundChatPollingAsync();
             Factory.GetChatController().ActivateForegroundChatPollingAsync();
         }
-
         private void SysManager_BackRequested(object sender, BackRequestedEventArgs e)
         {
             var frame = Windows.UI.Xaml.Window.Current.Content as Frame;
