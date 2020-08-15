@@ -15,7 +15,7 @@
     <NavigationView x:Name="navView"
                     PaneDisplayMode="LeftCompact" IsPaneOpen="False" IsBackButtonVisible="Collapsed" Foreground="{StaticResource NutzmichBlau}"
                     IsSettingsVisible="False" SelectionChanged="NavigationView_SelectionChanged" IsBackEnabled="{x:Bind Path=contentFrame.CanGoBack, Mode=OneWay}" BackRequested="navView_BackRequested"
-                    
+                    Style="{StaticResource MaterialNoCompactMenuNavigationViewStyle}"
                     Background="White">
         <NavigationView.HeaderTemplate>
             <DataTemplate>
