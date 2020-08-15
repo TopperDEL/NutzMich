@@ -15,8 +15,18 @@
     <NavigationView x:Name="navView"
                     PaneDisplayMode="LeftCompact" IsPaneOpen="False" IsBackButtonVisible="Collapsed" Foreground="{StaticResource NutzmichBlau}"
                     IsSettingsVisible="False" SelectionChanged="NavigationView_SelectionChanged" IsBackEnabled="{x:Bind Path=contentFrame.CanGoBack, Mode=OneWay}" BackRequested="navView_BackRequested"
-                    Style="{StaticResource MaterialNoCompactMenuNavigationViewStyle}"
+                    Style="{StaticResource MaterialNoCompactMenuNavigationViewStyle}" OpenPaneLength="220" ExpandedModeThresholdWidth="800"
                     Background="White">
+        <NavigationView.PaneHeader>
+            <StackPanel Orientation="Horizontal"
+							Padding="16">
+                <Image Source="/Assets/nutzMichLogo.png"
+						   Width="180"
+						   Height="93"
+						   HorizontalAlignment="Center"
+						   Stretch="Uniform" />
+            </StackPanel>
+        </NavigationView.PaneHeader>
         <NavigationView.HeaderTemplate>
             <DataTemplate>
                 <Grid Background="White" Padding="5" Margin="0">
@@ -54,6 +64,6 @@
             <NavigationViewItem Content="Anmelden" Icon="Contact" Tag="LoginPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsCollapsedConverter}}"/>
             <NavigationViewItem Content="Benutzer einladen" Icon="AddFriend" Tag="EinladungPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
         </NavigationView.MenuItems>
-        <Frame x:Name="contentFrame"/>
+        <Frame x:Name="contentFrame" Background="White"/>
     </NavigationView>
 </Page>
