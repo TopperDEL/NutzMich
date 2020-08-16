@@ -110,7 +110,7 @@ namespace NutzMich
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             this.Resources.MergedDictionaries.Add(new Uno.Material.MaterialColorPalette());
-            //this.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/Application/Colors.xaml") });
+            this.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///NutzMich_ColorPaletteOverride.xaml") });
             this.Resources.MergedDictionaries.Add(new Uno.Material.MaterialResources());
             //this.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/Styles.xaml") });
 #if DEBUG
