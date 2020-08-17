@@ -23,7 +23,7 @@ namespace NutzMich.Shared.Services
 
             Barrel.ApplicationId = "nutzmich_monkeycache";
 
-            if (Barrel.Current.Exists("ChatListe_"+_loginService.AnbieterId))
+            if (_loginService.AnbieterId != "" && Barrel.Current.Exists("ChatListe_"+_loginService.AnbieterId))
                 _buffer = Barrel.Current.Get<List<ChatInfo>>("ChatListe_" + _loginService.AnbieterId);
             else
                 _buffer = new List<ChatInfo>();
