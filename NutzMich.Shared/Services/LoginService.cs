@@ -43,7 +43,7 @@ namespace NutzMich.Shared.Services
             {
                 ConnectionService connection = await ConnectionService.CreateAsync(Factory.GetIdentityService().GetDefaultAccess());
 
-                var mailHash = Convert.ToBase64String(System.Security.Cryptography.SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(email + password)));
+                var mailHash = Convert.ToBase64String(System.Security.Cryptography.SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(email.ToLower() + password)));
                 var download = await connection.ObjectService.DownloadObjectAsync(connection.Bucket, "Accounts/" + mailHash, new uplink.NET.Models.DownloadOptions(), false);
                 await download.StartDownloadAsync();
 
