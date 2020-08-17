@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -55,6 +56,13 @@ namespace NutzMich.Pages
             this.KeyboardAccelerators.Add(AltLeft);
             // ALT routes here
             AltLeft.Modifiers = VirtualKeyModifiers.Menu;
+
+            this.Loaded += MainPage_Loaded;
+        }
+
+        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            await CheckHasProfilAsync();
         }
 
         private void DoGoBack()
@@ -84,6 +92,22 @@ namespace NutzMich.Pages
 
             if(e.Parameter != null && e.Parameter is bool && ((bool)e.Parameter) == true)
                 Frame.BackStack.Clear();
+        }
+
+        private async Task CheckHasProfilAsync()
+        {
+            var loginService = Factory.GetLoginService();
+            if (loginService.IsLoggedIn())
+            {
+                var meinProfil = await Factory.GetProfilService().GetProfilAsync(loginService.AnbieterId);
+                if (meinProfil == null || string.IsNullOrEmpty(meinProfil.Nickname))
+                {
+                    MessageDialog dlg = new MessageDialog("Bitte hinterlege einen Namen in deinem Profil - Klarnamen-Pflicht herrscht aber nicht!", "Profil");
+                    await dlg.ShowAsync();
+
+                    contentFrame.Navigate(typeof(ProfilEditPage));
+                }
+            }
         }
 
         private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
