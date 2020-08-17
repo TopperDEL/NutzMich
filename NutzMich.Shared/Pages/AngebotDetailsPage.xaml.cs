@@ -70,10 +70,12 @@ namespace NutzMich.Shared.Pages
             _angebotVM.SetIsLoading();
             await _angebotVM.InitAnbieterProfilAsync(); 
             await _angebotVM.LoadReservierungenAsync(true);
-            await _angebotVM.LoadFotos();
+            
             _angebotVM.RefreshBindings();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(_angebotVM)));
             _angebotVM.SetIsNotLoading();
+
+            _angebotVM.LoadFotos();
         }
 
         private void ProfilDetails(object sender, RoutedEventArgs e)

@@ -42,6 +42,8 @@ namespace NutzMich.Shared.ViewModels
         public ObservableCollection<AttachmentImageViewModel> Fotos { get; private set; }
         public bool Loading { get; set; }
         public bool NotLoading { get; set; }
+
+        public bool FotosLoading { get; set; }
         public string BeschreibungShort
         {
             get
@@ -118,6 +120,9 @@ namespace NutzMich.Shared.ViewModels
 
         public async Task LoadFotos()
         {
+            FotosLoading = true;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FotosLoading)));
+
             var images = await Factory.GetAngebotService().GetAngebotImagesAsync(Angebot);
             int count = 1;
             foreach (var image in images)
@@ -140,6 +145,9 @@ namespace NutzMich.Shared.ViewModels
                     count++;
                 }
             }
+
+            FotosLoading = false;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FotosLoading)));
         }
 
         private bool _reservierungenGeladen;

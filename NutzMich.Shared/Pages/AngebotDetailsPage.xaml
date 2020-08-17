@@ -56,23 +56,26 @@
                 </StackPanel>
                 <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical">
                     <TextBlock Text="Fotos" FontWeight="Bold" Foreground="Black"/>
-                    <FlipView ItemsSource="{x:Bind _angebotVM.Fotos, Mode=OneWay}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="10">
-                        <FlipView.ItemTemplate>
-                            <DataTemplate x:DataType="viewmodels:AttachmentImageViewModel">
-                                <ScrollViewer Background="White" MinHeight="200" MinWidth="200"
+                    <Grid>
+                        <FlipView ItemsSource="{x:Bind _angebotVM.Fotos, Mode=OneWay}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="10">
+                            <FlipView.ItemTemplate>
+                                <DataTemplate x:DataType="viewmodels:AttachmentImageViewModel">
+                                    <ScrollViewer Background="White" MinHeight="200" MinWidth="200"
                                         Name="ScrollViewerMain"
                                         MinZoomFactor="1" 
                                         ZoomMode="Enabled">
-                                    <Image
+                                        <Image
                                             MaxWidth="{Binding Path=ViewportWidth, ElementName=ScrollViewerMain}"
                                             MaxHeight="{Binding Path=ViewportHeight, ElementName=ScrollViewerMain}"
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
                                             Source="{Binding AttachmentImage.Image}"/>
-                                </ScrollViewer>
-                            </DataTemplate>
-                        </FlipView.ItemTemplate>
-                    </FlipView>
+                                    </ScrollViewer>
+                                </DataTemplate>
+                            </FlipView.ItemTemplate>
+                        </FlipView>
+                        <TextBlock Text="Lädt..." Foreground="Gray" Visibility="{x:Bind _angebotVM.FotosLoading, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}"/>
+                    </Grid>
                 </StackPanel>
             </Grid>
             <Grid Grid.RowSpan="2" Visibility="{Binding Loading,Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}">
