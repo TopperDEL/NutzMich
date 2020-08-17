@@ -1,0 +1,127 @@
+﻿<Page
+    x:Class="NutzMich.Shared.Pages.WillkommensPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NutzMich.Shared.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <FlipView>
+            <FlipViewItem Background="White">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Image Grid.Row="0" Source="/Assets/nutzMichLogo.png"/>
+                    <TextBlock Grid.Row="1"
+												   Foreground="Black"
+												   HorizontalAlignment="Center"
+												   VerticalAlignment="Bottom"
+                                                   TextAlignment="Center" MaxWidth="400"
+												   FontSize="30" TextWrapping="WrapWholeWords"
+												   Text="Herzlich Willkommen zu NutzMich!" />
+                    <TextBlock Grid.Row="2"
+												   Foreground="Black"
+												   HorizontalAlignment="Center"
+												   VerticalAlignment="Bottom"
+                                                   TextAlignment="Center" MaxWidth="400"
+												   FontSize="30" TextWrapping="WrapWholeWords"
+												   Text="Mit NutzMich tauscht du Spielsachen auf Zeit mit anderen Familien aus deiner Nähe." />
+                    <TextBlock Grid.Row="3"
+												   Foreground="Black"
+												   HorizontalAlignment="Center"
+												   VerticalAlignment="Center"
+												   FontSize="30"
+												   Text="Weiter &#x2192;" />
+                </Grid>
+            </FlipViewItem>
+            <FlipViewItem Background="{StaticResource NutzmichGruen}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0"
+												   Foreground="White"
+												   HorizontalAlignment="Center"
+												   VerticalAlignment="Bottom"
+                                                   TextAlignment="Center" MaxWidth="400"
+												   FontSize="30" TextWrapping="WrapWholeWords"
+												   Text="NutzMich ist kostenlos." />
+                    <TextBlock Grid.Row="1"
+												   Foreground="White"
+												   HorizontalAlignment="Center"
+												   VerticalAlignment="Bottom"
+                                                   TextAlignment="Center" MaxWidth="400"
+												   FontSize="30" TextWrapping="WrapWholeWords"
+												   Text="Ohne Anmeldung kannst du den Bestand durchsuchen. Aber um dir etwas auszuleihen oder selbst etwas einstellen zu können, brauchst du einen Zugang." />
+                    <TextBlock Grid.Row="2"
+												   Foreground="White"
+												   HorizontalAlignment="Center"
+												   VerticalAlignment="Center"
+												   FontSize="30"
+												   Text="Weiter &#x2192;" />
+                </Grid>
+            </FlipViewItem>
+            <FlipViewItem Background="{StaticResource NutzmichRosa}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0"
+												   Foreground="White"
+												   HorizontalAlignment="Center"
+												   VerticalAlignment="Bottom"
+                                                   TextAlignment="Center" MaxWidth="400"
+												   FontSize="30" TextWrapping="WrapWholeWords"
+												   Text="Finde jemand aus deinem Umfeld, der NutzMich schon nutzt und der dir ein Anmeldetoken geben kann." />
+                    <TextBlock Grid.Row="1"
+												   Foreground="White"
+												   HorizontalAlignment="Center"
+												   VerticalAlignment="Bottom"
+                                                   TextAlignment="Center" MaxWidth="400"
+												   FontSize="30" TextWrapping="WrapWholeWords"
+												   Text="Schon bist du Teil des NutzMich-WebOfTrust - dem sicheren inneren Zirkel wo jeder jeden kennt." />
+                    <TextBlock Grid.Row="2"
+												   Foreground="White"
+												   HorizontalAlignment="Center"
+												   VerticalAlignment="Center"
+												   FontSize="30"
+												   Text="Weiter &#x2192;" />
+                </Grid>
+            </FlipViewItem>
+            <FlipViewItem Background="{StaticResource NutzmichBlau}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0"
+												   Foreground="White"
+												   HorizontalAlignment="Center"
+												   VerticalAlignment="Bottom"
+                                                   TextAlignment="Center" MaxWidth="400"
+												   FontSize="30" TextWrapping="WrapWholeWords"
+												   Text="Nun aber viel Spaß mit NutzMich!" />
+                    <Button Grid.Row="1"
+												   Foreground="White"
+												   HorizontalAlignment="Center"
+												   VerticalAlignment="Bottom"
+                                                   MaxWidth="400"
+												   FontSize="30"
+                                                   Click="LosGehts_Click"
+												   Content="Los geht's!" />
+                </Grid>
+            </FlipViewItem>
+        </FlipView>
+    </Grid>
+</Page>

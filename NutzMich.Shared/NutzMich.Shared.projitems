@@ -86,6 +86,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Pages\ReservierungErstellenDialog.xaml.cs">
       <DependentUpon>ReservierungErstellenDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\WillkommensPage.xaml.cs">
+      <DependentUpon>WillkommensPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Resources\ChatMessageTemplateSelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AngebotService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ChatBufferService.cs" />
@@ -187,6 +190,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="$(MSBuildThisFileDirectory)Pages\ReservierungErstellenDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Pages\WillkommensPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
