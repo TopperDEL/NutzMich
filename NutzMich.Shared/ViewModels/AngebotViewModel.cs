@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using System.Linq;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml;
 
 namespace NutzMich.Shared.ViewModels
 {
@@ -189,14 +190,14 @@ namespace NutzMich.Shared.ViewModels
                 else
                 {
                     VerfuegbarkeitsDetails = "";
-                    VerfuegbarkeitsAmpel = new SolidColorBrush(Colors.DarkGreen);
+                    VerfuegbarkeitsAmpel = Application.Current.Resources["NutzmichGruenBrush"] as SolidColorBrush; // new SolidColorBrush(Colors.DarkGreen);
                 }
             }
             else
             {
                 Verfuegbarkeit = Verfuegbarkeit.Verliehen;
                 VerfuegbarkeitsDetails = "Verfügbar ab " + reservierungHeute.First().Zeitraum.Bis.AddDays(1).ToString("d");
-                VerfuegbarkeitsAmpel = new SolidColorBrush(Colors.DarkRed);
+                VerfuegbarkeitsAmpel = Application.Current.Resources["NutzmichRosaBrush"] as SolidColorBrush;// new SolidColorBrush(Colors.DarkRed);
             }
 
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Verfuegbarkeit)));
