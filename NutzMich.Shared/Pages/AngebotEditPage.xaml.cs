@@ -66,6 +66,8 @@ namespace NutzMich.Shared.Pages
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            bool istNeuesAngebot = false;
+
             base.OnNavigatedTo(e);
 
             if (e.Parameter != null)
@@ -94,7 +96,26 @@ namespace NutzMich.Shared.Pages
                 aktivierenDeaktivieren.Command = new AsyncRelayCommand(DeaktivierenAsync);
                 aktivierenDeaktivieren.NurWennAngemeldet = true;
             }
-            Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
+            if (istNeuesAngebot)
+            {
+                Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
+                {
+                    new Models.NutzMichCommand()
+                    {
+                        Symbol = Symbol.Back,
+                        Command = Models.NutzMichCommand.GoBackCommand
+                    },
+                    new Models.NutzMichCommand()
+                    {
+                        Symbol = Symbol.Save,
+                        Command = new AsyncRelayCommand(SaveAsync),
+                        NurWennAngemeldet = true
+                    }
+                }));
+            }
+            else
+            {
+                Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
                 {
                     new Models.NutzMichCommand()
                     {
@@ -115,6 +136,7 @@ namespace NutzMich.Shared.Pages
                         NurWennAngemeldet = true
                     }
                 }));
+            }
 
             this.DataContext = _angebotVM;
             _angebotVM.SetIsNotLoading();
