@@ -20,7 +20,7 @@
                     </Grid.RowDefinitions>
                     <Image Grid.Row="0" Source="/Assets/nutzMichLogo.png"/>
                     <TextBlock Grid.Row="1"
-												   Foreground="Black"
+												   Foreground="{StaticResource NutzmichGruen}"
 												   HorizontalAlignment="Center"
 												   VerticalAlignment="Bottom"
                                                    TextAlignment="Center" MaxWidth="400"
@@ -34,7 +34,7 @@
 												   FontSize="30" TextWrapping="WrapWholeWords"
 												   Text="Mit NutzMich tauscht du Spielsachen auf Zeit mit anderen Familien aus deiner Nähe." />
                     <TextBlock Grid.Row="3"
-												   Foreground="Black"
+												   Foreground="{StaticResource NutzmichGruen}"
 												   HorizontalAlignment="Center"
 												   VerticalAlignment="Center"
 												   FontSize="30"
@@ -54,14 +54,14 @@
 												   VerticalAlignment="Bottom"
                                                    TextAlignment="Center" MaxWidth="400"
 												   FontSize="30" TextWrapping="WrapWholeWords"
-												   Text="NutzMich ist kostenlos." />
+												   Text="NutzMich ist kostenlos. Ohne Anmeldung kannst du den Bestand durchsuchen." />
                     <TextBlock Grid.Row="1"
 												   Foreground="White"
 												   HorizontalAlignment="Center"
 												   VerticalAlignment="Bottom"
                                                    TextAlignment="Center" MaxWidth="400"
 												   FontSize="30" TextWrapping="WrapWholeWords"
-												   Text="Ohne Anmeldung kannst du den Bestand durchsuchen. Aber um dir etwas auszuleihen oder selbst etwas einstellen zu können, brauchst du einen Zugang." />
+												   Text="Aber um dir etwas auszuleihen oder selbst etwas einstellen zu können, brauchst du einen Zugang." />
                     <TextBlock Grid.Row="2"
 												   Foreground="White"
 												   HorizontalAlignment="Center"
@@ -119,7 +119,7 @@
                                                    MaxWidth="400"
 												   FontSize="30"
                                                    Click="LosGehts_Click"
-												   Content="Los geht's!" />
+												   Content="Los geht's!" Padding="30"/>
                 </Grid>
             </FlipViewItem>
         </FlipView>
