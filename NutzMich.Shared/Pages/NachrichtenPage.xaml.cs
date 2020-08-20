@@ -38,16 +38,6 @@ namespace NutzMich.Shared.Pages
         {
             this.InitializeComponent();
 
-            Messenger.Default.Send(new ChangePageMessage(this, "Nachrichten"));
-            Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
-                {
-                    new Models.NutzMichCommand()
-                    {
-                        Symbol = Symbol.Back,
-                        Command = Models.NutzMichCommand.GoBackCommand
-                    }
-                }));
-
             _vm = new ChatListViewModel(Factory.GetChatService(), Factory.GetAngebotService(), Factory.GetChatController());
             _gelesenTaskCancelTokenSource = new CancellationTokenSource();
             _gelesenMarkiertTask = Task.Run(async () =>
@@ -61,9 +51,24 @@ namespace NutzMich.Shared.Pages
             });
         }
 
+        private void SetzeCommands()
+        {
+            Messenger.Default.Send(new ChangePageMessage(this, "Nachrichten"));
+            Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
+                {
+                    new Models.NutzMichCommand()
+                    {
+                        Symbol = Symbol.Back,
+                        Command = Models.NutzMichCommand.GoBackCommand
+                    }
+                }));
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
+            SetzeCommands();
 
             if(e.Parameter is AngebotViewModel)
             {

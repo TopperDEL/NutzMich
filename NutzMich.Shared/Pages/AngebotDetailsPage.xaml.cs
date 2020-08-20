@@ -37,7 +37,10 @@ namespace NutzMich.Shared.Pages
         public AngebotDetailsPage()
         {
             this.InitializeComponent();
+        }
 
+        private void SetzeCommands()
+        {
             Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
                 {
                     new Models.NutzMichCommand()
@@ -62,6 +65,8 @@ namespace NutzMich.Shared.Pages
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
+            SetzeCommands();
 
             this.DataContext = _angebotVM = e.Parameter as AngebotViewModel;
 

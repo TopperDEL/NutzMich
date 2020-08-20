@@ -43,6 +43,12 @@ namespace NutzMich.Shared.Pages
         {
             this.InitializeComponent();
 
+            _profilService = Factory.GetProfilService();
+            _loginService = Factory.GetLoginService();
+        }
+
+        private void SetzeCommands()
+        {
             Messenger.Default.Send(new ChangePageMessage(this, "Mein Profil"));
             Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
                 {
@@ -64,9 +70,6 @@ namespace NutzMich.Shared.Pages
                         NurWennAngemeldet = true
                     }
                 }));
-
-            _profilService = Factory.GetProfilService();
-            _loginService = Factory.GetLoginService();
         }
 
         private void Logout()
@@ -79,6 +82,8 @@ namespace NutzMich.Shared.Pages
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
+            SetzeCommands();
 
             Profil profil = await _profilService.GetProfilAsync(_loginService.AnbieterId);
             _profilVM = new ProfilViewModel(profil);

@@ -33,6 +33,12 @@ namespace NutzMich.Shared.Pages
         {
             this.InitializeComponent();
 
+            _vm = new ReservierungenViewModel(Factory.GetReservierungService());
+            _vm.LoadReservierungen();
+        }
+
+        private void SetzeCommands()
+        {
             Messenger.Default.Send(new ChangePageMessage(this, "Reservierungen"));
             Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
                 {
@@ -42,9 +48,13 @@ namespace NutzMich.Shared.Pages
                         Command = Models.NutzMichCommand.GoBackCommand
                     }
                 }));
+        }
 
-            _vm = new ReservierungenViewModel(Factory.GetReservierungService());
-            _vm.LoadReservierungen();
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            SetzeCommands();
         }
     }
 }

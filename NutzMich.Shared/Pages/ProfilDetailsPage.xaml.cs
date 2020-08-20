@@ -36,12 +36,9 @@ namespace NutzMich.Shared.Pages
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        private void SetzeCommands()
         {
-            base.OnNavigatedTo(e);
-
-            _profilVM = e.Parameter as ProfilViewModel;
-            Messenger.Default.Send(new ChangePageMessage(this,_profilVM.Profil.Nickname));
+            Messenger.Default.Send(new ChangePageMessage(this, _profilVM.Profil.Nickname));
             Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
                 {
                     new Models.NutzMichCommand()
@@ -50,7 +47,16 @@ namespace NutzMich.Shared.Pages
                         Command = Models.NutzMichCommand.GoBackCommand
                     }
                 }));
+        }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            SetzeCommands();
+
+            _profilVM = e.Parameter as ProfilViewModel;
+           
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(_profilVM)));
         }
     }

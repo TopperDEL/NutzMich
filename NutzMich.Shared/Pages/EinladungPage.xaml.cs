@@ -44,7 +44,10 @@ namespace NutzMich.Shared.Pages
 
             _vm = new EinladungViewModel();
             _vm.ErzeugeToken = new AsyncRelayCommand(ErstelleTokenAsync);
+        }
 
+        private void SetzeCommands()
+        {
             Messenger.Default.Send(new ChangePageMessage(this, "Benutzer einladen"));
             Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
                 {
@@ -54,6 +57,13 @@ namespace NutzMich.Shared.Pages
                         Command = Models.NutzMichCommand.GoBackCommand
                     }
                 }));
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            SetzeCommands();
         }
 
         private async Task ErstelleTokenAsync()

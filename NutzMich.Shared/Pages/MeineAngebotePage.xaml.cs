@@ -38,6 +38,14 @@ namespace NutzMich.Shared.Pages
         {
             this.InitializeComponent();
 
+            _angebotService = Factory.GetAngebotService();
+            _loginService = Factory.GetLoginService();
+
+            this.DataContext = _angeboteVM = new AngeboteViewModel();
+        }
+
+        private void SetzeCommands()
+        {
             Messenger.Default.Send(new ChangePageMessage(this, "Meine Angebote"));
             Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
                 {
@@ -59,16 +67,13 @@ namespace NutzMich.Shared.Pages
                         NurWennAngemeldet = true
                     }
                 }));
-
-            _angebotService = Factory.GetAngebotService();
-            _loginService = Factory.GetLoginService();
-
-            this.DataContext = _angeboteVM = new AngeboteViewModel();
         }
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
+            SetzeCommands();
 
             await LoadAngeboteAsync();
         }
