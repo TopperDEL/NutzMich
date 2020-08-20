@@ -26,8 +26,8 @@
             <Button Content="Neues Anmeldetoken generieren" Command="{x:Bind _vm.ErzeugeToken}"/>
         </StackPanel>
         <TextBlock Grid.Row="2" Text="{x:Bind _vm.Token, Mode=OneWay}" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Margin="20" Visibility="{x:Bind _vm.TokenErzeugt, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}"
-                   Foreground="Black"/>
-        <TextBlock Grid.Row="3" Text="Gib diesen Code an den neu anzumeldenden Benutzer weiter." TextWrapping="WrapWholeWords" HorizontalAlignment="Center" Visibility="{x:Bind _vm.TokenErzeugt, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}"
+                   Foreground="{StaticResource NutzmichGruen}" IsTextSelectionEnabled="True" SelectionHighlightColor="{StaticResource NutzmichRosaBrush}"/>
+        <TextBlock Grid.Row="3" Padding="20" Text="Gib diesen Code an den neu anzumeldenden Benutzer weiter." TextWrapping="WrapWholeWords" HorizontalAlignment="Center" Visibility="{x:Bind _vm.TokenErzeugt, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}"
                    Foreground="Black"/>
     </Grid>
 </Page>
