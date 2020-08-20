@@ -82,6 +82,7 @@ namespace NutzMich.Shared.Pages
             {
                 _angebotVM = new AngebotViewModel();
                 Messenger.Default.Send(new ChangePageMessage(this, "Neues Angebot"));
+                istNeuesAngebot = true;
             }
             var aktivierenDeaktivieren = new NutzMichCommand();
             if(_angebotVM.IstInaktiv)
