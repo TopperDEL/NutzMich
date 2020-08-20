@@ -43,7 +43,7 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="models:NutzMichCommand">
-                                <Button Foreground="Black" BorderThickness="0" Background="White" Command="{x:Bind Command}">
+                                <Button Foreground="Black" BorderThickness="0" Background="White" Command="{x:Bind Command}" Visibility="{x:Bind CommandAusfuehrbar, Converter={StaticResource TrueIsVisibleConverter}}">
                                     <SymbolIcon Symbol="{x:Bind Symbol}"/>
                                 </Button>
                             </DataTemplate>
