@@ -34,12 +34,12 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </StackPanel>
-                <GridView ItemsSource="{Binding Fotos, Mode=OneWay}" MinHeight="400" Header="Fotos" SelectionChanged="Fotos_SelectionChanged">
+                <GridView ItemsSource="{Binding Fotos, Mode=OneWay}" MinHeight="400" Header="Fotos" SelectionChanged="Fotos_SelectionChanged" Foreground="Black">
                     <GridView.FooterTemplate>
                         <DataTemplate>
                             <Button Width="100" Height="50" Padding="15" Click="AddPhoto" >
                                 <Viewbox>
-                                    <SymbolIcon Symbol="Add" Foreground="RoyalBlue"/>
+                                    <SymbolIcon Symbol="Add" Foreground="{StaticResource NutzmichBlau}"/>
                                 </Viewbox>
                             </Button>
                         </DataTemplate>
