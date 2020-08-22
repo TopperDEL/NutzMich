@@ -129,6 +129,11 @@ namespace NutzMich.Pages
                     {
                         this.Frame.Navigate(pageType);
                     }
+                    else if (pageName.Contains("LogoutPage"))
+                    {
+                        Factory.GetLoginService().Logout();
+                        this.Frame.Navigate(typeof(MainPage), true);
+                    }
                     else
                     {
                         contentFrame.Navigate(pageType);

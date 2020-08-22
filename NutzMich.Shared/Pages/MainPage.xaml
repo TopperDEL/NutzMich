@@ -62,6 +62,7 @@
             <NavigationViewItem Content="Nachrichten" Icon="Mail" Tag="NachrichtenPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
             <NavigationViewItem Content="Profil" Icon="Contact" Tag="ProfilEditPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
             <NavigationViewItem Content="Benutzer einladen" Icon="AddFriend" Tag="EinladungPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
+            <NavigationViewItem Content="Abmelden" Icon="LeaveChat" Tag="LogoutPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
             <NavigationViewItem Content="Anmelden" Icon="Contact" Tag="LoginPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsCollapsedConverter}}"/>
         </NavigationView.MenuItems>
         <Frame x:Name="contentFrame" Background="White"/>
