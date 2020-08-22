@@ -13,7 +13,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ProgressRing Grid.Row="0" Visibility="{Binding Loading, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}" IsActive="True" Foreground="{StaticResource NutzmichGruen}"/>
+        <!--<ProgressRing Grid.Row="0" Visibility="{Binding Loading, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}" IsActive="True" Foreground="{StaticResource NutzmichGruen}"/>-->
         <ListView Grid.Row="1" ItemsSource="{x:Bind _angeboteVM.AlleAngebote, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="AngebotAnzeigen">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:AngebotViewModel">

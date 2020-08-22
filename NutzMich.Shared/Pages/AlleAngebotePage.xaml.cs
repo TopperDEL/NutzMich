@@ -80,6 +80,10 @@ namespace NutzMich.Shared.Pages
             {
                 var angebotVM = new AngebotViewModel(angebot);
                 _angeboteVM.AlleAngebote.Add(angebotVM);
+            }
+
+            foreach(var angebotVM in _angeboteVM.AlleAngebote)
+            {
                 await angebotVM.LoadReservierungenAsync();
             }
 
