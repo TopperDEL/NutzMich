@@ -6,6 +6,7 @@ using NutzMich.Shared.Messages;
 using NutzMich.Shared.Models;
 using NutzMich.Shared.Services;
 using NutzMich.Shared.ViewModels;
+using Plugin.Media;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -36,6 +37,7 @@ namespace NutzMich.Shared.Pages
         public ProfilViewModel _profilVM;
         IProfilService _profilService;
         ILoginService _loginService;
+        IThumbnailHelper _thumbnailHelper;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -45,6 +47,7 @@ namespace NutzMich.Shared.Pages
 
             _profilService = Factory.GetProfilService();
             _loginService = Factory.GetLoginService();
+            _thumbnailHelper = Factory.GetThumbnailHelper();
         }
 
         private void SetzeCommands()
@@ -93,6 +96,31 @@ namespace NutzMich.Shared.Pages
 
                 await notSavedDlg.ShowAsync();
             }
+        }
+
+        private async void PersonPicture_Click(object sender, RoutedEventArgs e)
+        {
+            await CrossMedia.Current.Initialize();
+
+            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+            {
+                return;
+            }
+
+            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+            {
+                Directory = "NutzMich",
+                Name = "ProfilFoto.jpg",
+                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium
+            });
+
+            if (file == null)
+                return;
+
+            var fileRead = File.OpenRead(file.Path);
+            _profilVM.Profil.ProfilbildBase64 = await _thumbnailHelper.ThumbnailToBase64Async(new Models.AttachmentImage(fileRead));
+
+            _profilVM.RefreshProfilbild();
         }
     }
 }

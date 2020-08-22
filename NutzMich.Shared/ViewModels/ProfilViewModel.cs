@@ -1,7 +1,9 @@
 ﻿using NutzMich.Shared.Interfaces;
 using NutzMich.Shared.Models;
+using NutzMich.Shared.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
@@ -9,10 +11,13 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace NutzMich.Shared.ViewModels
 {
-    [Bindable]
-    public class ProfilViewModel
+    [Windows.UI.Xaml.Data.Bindable]
+    public class ProfilViewModel:INotifyPropertyChanged
     {
         private IThumbnailHelper _thumbnailHelper;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public Profil Profil{ get; private set; }
 
         public BitmapImage Profilbild
@@ -32,6 +37,13 @@ namespace NutzMich.Shared.ViewModels
         public ProfilViewModel(Profil profil)
         {
             Profil = profil;
+            _thumbnailHelper = Factory.GetThumbnailHelper();
+        }
+
+        public void RefreshProfilbild()
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Profilbild)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HatProfilbild)));
         }
     }
 }

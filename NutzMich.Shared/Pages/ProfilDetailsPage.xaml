@@ -16,7 +16,9 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <PersonPicture ProfilePicture="{x:Bind _profilVM.Profilbild}" Initials="{x:Bind _profilVM.Profil.Nickname}" DisplayName="{x:Bind _profilVM.Profil.Nickname}" Width="120" Height="120" Visibility="{x:Bind _profilVM.HatProfilbild}"/>
+            <Border Grid.Row="0" CornerRadius="10" Width="80" Height="80" Margin="0,0,10,0">
+                <Image Source="{x:Bind _profilVM.Profilbild, Mode=OneWay}" Stretch="UniformToFill" Height="80" Width="80"/>
+            </Border>
             <TextBox Grid.Row="1" Text="{x:Bind _profilVM.Profil.Nickname, Mode=OneWay}" Header="Name" IsReadOnly="True" BorderThickness="0" AcceptsReturn="True"/>
             <TextBox Grid.Row="2" Text="{x:Bind _profilVM.Profil.UeberMich, Mode=OneWay}" Header="Über mich" IsReadOnly="True" BorderThickness="0" AcceptsReturn="True" TextWrapping="Wrap" Visibility="{x:Bind _profilVM.HatUeberMich}"/>
             <StackPanel Grid.Row="3" Orientation="Vertical">

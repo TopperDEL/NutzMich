@@ -23,7 +23,7 @@
                        Foreground="Black"/>
         </StackPanel>
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" Margin="10">
-            <Button Content="Neues Anmeldetoken generieren" Command="{x:Bind _vm.ErzeugeToken}"/>
+            <Button Content="Neues Anmeldetoken generieren" Command="{x:Bind _vm.ErzeugeToken}" Background="{StaticResource NutzmichBlauBrush}" BorderBrush="{StaticResource NutzmichBlauBrush}" Foreground="White"/>
         </StackPanel>
         <TextBlock Grid.Row="2" Text="{x:Bind _vm.Token, Mode=OneWay}" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Margin="20" Visibility="{x:Bind _vm.TokenErzeugt, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}"
                    Foreground="{StaticResource NutzmichGruen}" IsTextSelectionEnabled="True" SelectionHighlightColor="{StaticResource NutzmichRosaBrush}"/>
