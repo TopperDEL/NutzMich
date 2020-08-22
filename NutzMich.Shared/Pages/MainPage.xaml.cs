@@ -110,8 +110,12 @@ namespace NutzMich.Pages
             }
         }
 
+        private bool _doNoNavigation = false;
         private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
+            if (_doNoNavigation)
+                return;
+
             if (args.IsSettingsSelected)
             {
                 //contentFrame.Navigate(typeof(SampleSettingsPage));
@@ -157,7 +161,11 @@ namespace NutzMich.Pages
             var itemList = navView.MenuItems.OfType<NavigationViewItem>().ToList();
             var selected = itemList.Where(m => newPageName.Contains(m.Tag as string)).FirstOrDefault();
             if (selected != null)
+            {
+                _doNoNavigation = true;
                 navView.SelectedItem = selected;
+                _doNoNavigation = false;
+            }
         }
     }
 }
