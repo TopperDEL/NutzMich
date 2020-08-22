@@ -197,10 +197,28 @@ namespace NutzMich.Shared.Services
                 Barrel.Current.Add<byte[]>(fotoKey, image.Stream.ToMemoryStream().ToArray(), TimeSpan.FromDays(365));
             }
 
+            while (true)
+            {
+                string fotoKey = "Fotos/" + _loginService.AnbieterId + "/" + angebot.Id.ToString() + "/" + count;
+                try
+                {
+                    var existingObject = await _writeConnection.ObjectService.GetObjectAsync(_writeConnection.Bucket, fotoKey);
+                    //Es existiert - lösche es - alle gewünschten Bilder sind schon oben
+                    await _writeConnection.ObjectService.DeleteObjectAsync(_writeConnection.Bucket, fotoKey);
+                    count++;
+                }
+                catch
+                {
+                    //Es gibt nicht mehr Bilder, alles bereinigt
+                    break;
+                }
+            }
+
             Barrel.Current.Add<Angebot>("angebot_" + key.Replace("Angebote/", ""), angebot, TimeSpan.FromDays(180));
 
             return angebotUpload.Completed;
         }
+
 
         public void Refresh()
         {
