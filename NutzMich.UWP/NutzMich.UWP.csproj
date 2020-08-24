@@ -41,10 +41,10 @@
       <Version>1.0.0-dev.515</Version>
     </PackageReference>
     <PackageReference Include="Uno.UI">
-      <Version>3.1.0-dev.66</Version>
+      <Version>3.1.0-dev.72</Version>
     </PackageReference>
     <PackageReference Include="Uno.UI.RemoteControl">
-      <Version>3.1.0-dev.66</Version>
+      <Version>3.1.0-dev.72</Version>
     </PackageReference>
     <PackageReference Include="uplink.NET">
       <Version>2.3.5</Version>
