@@ -20,13 +20,13 @@
             <Border Grid.Row="0" CornerRadius="10" Width="80" Height="80" Margin="0,0,10,0">
                 <Image Source="{x:Bind _profilVM.Profilbild, Mode=OneWay}" Stretch="UniformToFill" Height="80" Width="80"/>
             </Border>
-            <Button Grid.Row="1" Content="Profilbild ändern" Click="PersonPicture_Click" Background="{StaticResource NutzmichBlauBrush}" BorderBrush="{StaticResource NutzmichBlauBrush}" Foreground="White" HorizontalAlignment="Center"/>
+            <Button Grid.Row="1" Content="Profilbild ändern" Click="PersonPicture_Click" Background="{StaticResource NutzmichBlauBrush}" BorderBrush="{StaticResource NutzmichBlauBrush}" Foreground="White" HorizontalAlignment="Center" Margin="10"/>
             <TextBox Grid.Row="2" Text="{x:Bind _profilVM.Profil.Nickname, Mode=TwoWay}" Header="Name" BorderThickness="2" AcceptsReturn="True" MaxLength="50"/>
             <TextBox Grid.Row="3" Text="{x:Bind _profilVM.Profil.UeberMich, Mode=TwoWay}" Header="Über mich (freiwillige Angabe)" BorderThickness="2" AcceptsReturn="True"/>
             <StackPanel Grid.Row="4" Orientation="Vertical">
                 <TextBlock Text="Besonderheiten" FontWeight="Bold" Foreground="Black"/>
-                <CheckBox Content="Nichtraucher" IsChecked="{x:Bind _profilVM.Profil.Nichtraucher,Mode=TwoWay}" Margin="10,0"/>
-                <CheckBox Content="Tierfreier Haushalt" IsChecked="{x:Bind _profilVM.Profil.TierfreierHaushalt,Mode=TwoWay}" Margin="10,0"/>
+                <CheckBox Content="Nichtraucher" IsChecked="{x:Bind _profilVM.Profil.Nichtraucher,Mode=TwoWay}" Margin="10,0" Foreground="{StaticResource NutzmichGruen}"/>
+                <CheckBox Content="Tierfreier Haushalt" IsChecked="{x:Bind _profilVM.Profil.TierfreierHaushalt,Mode=TwoWay}" Margin="10,0" Foreground="{StaticResource NutzmichGruen}"/>
             </StackPanel>
         </Grid>
     </ScrollViewer>

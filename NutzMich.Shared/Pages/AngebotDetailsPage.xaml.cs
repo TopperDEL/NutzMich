@@ -85,7 +85,7 @@ namespace NutzMich.Shared.Pages
 
         private void ProfilDetails(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(ProfilDetailsPage), _angebotVM.AnbieterProfilViewmodel);
+            Messenger.Default.Send(new NavigateMessage(typeof(ProfilDetailsPage), _angebotVM.AnbieterProfilViewmodel));
         }
     }
 }

@@ -6,9 +6,9 @@ using Windows.UI.Xaml.Controls;
 
 namespace NutzMich.Shared.Messages
 {
-    public class ChangePageMessage : ValueChangedMessage<Tuple<Page, string>>
+    public class ChangePageMessage : ValueChangedMessage<Tuple<Page, string, bool>>
     {
-        public ChangePageMessage(Page newPage, string newTitle) : base(new Tuple<Page, string>(newPage, newTitle))
+        public ChangePageMessage(Page newPage, string newTitle, bool setTitleOnly = false) : base(new Tuple<Page, string, bool>(newPage, newTitle, setTitleOnly))
         {
         }
     }

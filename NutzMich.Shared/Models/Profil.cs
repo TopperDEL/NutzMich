@@ -13,6 +13,7 @@ namespace NutzMich.Shared.Models
         public bool TierfreierHaushalt { get; set; }
         public string UeberMich { get; set; }
         public string ProfilbildBase64 { get; set; }
+        public DateTime AktualisiertAm { get; set; } = DateTime.MinValue;
 
         public static Profil GetFallback(string anbieterID)
         {

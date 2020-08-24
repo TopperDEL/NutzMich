@@ -5,6 +5,7 @@ using NutzMich.Shared.Models;
 using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,8 @@ namespace NutzMich.Shared.Services
 {
     public class ProfilService : ConnectionUsingServiceBase, IProfilService
     {
+        internal const string PROFIL_VERSION_VOM = "NUTZMICH:PROFIL_VERSION_VOM";
+
         ILoginService _loginService;
         IThumbnailHelper _thumbnailHelper;
 
@@ -28,7 +31,27 @@ namespace NutzMich.Shared.Services
         public async Task<Profil> GetProfilAsync(string anbieterID)
         {
             if (!Barrel.Current.IsExpired("profil_" + anbieterID) || !CrossConnectivity.Current.IsConnected)
-                return Barrel.Current.Get<Profil>("profil_" + anbieterID);
+            {
+                var profil = Barrel.Current.Get<Profil>("profil_" + anbieterID);
+                if (CrossConnectivity.Current.IsConnected)
+                {
+                    //Prüfen, ob das Profil noch aktuell ist
+                    var profilInfo = await _readConnection.ObjectService.GetObjectAsync(_readConnection.Bucket, "Profile/" + anbieterID + "/Profil.json");
+                    if (profilInfo.CustomMetaData.Entries.Where(c => c.Key == PROFIL_VERSION_VOM).Count() == 1)
+                    {
+                        DateTime profilVom = DateTime.MinValue;
+                        var profilVomMeta = profilInfo.CustomMetaData.Entries.Where(c => c.Key == PROFIL_VERSION_VOM).FirstOrDefault();
+                        if (profilVomMeta != null)
+                            profilVom = DateTime.Parse(profilVomMeta.Value);
+                        if (profilVom <= profil.AktualisiertAm)
+                            return profil;
+                    }
+                }
+                else
+                {
+                    return profil;
+                }
+            }
             await InitReadConnectionAsync();
 
             try
@@ -39,7 +62,7 @@ namespace NutzMich.Shared.Services
                 if (profilDownload.Completed)
                 {
                     var angebot = Newtonsoft.Json.JsonConvert.DeserializeObject<Profil>(Encoding.UTF8.GetString(profilDownload.DownloadedBytes));
-                    Barrel.Current.Add<Profil>("profil_" + anbieterID, angebot, TimeSpan.FromDays(180));
+                    Barrel.Current.Add<Profil>("profil_" + anbieterID, angebot, TimeSpan.FromDays(7));
                     return angebot;
                 }
             }
@@ -56,12 +79,17 @@ namespace NutzMich.Shared.Services
             if (image != null)
                 profil.ProfilbildBase64 = await _thumbnailHelper.ThumbnailToBase64Async(image);
 
+            profil.AktualisiertAm = DateTime.Now;
+
             var profilJSON = Newtonsoft.Json.JsonConvert.SerializeObject(profil);
             var profilJSONbytes = Encoding.UTF8.GetBytes(profilJSON);
 
             string key = "Profile/" + profil.AnbieterID + "/Profil.json";
 
-            var profilUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, key, new UploadOptions(), profilJSONbytes, false);
+            var customMeta = new CustomMetadata();
+            customMeta.Entries.Add(new CustomMetadataEntry() { Key = PROFIL_VERSION_VOM, Value = DateTime.Now.ToString() });
+
+            var profilUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, key, new UploadOptions(), profilJSONbytes, customMeta, false);
             await profilUpload.StartUploadAsync();
 
             Barrel.Current.Empty("profil_" + profil.AnbieterID);

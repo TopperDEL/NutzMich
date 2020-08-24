@@ -167,5 +167,10 @@ namespace NutzMich.Pages
                 _doNoNavigation = false;
             }
         }
+
+        private void ViewModel_NavigateToPage(Type pageToNavigateTo, object parameters)
+        {
+            contentFrame.Navigate(pageToNavigateTo, parameters);
+        }
     }
 }

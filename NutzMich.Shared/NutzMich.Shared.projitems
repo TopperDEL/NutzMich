@@ -34,6 +34,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IThumbnailHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ITokenService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Jobs\BackgroundChatPollJob.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Messages\NavigateMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\SetCommandsMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messages\ChangePageMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Angebot.cs" />

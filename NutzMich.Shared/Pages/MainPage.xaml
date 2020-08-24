@@ -9,7 +9,7 @@
     xmlns:toolkit="using:Uno.UI.Toolkit" xmlns:models="using:NutzMich.Shared.Models"
     mc:Ignorable="d" x:Name="NutzMichMainPage">
     <Page.DataContext>
-        <viewmodels:MainPageViewModel x:Name="ViewModel" CurrentPageChanged="ViewModel_CurrentPageChanged"/>
+        <viewmodels:MainPageViewModel x:Name="ViewModel" CurrentPageChanged="ViewModel_CurrentPageChanged" NavigateToPage="ViewModel_NavigateToPage"/>
     </Page.DataContext>
 
     <NavigationView x:Name="navView"

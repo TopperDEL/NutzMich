@@ -1,5 +1,6 @@
 ﻿using Microsoft.Toolkit.Mvvm.Messaging;
 using NutzMich.Shared.Messages;
+using NutzMich.Shared.Services;
 using NutzMich.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -36,9 +37,9 @@ namespace NutzMich.Shared.Pages
             this.InitializeComponent();
         }
 
-        private void SetzeCommands()
+        private void SetzeCommands(bool setTitleOnly)
         {
-            Messenger.Default.Send(new ChangePageMessage(this, _profilVM.Profil.Nickname));
+            Messenger.Default.Send(new ChangePageMessage(this, _profilVM.Profil.Nickname, setTitleOnly));
             Messenger.Default.Send(new SetCommandsMessage(new List<Models.NutzMichCommand>()
                 {
                     new Models.NutzMichCommand()
@@ -52,11 +53,12 @@ namespace NutzMich.Shared.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
-            SetzeCommands();
-
+            
             _profilVM = e.Parameter as ProfilViewModel;
-           
+
+            var istMeinProfil = _profilVM.Profil.AnbieterID == Factory.GetLoginService().AnbieterId ? true : false;
+            SetzeCommands(!istMeinProfil);
+
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(_profilVM)));
         }
     }
