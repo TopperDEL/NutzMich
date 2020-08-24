@@ -61,9 +61,9 @@ namespace NutzMich.Shared.Services
 
                 if (profilDownload.Completed)
                 {
-                    var angebot = Newtonsoft.Json.JsonConvert.DeserializeObject<Profil>(Encoding.UTF8.GetString(profilDownload.DownloadedBytes));
-                    Barrel.Current.Add<Profil>("profil_" + anbieterID, angebot, TimeSpan.FromDays(7));
-                    return angebot;
+                    var profil = Newtonsoft.Json.JsonConvert.DeserializeObject<Profil>(Encoding.UTF8.GetString(profilDownload.DownloadedBytes));
+                    Barrel.Current.Add<Profil>("profil_" + anbieterID, profil, TimeSpan.FromDays(7));
+                    return profil;
                 }
             }
             catch { }
