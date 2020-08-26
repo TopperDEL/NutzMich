@@ -58,9 +58,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox Text="{x:Bind NachrichtComposer, Mode=TwoWay}" Grid.Column="0" PlaceholderText="Leg los..." CornerRadius="12" Margin="5">
-                            <TextBox.HeaderTemplate>
-                                <DataTemplate></DataTemplate>
-                            </TextBox.HeaderTemplate>
+                            
                         </TextBox>
                         <Button Grid.Column="1" VerticalAlignment="Center" Background="{StaticResource NutzmichGruen}" Foreground="White" Click="SendeNachricht" CornerRadius="12" BorderThickness="0">
                             <SymbolIcon Symbol="Send"/>

@@ -189,8 +189,13 @@ namespace NutzMich.Shared.Services
                 }
                 catch { } //Dann existiert es noch nicht
                 image.Stream.Position = 0;
-                var imageUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, fotoKey, new UploadOptions(), image.Stream, false);
-                await imageUpload.StartUploadAsync();
+
+                var queue = new uplink.NET.Services.UploadQueueService();
+                await queue.AddObjectToUploadQueue(_writeConnection.Bucket.Name, fotoKey, _identityService.GetIdentityWriteAccess().Serialize(), image.Stream.ToMemoryStream().ToArray(), angebot.Ueberschrift + " - Bild " + count.ToString());
+                queue.ProcessQueueInBackground();
+
+                //var imageUpload = await _writeConnection.ObjectService.UploadObjectAsync(_writeConnection.Bucket, fotoKey, new UploadOptions(), image.Stream, false);
+                //await imageUpload.StartUploadAsync();
                 count++;
 
                 image.Stream.Position = 0;

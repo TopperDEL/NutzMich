@@ -239,12 +239,19 @@ namespace NutzMich.Shared.Pages
             }
         }
 
+        private bool _addingFoto = false;
         private async void AddPhoto(object sender, RoutedEventArgs e)
         {
+            if (_addingFoto) //Temp
+                return;
+
+            _addingFoto = true;
+
             await CrossMedia.Current.Initialize();
 
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
+                _addingFoto = false;
                 return;
             }
 
@@ -254,6 +261,8 @@ namespace NutzMich.Shared.Pages
                 Name = "AngebotsFoto.jpg",
                 PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium
             });
+
+            _addingFoto = false;
 
             if (file == null)
                 return;
