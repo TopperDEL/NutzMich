@@ -54,7 +54,7 @@ namespace NutzMich.Shared.Services
                         DateTime angebotVom = DateTime.MinValue;
                         var angebotVomMeta = angebot.CustomMetaData.Entries.Where(c => c.Key == ANGEBOT_VERSION_VOM).FirstOrDefault();
                         if (angebotVomMeta != null)
-                            angebotVom = DateTime.Parse(angebotVomMeta.Value);
+                            angebotVom = DateTime.Parse(angebotVomMeta.Value, new System.Globalization.CultureInfo("de-DE"));
                         if (!angebot.Key.Contains("Reservierung"))
                             yield return await LoadAngebotAsync(angebot.Key.Replace("Angebote/", ""), angebotVom);
                     }

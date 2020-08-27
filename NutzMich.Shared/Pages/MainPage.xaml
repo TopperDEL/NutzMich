@@ -12,59 +12,61 @@
         <viewmodels:MainPageViewModel x:Name="ViewModel" CurrentPageChanged="ViewModel_CurrentPageChanged" NavigateToPage="ViewModel_NavigateToPage"/>
     </Page.DataContext>
 
-    <NavigationView x:Name="navView"
+    <Grid toolkit:VisibleBoundsPadding.PaddingMask="All">
+        <NavigationView x:Name="navView"
                     PaneDisplayMode="LeftCompact" IsPaneOpen="False" IsBackButtonVisible="Collapsed" Foreground="{StaticResource NutzmichBlau}"
                     IsSettingsVisible="False" SelectionChanged="NavigationView_SelectionChanged" IsBackEnabled="{x:Bind Path=contentFrame.CanGoBack, Mode=OneWay}" BackRequested="navView_BackRequested"
                     Style="{StaticResource MaterialNoCompactMenuNavigationViewStyle}" OpenPaneLength="220" ExpandedModeThresholdWidth="800"
                     Background="White">
-        <NavigationView.PaneHeader>
-            <StackPanel Orientation="Horizontal"
+            <NavigationView.PaneHeader>
+                <StackPanel Orientation="Horizontal"
 							Padding="16">
-                <Image Source="/Assets/nutzMichLogo.png"
+                    <Image Source="/Assets/nutzMichLogo.png"
 						   Width="180"
 						   Height="93"
 						   HorizontalAlignment="Center"
 						   Stretch="Uniform" />
-            </StackPanel>
-        </NavigationView.PaneHeader>
-        <NavigationView.HeaderTemplate>
-            <DataTemplate>
-                <Grid Background="White" Padding="5" Margin="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="32"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="{Binding DataContext.Title, ElementName=NutzMichMainPage, Mode=OneWay}" FontSize="18" Foreground="Black"/>
-                    <ItemsControl Grid.Row="1" ItemsSource="{Binding DataContext.Commands, ElementName=NutzMichMainPage, Mode=OneWay}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate x:DataType="models:NutzMichCommand">
-                                <Button Foreground="Black" BorderThickness="0" Background="White" Command="{x:Bind Command}" Visibility="{x:Bind CommandAusfuehrbar, Converter={StaticResource TrueIsVisibleConverter}}">
-                                    <SymbolIcon Symbol="{x:Bind Symbol}"/>
-                                </Button>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <Border Grid.RowSpan="2" BorderThickness="0,0,0,2" BorderBrush="{StaticResource NutzmichBlau}"></Border>
-                </Grid>
-            </DataTemplate>
-        </NavigationView.HeaderTemplate>
+                </StackPanel>
+            </NavigationView.PaneHeader>
+            <NavigationView.HeaderTemplate>
+                <DataTemplate>
+                    <Grid Background="White" Padding="5" Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="32"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="{Binding DataContext.Title, ElementName=NutzMichMainPage, Mode=OneWay}" FontSize="18" Foreground="Black"/>
+                        <ItemsControl Grid.Row="1" ItemsSource="{Binding DataContext.Commands, ElementName=NutzMichMainPage, Mode=OneWay}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="models:NutzMichCommand">
+                                    <Button Foreground="Black" BorderThickness="0" Background="White" Command="{x:Bind Command}" Visibility="{x:Bind CommandAusfuehrbar, Converter={StaticResource TrueIsVisibleConverter}}">
+                                        <SymbolIcon Symbol="{x:Bind Symbol}"/>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Border Grid.RowSpan="2" BorderThickness="0,0,0,2" BorderBrush="{StaticResource NutzmichBlau}"></Border>
+                    </Grid>
+                </DataTemplate>
+            </NavigationView.HeaderTemplate>
 
-        <NavigationView.MenuItems>
-            <NavigationViewItem Content="Start" Icon="Home" Tag="AlleAngebotePage"/>
-            <NavigationViewItem Content="Angebot einstellen" Icon="Add" Tag="AngebotEditPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
-            <NavigationViewItem Content="Meine Angebote" Icon="ContactInfo" Tag="MeineAngebotePage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
-            <NavigationViewItem Content="Reservierungen" Icon="Bookmarks" Tag="ReservierungenPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
-            <NavigationViewItem Content="Nachrichten" Icon="Mail" Tag="NachrichtenPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
-            <NavigationViewItem Content="Profil" Icon="Contact" Tag="ProfilEditPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
-            <NavigationViewItem Content="Benutzer einladen" Icon="AddFriend" Tag="EinladungPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
-            <NavigationViewItem Content="Abmelden" Icon="LeaveChat" Tag="LogoutPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
-            <NavigationViewItem Content="Anmelden" Icon="Contact" Tag="LoginPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsCollapsedConverter}}"/>
-        </NavigationView.MenuItems>
-        <Frame x:Name="contentFrame" Background="White"/>
-    </NavigationView>
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="Start" Icon="Home" Tag="AlleAngebotePage"/>
+                <NavigationViewItem Content="Angebot einstellen" Icon="Add" Tag="AngebotEditPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
+                <NavigationViewItem Content="Meine Angebote" Icon="ContactInfo" Tag="MeineAngebotePage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
+                <NavigationViewItem Content="Reservierungen" Icon="Bookmarks" Tag="ReservierungenPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
+                <NavigationViewItem Content="Nachrichten" Icon="Mail" Tag="NachrichtenPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
+                <NavigationViewItem Content="Profil" Icon="Contact" Tag="ProfilEditPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
+                <NavigationViewItem Content="Benutzer einladen" Icon="AddFriend" Tag="EinladungPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
+                <NavigationViewItem Content="Abmelden" Icon="LeaveChat" Tag="LogoutPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsVisibleConverter}}"/>
+                <NavigationViewItem Content="Anmelden" Icon="Contact" Tag="LoginPage" Visibility="{x:Bind ViewModel.IstEingeloggt, Converter={StaticResource TrueIsCollapsedConverter}}"/>
+            </NavigationView.MenuItems>
+            <Frame x:Name="contentFrame" Background="White"/>
+        </NavigationView>
+    </Grid>
 </Page>
