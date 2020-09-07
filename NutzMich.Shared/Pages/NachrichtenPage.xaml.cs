@@ -100,10 +100,9 @@ namespace NutzMich.Shared.Pages
             }
         }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void MasterDetailsView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //_vm.SelectedChatChanged(ChatList.SelectedItem as ChatViewModel);
-            //Split.IsPaneOpen = false;
+            _vm.SelectedChatChanged(e.AddedItems[0] as ChatViewModel);
         }
     }
 }
