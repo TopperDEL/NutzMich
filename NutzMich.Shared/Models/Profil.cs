@@ -17,7 +17,7 @@ namespace NutzMich.Shared.Models
 
         public static Profil GetFallback(string anbieterID)
         {
-            return new Profil() { AnbieterID = anbieterID, Nickname = anbieterID };
+            return new Profil() { AnbieterID = anbieterID };
         }
     }
 }
