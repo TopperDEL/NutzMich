@@ -12,7 +12,7 @@
     xmlns:not_win="http:/uno.ui/not_win"
     mc:Ignorable="d not_win">
 
-    <controls:MasterDetailsView ItemsSource="{x:Bind _vm.Chats, Mode=OneWay}" CompactModeThresholdWidth="720" SelectionChanged="MasterDetailsView_SelectionChanged">
+    <controls:MasterDetailsView ItemsSource="{x:Bind _vm.Chats, Mode=OneWay}" CompactModeThresholdWidth="720" SelectionChanged="MasterDetailsView_SelectionChanged" SelectedItem="{x:Bind _vm.SelectedChat, Mode=TwoWay}">
         <controls:MasterDetailsView.ItemTemplate>
             <DataTemplate x:DataType="viewmodels:ChatViewModel">
                 <Grid Padding="8" RowSpacing="8" ColumnSpacing="8">
