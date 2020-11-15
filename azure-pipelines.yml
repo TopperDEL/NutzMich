@@ -9,3 +9,19 @@ resources:
   
 variables:
   - group: 'NutzMich Build Variables'
+
+stages:
+- template:  azure/mobile/build-xamarin-android.yml@builttoroam_templates
+  parameters:
+    stage_name: 'Build_Android'
+    build_android: $(android_enabled)
+    solution_filename: 'NutzMich_Droid.sln'
+    solution_build_configuration: 'Release'
+    build_number: '$(Build.BuildId)'
+    full_version_number: '$(version_prefix).$(Build.BuildId)'
+    artifact_name: 'inspector-build'
+    artifact_folder: 'Android_output'
+    application_package: 'Inspector-Uno-Android.aab'
+    secure_file_keystore_filename: '$(android_keystore_filename)'
+    keystore_alias: '$(android_keystore_alias)'
+    keystore_password: '$(android_keystore_password)'
