@@ -8,4 +8,4 @@ resources:
       endpoint: github_connection
   
 variables:
-  - group: 'Uno Build Variables'
+  - group: 'NutzMich Build Variables'
