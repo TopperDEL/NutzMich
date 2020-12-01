@@ -26,7 +26,7 @@ steps:
 
 - task: ios-bundle-version@1
   inputs:
-    sourcePath: 'NutzMich/NutzMich.iOS/Info.plist'
+    sourcePath: 'NutzMich.iOS/Info.plist'
     versionCodeOption: 'buildid'
     versionCode: '$(Build.BuildId)'
     printFile: true
