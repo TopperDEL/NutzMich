@@ -353,3 +353,4 @@ MigrationBackup/
 .ionide/
 
 NutzMich.Shared/Services/IdentityServiceSecret.cs
+.DS_Store
