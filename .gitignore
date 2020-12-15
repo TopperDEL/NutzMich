@@ -354,3 +354,4 @@ MigrationBackup/
 NutzMich.Shared/Services/IdentityServiceSecret.cs
 NutzMich.Droid/secrets.json
 NutzMich.iOS/secrets.json
+NutzMich.Shared/Services/IdentityServiceSecret.cs
