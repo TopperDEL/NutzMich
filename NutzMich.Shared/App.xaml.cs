@@ -47,6 +47,9 @@ namespace NutzMich
 #endif
 #if __IOS__
             Shiny.iOSShinyHost.Init(new NutzMich.Shared.ShinyInit.NutzMichStartup());
+
+            //Initialize the uplink.NET-library
+            uplink.NET.Models.Access.Init_iOs(Foundation.NSBundle.MainBundle.BundlePath);
 #endif
         }
 
