@@ -51,6 +51,10 @@
 	<string>Portrait</string>
 	<key>UILaunchImageSize</key>
 	<string>{320, 568}</string>
+	<key>XSAppIconAssets</key>
+	<string>Media.xcassets/AppIcons.appiconset</string>
+	<key>UIRequiresFullScreen</key>
+	<true/>
     <key>NSCameraUsageDescription</key>
     <string>This app needs access to the camera to take photos.</string>
     <key>NSPhotoLibraryUsageDescription</key>
