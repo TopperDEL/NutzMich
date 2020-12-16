@@ -168,32 +168,110 @@
       <Version>1.0.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
+ <ItemGroup>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Nutzmich1024x1024.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Nutzmich120x120.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Nutzmich120x1201.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Nutzmich152x152.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Nutzmich167x167.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Nutzmich180x180.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Nutzmich20x20.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Nutzmich29x29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Nutzmich40x40.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Nutzmich40x401.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Nutzmich40x402.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Nutzmich58x58.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Nutzmich58x581.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Nutzmich60x60.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Nutzmich76x76.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Nutzmich80x80.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Nutzmich80x801.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Nutzmich87x87.png">
+      <Visible>false</Visible>
+    </ImageAsset>
     <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\ios-marketing-1024x1024%401x.png">
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-83.5%402x.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\iPad-76x76%402x.png">
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-76%402x.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\iPad-84x84%402x.png">
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-76.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\iPhone-20x20%402x.png">
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-60%403x.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\iPhone-20x20%403x.png">
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-60%402x.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\iPhone-40x40%403x.png">
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-40%403x.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\iPhone-60x60%402x.png">
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-40%402x.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Media.xcassets\LaunchImages.launchimage\Contents.json">
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-40.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-29%403x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-29%402x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-20%403x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-20%402x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-20.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-120.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Media.xcassets\AppIcons.appiconset\Icon-1024.png">
       <Visible>false</Visible>
     </ImageAsset>
   </ItemGroup>
