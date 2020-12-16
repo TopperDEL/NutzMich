@@ -19,14 +19,9 @@ steps:
   enabled: false
 
 - task: DownloadSecureFile@1
+  name: IdentityServiceSecret
   inputs:
     secureFile: 'IdentityServiceSecret'
-
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(IdentityServiceSecret.secureFilePath)'
-    Contents: '**'
-    TargetFolder: 'NutzMich.Shared/Services/'
 
 - task: Bash@3
   inputs:
@@ -34,7 +29,7 @@ steps:
     script: |
       # Write your commands here
       echo 'Renaming secret'
-      mv NutzMich.Shared/Services/IdentityServiceSecret NutzMich.Shared/Services/IdentityServiceSecret.cs
+      mv $(IdentityServiceSecret.secureFilePath) NutzMich.Shared/Services/IdentityServiceSecret.cs
 
 - task: NuGetToolInstaller@1
 
