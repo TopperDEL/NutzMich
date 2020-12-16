@@ -351,6 +351,6 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
 NutzMich.Shared/Services/IdentityServiceSecret.cs
-NutzMich.Droid/secrets.json
-NutzMich.iOS/secrets.json
+.DS_Store
