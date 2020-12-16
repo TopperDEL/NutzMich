@@ -47,7 +47,7 @@ steps:
 - task: InstallAppleProvisioningProfile@1
   inputs:
     provisioningProfileLocation: 'secureFiles'
-    provProfileSecureFile: 'NutzMichStore.mobileprovision'
+    provProfileSecureFile: 'NutzMich.mobileprovision'
 
 - task: ios-bundle-version@1
   inputs:
