@@ -5,7 +5,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>NutzMich</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.companyname.NutzMich</string>
+	<string>de.nutzmich.nutzmich</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
