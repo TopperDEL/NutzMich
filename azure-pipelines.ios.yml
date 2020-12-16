@@ -35,7 +35,7 @@ steps:
 
 - task: NuGetCommand@2
   inputs:
-    restoreSolution: '**/NutzMich.sln'
+    restoreSolution: '**/*iOs.sln'
 
 - task: ios-bundle-version@1
   inputs:
@@ -46,7 +46,7 @@ steps:
 
 - task: XamariniOS@2
   inputs:
-    solutionFile: '**/NutzMich.sln'
+    solutionFile: '**/*iOs.sln'
     configuration: 'Release'
     buildForSimulator: true
     packageApp: false
