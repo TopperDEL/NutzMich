@@ -18,6 +18,24 @@ steps:
   displayName: 'Select the Xamarin SDK version'
   enabled: false
 
+- task: DownloadSecureFile@1
+  inputs:
+    secureFile: 'IdentityServiceSecret'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(IdentityServiceSecret.secureFilePath)'
+    Contents: '**'
+    TargetFolder: 'NutzMich.Shared/Services/'
+
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Write your commands here
+      echo 'Renaming secret'
+      mv NutzMich.Shared/Services/IdentityServiceSecret NutzMich.Shared/Services/IdentityServiceSecret.cs
+
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
