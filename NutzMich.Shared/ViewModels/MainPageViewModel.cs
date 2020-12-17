@@ -8,11 +8,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 
 namespace NutzMich.Shared.ViewModels
 {
     public delegate void CurrentPageChangedEventHandler(Page newPage);
     public delegate void NavigateToPageEventHandler(Type pageToNavigateTo, object parameters);
+
+    [Bindable()]
     public class MainPageViewModel : ObservableRecipient, IRecipient<ChangePageMessage>, IRecipient<SetCommandsMessage>, IRecipient<NavigateMessage>
     {
         private string title;
