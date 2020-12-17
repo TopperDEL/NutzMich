@@ -1,0 +1,12 @@
+Es werden von der App NutzMich keine privaten Daten erfasst außer den Daten, die du als Nutzer selbst dort einträgst.
+Diese Daten umfassen in erster Linie:
+- deinen Benutzernamen
+- ggfs deine weiteren Profilinformationen
+- dein eingestelltes Spielzeug inkl Beschreibung, Kategorien und Fotos
+- ggfs. die Chatnachrichten mit anderen Nutzern (diese sind auch nur für den jeweiligen Chatpartner einsehbar)
+
+NutzMich ist dezentral aufgebaut - als Datenspeicher dient das dezentrale und hochsichere Storj-Netzwerk, welches die Daten direkt auf deinem Gerät verschlüsselt und weltweit verteilt ablegt. Die Daten sind nur für NutzMich-Nutzer abrufbar.
+
+Weitere Daten werden von der App nicht erfasst. Insbesondere keinerlei Daten von und zu deinem Gerät oder deiner Person.
+
+Kurz gefasst: nur die von dir explizit in der App eingetragenen Daten werden von der App gespeichert.
