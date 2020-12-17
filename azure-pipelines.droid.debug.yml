@@ -1,0 +1,56 @@
+# Xamarin.Android
+# Build a Xamarin.Android project.
+# Add steps that test, sign, and distribute an app, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/xamarin
+
+trigger:
+- release
+
+pool:
+  vmImage: 'macos-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  outputDirectory: '$(build.binariesDirectory)/$(buildConfiguration)'
+
+steps:
+- task: DownloadSecureFile@1
+  name: IdentityServiceSecret
+  inputs:
+    secureFile: 'IdentityServiceSecret'
+
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Write your commands here
+      echo 'Renaming secret'
+      mv $(IdentityServiceSecret.secureFilePath) NutzMich.Shared/Services/IdentityServiceSecret.cs
+
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*Droid.csproj'
+    feedsToUse: 'select'
+
+- task: android-manifest-package-name@1
+  inputs:
+    sourcePath: 'NutzMich.Droid/Properties/AndroidManifest.xml'
+    packageName: 'de.nutzmich.app'
+    appLabel: 'NutzMich'
+    printFile: true
+
+- task: android-manifest-version@1
+  inputs:
+    sourcePath: 'NutzMich.Droid/Properties/AndroidManifest.xml'
+    versionCodeOption: 'buildid'
+    versionCode: '$(Build.BuildId)'
+    printFile: true
+
+- task: XamarinAndroid@1
+  inputs:
+    projectFile: '**/*Droid.csproj'
+    outputDirectory: '$(outputDirectory)'
+    configuration: '$(buildConfiguration)'
