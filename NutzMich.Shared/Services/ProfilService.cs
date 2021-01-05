@@ -42,7 +42,7 @@ namespace NutzMich.Shared.Services
                         DateTime profilVom = DateTime.MinValue;
                         var profilVomMeta = profilInfo.CustomMetaData.Entries.Where(c => c.Key == PROFIL_VERSION_VOM).FirstOrDefault();
                         if (profilVomMeta != null)
-                            profilVom = DateTime.Parse(profilVomMeta.Value);
+                            profilVom = DateTime.Parse(profilVomMeta.Value, new System.Globalization.CultureInfo("de-DE"));
                         if (profilVom <= profil.AktualisiertAm)
                             return profil;
                     }
