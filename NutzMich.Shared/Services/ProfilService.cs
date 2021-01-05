@@ -30,6 +30,7 @@ namespace NutzMich.Shared.Services
 
         public async Task<Profil> GetProfilAsync(string anbieterID)
         {
+            await InitReadConnectionAsync();
             if (!Barrel.Current.IsExpired("profil_" + anbieterID) || !CrossConnectivity.Current.IsConnected)
             {
                 var profil = Barrel.Current.Get<Profil>("profil_" + anbieterID);
@@ -42,7 +43,7 @@ namespace NutzMich.Shared.Services
                         DateTime profilVom = DateTime.MinValue;
                         var profilVomMeta = profilInfo.CustomMetaData.Entries.Where(c => c.Key == PROFIL_VERSION_VOM).FirstOrDefault();
                         if (profilVomMeta != null)
-                            profilVom = DateTime.Parse(profilVomMeta.Value);
+                            profilVom = DateTime.Parse(profilVomMeta.Value, new System.Globalization.CultureInfo("de-DE"));
                         if (profilVom <= profil.AktualisiertAm)
                             return profil;
                     }
@@ -52,7 +53,6 @@ namespace NutzMich.Shared.Services
                     return profil;
                 }
             }
-            await InitReadConnectionAsync();
 
             try
             {
