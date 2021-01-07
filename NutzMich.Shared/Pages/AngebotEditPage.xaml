@@ -34,16 +34,8 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </StackPanel>
+
                 <GridView ItemsSource="{Binding Fotos, Mode=OneWay}" MinHeight="400" Header="Fotos" SelectionChanged="Fotos_SelectionChanged" Foreground="Black">
-                    <GridView.FooterTemplate>
-                        <DataTemplate>
-                            <Button Width="100" Height="50" Padding="15" Click="AddPhoto" >
-                                <Viewbox>
-                                    <SymbolIcon Symbol="Add" Foreground="{StaticResource NutzmichBlau}"/>
-                                </Viewbox>
-                            </Button>
-                        </DataTemplate>
-                    </GridView.FooterTemplate>
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="viewmodels:AttachmentImageViewModel">
                             <Border BorderBrush="{Binding RahmenBrush, Mode=OneWay}" BorderThickness="2" CornerRadius="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -87,6 +79,11 @@
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>
+                <Button Width="100" Height="50" Padding="15" Click="AddPhoto" >
+                    <Viewbox>
+                        <SymbolIcon Symbol="Add" Foreground="{StaticResource NutzmichBlau}"/>
+                    </Viewbox>
+                </Button>
             </StackPanel>
             <Grid Grid.RowSpan="2" Visibility="{Binding Loading,Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}">
                 <controls:Loading IsLoading="{Binding Loading, Mode=OneWay}" Grid.RowSpan="2" Visibility="{Binding Loading, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}">
