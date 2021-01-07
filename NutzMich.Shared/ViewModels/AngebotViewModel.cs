@@ -35,7 +35,17 @@ namespace NutzMich.Shared.ViewModels
             get
             {
                 if (!string.IsNullOrEmpty(Angebot.ThumbnailBase64))
-                    return _thumbnailHelper.ThumbnailFromBase64(Angebot.ThumbnailBase64).Image;
+                {
+                    //Warum auch immer, aber das mag nicht mit Uno
+                    //if (IstInaktiv)
+                    //{
+                    //    var bytes = Convert.FromBase64String(Angebot.ThumbnailBase64);
+                    //    var monochrome = Plugin.ImageEdit.CrossImageEdit.Current.CreateImage(bytes).ToMonochrome().ToJpeg();
+                    //    return _thumbnailHelper.ThumbnailFromBase64(Convert.ToBase64String(monochrome)).Image;
+                    //}
+                    //else
+                        return _thumbnailHelper.ThumbnailFromBase64(Angebot.ThumbnailBase64).Image;
+                }
                 else
                     return new BitmapImage(new Uri(@"ms-appx:///Assets/ProductPlaceholder.jpg"));
             }
@@ -172,6 +182,8 @@ namespace NutzMich.Shared.ViewModels
         public async Task LoadAngebotsStatus()
         {
             IstInaktiv = !await Factory.GetAngebotService().IstAngebotAktivAsync(Angebot);
+            if(IstInaktiv)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Thumbnail)));
         }
 
         private void RefreshVerfügbarkeit()
