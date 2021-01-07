@@ -42,7 +42,7 @@
                             <SymbolIcon Symbol="Add" Foreground="{StaticResource NutzmichBlau}"/>
                         </Viewbox>
                     </Button>
-                    <GridView ItemsSource="{Binding Fotos, Mode=OneWay}" MinHeight="400" SelectionChanged="Fotos_SelectionChanged" Foreground="Black">
+                    <GridView ItemsSource="{Binding Fotos, Mode=OneWay}" Header="" MinHeight="400" SelectionChanged="Fotos_SelectionChanged" Foreground="Black">
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="viewmodels:AttachmentImageViewModel">
                                 <Border BorderBrush="{Binding RahmenBrush, Mode=OneWay}" BorderThickness="2" CornerRadius="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
