@@ -20,7 +20,7 @@
                     <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                         <Border CornerRadius="10" Width="80" Height="80" Margin="0,0,10,0">
                             <Grid>
-                                <Image Source="{x:Bind Thumbnail}" Stretch="UniformToFill"/>
+                                <Image Source="{x:Bind Thumbnail, Mode=OneWay}" Stretch="UniformToFill"/>
                                 <Canvas Background="Black" Opacity="0.5" Visibility="{x:Bind IstInaktiv, Converter={StaticResource TrueIsVisibleConverter}}"/>
                             </Grid>
                         </Border>

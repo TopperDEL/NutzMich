@@ -84,7 +84,9 @@ namespace NutzMich.Shared.Pages
             _angeboteVM.MeineAngebote.Clear();
             await foreach (var angebot in _angebotService.GetMeineAsync())
             {
-                _angeboteVM.MeineAngebote.Add(new AngebotViewModel(angebot));
+                var vm = new AngebotViewModel(angebot);
+                //await vm.LoadAngebotsStatus(); Brauchen wir erst wieder, wenn ImageEdit.ToMonochrome funktionieren würde
+                _angeboteVM.MeineAngebote.Add(vm);
             }
 
             _angeboteVM.SetNotLoading();

@@ -242,35 +242,49 @@ namespace NutzMich.Shared.Pages
         private bool _addingFoto = false;
         private async void AddPhoto(object sender, RoutedEventArgs e)
         {
-            if (_addingFoto) //Temp
-                return;
-
-            _addingFoto = true;
-
-            await CrossMedia.Current.Initialize();
-
-            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+            try
             {
+                if (_addingFoto) //Temp
+                    return;
+
+                _addingFoto = true;
+
+                await CrossMedia.Current.Initialize();
+
+                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                {
+                    _addingFoto = false;
+                    return;
+                }
+
+                var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+                {
+                    Directory = "NutzMich",
+                    Name = "AngebotsFoto.jpg",
+                    PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium
+                });
+
                 _addingFoto = false;
-                return;
+
+                if (file == null)
+                    return;
+
+                var fileRead = File.OpenRead(file.Path);
+                _angebotVM.Fotos.Add(new AttachmentImageViewModel(new Models.AttachmentImage(fileRead)));
+
+                MarkiereErstesFotoAlsGalleriebild();
             }
-
-            var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+            catch(Exception ex)
             {
-                Directory = "NutzMich",
-                Name = "AngebotsFoto.jpg",
-                PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium
-            });
+                ContentDialog errorDlg = new ContentDialog()
+                {
+                    Title = "Fehler",
+                    Content = "Es gab einen Fehler: " + ex.Message,
+                    CloseButtonText = "Ok"
+                };
 
-            _addingFoto = false;
-
-            if (file == null)
-                return;
-
-            var fileRead = File.OpenRead(file.Path);
-            _angebotVM.Fotos.Add(new AttachmentImageViewModel(new Models.AttachmentImage(fileRead)));
-
-            MarkiereErstesFotoAlsGalleriebild();
+                await errorDlg.ShowAsync();
+            }
         }
 
         private async void DeletePhoto(object sender, RoutedEventArgs e)

@@ -10,6 +10,9 @@ namespace NutzMich.Shared.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
+            if (value == null)
+                return Visibility.Collapsed;
+
             if ((bool)value == true)
                 return Visibility.Visible;
             else

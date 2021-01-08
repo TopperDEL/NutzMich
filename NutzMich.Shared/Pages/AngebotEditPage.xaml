@@ -34,59 +34,60 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </StackPanel>
-                <GridView ItemsSource="{Binding Fotos, Mode=OneWay}" MinHeight="400" Header="Fotos" SelectionChanged="Fotos_SelectionChanged" Foreground="Black">
-                    <GridView.FooterTemplate>
-                        <DataTemplate>
-                            <Button Width="100" Height="50" Padding="15" Click="AddPhoto" >
-                                <Viewbox>
-                                    <SymbolIcon Symbol="Add" Foreground="{StaticResource NutzmichBlau}"/>
-                                </Viewbox>
-                            </Button>
-                        </DataTemplate>
-                    </GridView.FooterTemplate>
-                    <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="viewmodels:AttachmentImageViewModel">
-                            <Border BorderBrush="{Binding RahmenBrush, Mode=OneWay}" BorderThickness="2" CornerRadius="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <Grid>
-                                    <Image Source="{Binding AttachmentImage.Image}" Stretch="UniformToFill" Width="130" Height="100" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-                                    <Grid Visibility="{Binding IstSelektiert, Mode=OneWay}">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="20"/>
-                                            <RowDefinition Height="40"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="65"/>
-                                            <ColumnDefinition Width="65"/>
-                                        </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Fotos" Foreground="Black" FontWeight="Bold"/>
+                    <Button Width="100" Height="50" Padding="15" Click="AddPhoto" >
+                        <Viewbox>
+                            <SymbolIcon Symbol="Add" Foreground="Black"/>
+                        </Viewbox>
+                    </Button>
+                    <GridView ItemsSource="{Binding Fotos, Mode=OneWay}" Header="" MinHeight="400" SelectionChanged="Fotos_SelectionChanged" Foreground="Black">
+                        <GridView.ItemTemplate>
+                            <DataTemplate x:DataType="viewmodels:AttachmentImageViewModel">
+                                <Border BorderBrush="{Binding RahmenBrush, Mode=OneWay}" BorderThickness="2" CornerRadius="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <Grid>
+                                        <Image Source="{Binding AttachmentImage.Image}" Stretch="UniformToFill" Width="130" Height="100" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-                                        <Button Grid.Row="0" Grid.Column="0" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding KannNachVorne, Mode=OneWay}" Click="MovePhotoBack" Tag="{Binding}">
-                                            <Button.Content>
-                                                <SymbolIcon Symbol="Back"/>
-                                            </Button.Content>
-                                        </Button>
-                                        <Button Grid.Row="0" Grid.Column="1" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding KannNachHinten, Mode=OneWay}" Click="MovePhotoForward" Tag="{Binding}">
-                                            <Button.Content>
-                                                <SymbolIcon Symbol="Forward"/>
-                                            </Button.Content>
-                                        </Button>
-                                        <Button Grid.Row="2" Grid.Column="0" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="RotatePhoto" Tag="{Binding}">
-                                            <Button.Content>
-                                                <SymbolIcon Symbol="Rotate"/>
-                                            </Button.Content>
-                                        </Button>
-                                        <Button Grid.Row="2" Grid.Column="1" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="DeletePhoto" Tag="{Binding}">
-                                            <Button.Content>
-                                                <SymbolIcon Symbol="Delete"/>
-                                            </Button.Content>
-                                        </Button>
+                                        <Grid Visibility="{Binding IstSelektiert, Mode=OneWay}">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="40"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="40"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="65"/>
+                                                <ColumnDefinition Width="65"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Button Grid.Row="0" Grid.Column="0" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding KannNachVorne, Mode=OneWay}" Click="MovePhotoBack" Tag="{Binding}">
+                                                <Button.Content>
+                                                    <SymbolIcon Symbol="Back"/>
+                                                </Button.Content>
+                                            </Button>
+                                            <Button Grid.Row="0" Grid.Column="1" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="{Binding KannNachHinten, Mode=OneWay}" Click="MovePhotoForward" Tag="{Binding}">
+                                                <Button.Content>
+                                                    <SymbolIcon Symbol="Forward"/>
+                                                </Button.Content>
+                                            </Button>
+                                            <Button Grid.Row="2" Grid.Column="0" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="RotatePhoto" Tag="{Binding}">
+                                                <Button.Content>
+                                                    <SymbolIcon Symbol="Rotate"/>
+                                                </Button.Content>
+                                            </Button>
+                                            <Button Grid.Row="2" Grid.Column="1" Foreground="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="DeletePhoto" Tag="{Binding}">
+                                                <Button.Content>
+                                                    <SymbolIcon Symbol="Delete"/>
+                                                </Button.Content>
+                                            </Button>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
+                                </Border>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </StackPanel>
+
             </StackPanel>
             <Grid Grid.RowSpan="2" Visibility="{Binding Loading,Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}">
                 <controls:Loading IsLoading="{Binding Loading, Mode=OneWay}" Grid.RowSpan="2" Visibility="{Binding Loading, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}">
