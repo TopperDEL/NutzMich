@@ -39,7 +39,7 @@
                     <TextBlock Text="Fotos" Foreground="Black" FontWeight="Bold"/>
                     <Button Width="100" Height="50" Padding="15" Click="AddPhoto" >
                         <Viewbox>
-                            <SymbolIcon Symbol="Add" Foreground="{StaticResource NutzmichBlau}"/>
+                            <SymbolIcon Symbol="Add" Foreground="Black"/>
                         </Viewbox>
                     </Button>
                     <GridView ItemsSource="{Binding Fotos, Mode=OneWay}" Header="" MinHeight="400" SelectionChanged="Fotos_SelectionChanged" Foreground="Black">
