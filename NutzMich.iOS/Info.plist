@@ -56,17 +56,17 @@
 	<key>UIRequiresFullScreen</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>This app needs access to the camera to take photos.</string>
+	<string>NutzMich verwendet Deine Kamera, wenn du ein Foto von einem Angebot oder für Dein Profil machst.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app needs access to photos.</string>
+	<string>NutzMich greift auf deine Fotos zu, wenn du ein Bild für ein Angebot auswählen möchtest.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>This app needs access to microphone.</string>
+	<string>NutzMich verwendet dein Mikrofon nicht.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>This app needs access to the photo gallery.</string>
+	<string>NutzMich greift auf deine Fotos zu, wenn du ein Bild für ein Angebot auswählen möchtest.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to your location.</string>
+	<string>NutzMich benötigt keinen Zugriff auf deinen Standort.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs access to your location.</string>
+	<string>NutzMich benötigt keinen Zugriff auf deinen Standort.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
