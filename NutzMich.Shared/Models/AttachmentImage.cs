@@ -28,7 +28,7 @@ namespace NutzMich.Shared.Models
                     byte[] data = new byte[Stream.Length];
                     Stream.Read(data, 0, (int)Stream.Length);
                     MemoryStream mstream = new MemoryStream(data);
-                    _image.SetSource(mstream);
+                    _image.SetSourceAsync(mstream);
 #endif
                 }
                 return _image;
