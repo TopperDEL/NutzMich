@@ -56,10 +56,17 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </StackPanel>
-                <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical">
-                    <TextBlock Text="Fotos" FontWeight="Bold" Foreground="Black"/>
-                    <Grid>
-                        <FlipView ItemsSource="{x:Bind _angebotVM.Fotos, Mode=OneWay}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="10">
+                <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Fotos" Grid.Row="0" FontWeight="Bold" Foreground="Black"/>
+                    
+                        <FlipView ItemsSource="{x:Bind _angebotVM.Fotos, Mode=OneWay}"
+                                  Grid.Row="2" MinHeight="250"
+                                  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="10">
                             <FlipView.ItemTemplate>
                                 <DataTemplate x:DataType="viewmodels:AttachmentImageViewModel">
                                     <ScrollViewer Background="White" MinHeight="200" MinWidth="200"
@@ -76,9 +83,9 @@
                                 </DataTemplate>
                             </FlipView.ItemTemplate>
                         </FlipView>
-                        <TextBlock Text="Lädt..." Foreground="Gray" Visibility="{x:Bind _angebotVM.FotosLoading, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}"/>
-                    </Grid>
-                </StackPanel>
+                        <TextBlock Text="Lädt..." Grid.Row="1" Foreground="Gray" Visibility="{x:Bind _angebotVM.FotosLoading, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}"/>
+                    
+                </Grid>
             </Grid>
             <Grid Grid.RowSpan="2" Visibility="{Binding Loading,Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}">
                 <controls:Loading IsLoading="{Binding Loading, Mode=OneWay}" Grid.RowSpan="2" Visibility="{Binding Loading, Mode=OneWay, Converter={StaticResource TrueIsVisibleConverter}}">
