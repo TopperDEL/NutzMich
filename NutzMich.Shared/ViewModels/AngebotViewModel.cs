@@ -196,7 +196,7 @@ namespace NutzMich.Shared.ViewModels
                 var nächsteZukünftige = Reservierungen.Where(r => r.Zeitraum.Von > DateTime.Now);
                 if(nächsteZukünftige.Count() != 0)
                 {
-                    VerfuegbarkeitsDetails = "Verfügbar bis " + nächsteZukünftige.OrderBy(r => r.Zeitraum.Von).First().Zeitraum.Von.AddDays(-1).ToString("d");
+                    VerfuegbarkeitsDetails = "Verfügbar bis " + nächsteZukünftige.OrderBy(r => r.Zeitraum.Von).First().Zeitraum.Von.AddDays(-1).ToString("d", new System.Globalization.CultureInfo("de-DE"));
                     VerfuegbarkeitsAmpel = new SolidColorBrush(Colors.Orange);
                 }
                 else
@@ -208,7 +208,7 @@ namespace NutzMich.Shared.ViewModels
             else
             {
                 Verfuegbarkeit = Verfuegbarkeit.Verliehen;
-                VerfuegbarkeitsDetails = "Verfügbar ab " + reservierungHeute.First().Zeitraum.Bis.AddDays(1).ToString("d");
+                VerfuegbarkeitsDetails = "Verfügbar ab " + reservierungHeute.First().Zeitraum.Bis.AddDays(1).ToString("d", new System.Globalization.CultureInfo("de-DE"));
                 VerfuegbarkeitsAmpel = Application.Current.Resources["NutzmichRosaBrush"] as SolidColorBrush;// new SolidColorBrush(Colors.DarkRed);
             }
 
