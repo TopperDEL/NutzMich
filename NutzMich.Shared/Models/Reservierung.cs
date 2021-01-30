@@ -25,7 +25,7 @@ namespace NutzMich.Shared.Models
         {
             Reservierung res = Newtonsoft.Json.JsonConvert.DeserializeObject<Reservierung>(nachricht);
 
-            return "Reserviert von " + res.Zeitraum.Von.ToString("d") + " bis " + res.Zeitraum.Bis.ToString("d");
+            return "Reserviert von " + res.Zeitraum.Von.ToString("d", new System.Globalization.CultureInfo("de-DE")) + " bis " + res.Zeitraum.Bis.ToString("d", new System.Globalization.CultureInfo("de-DE"));
         }
     }
 }

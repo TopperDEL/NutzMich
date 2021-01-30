@@ -15,7 +15,7 @@ namespace NutzMich.Shared.ViewModels
         {
             get
             {
-                return Zeitraum.Von.ToString("d") + " - " + Zeitraum.Bis.ToString("d");
+                return Zeitraum.Von.ToString("d", new System.Globalization.CultureInfo("de-DE")) + " - " + Zeitraum.Bis.ToString("d", new System.Globalization.CultureInfo("de-DE"));
             }
         }
         public ReservierungsZeitraumViewModel(ReservierungsZeitraum zeitraum)
