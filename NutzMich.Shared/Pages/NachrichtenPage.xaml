@@ -43,7 +43,9 @@
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0" Padding="12,20,12,20">
-                        <ListView ItemsSource="{x:Bind Nachrichten, Mode=OneWay}" ItemTemplateSelector="{StaticResource ChatMessageTemplateSelector}">
+                        <ListView ItemsSource="{x:Bind Nachrichten, Mode=OneWay}"
+                                  SelectionMode="None"
+                                  ItemTemplateSelector="{StaticResource ChatMessageTemplateSelector}">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
