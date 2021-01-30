@@ -80,7 +80,12 @@ namespace NutzMich.Shared.Pages
             BefehlsNachricht.SendeDatum = DateTime.Now;
 
             await _chatService.SendNachrichtAsync(_angebot, BefehlsNachricht, _chatInfo.NachrichtenAccess, false);
-            deferral.Complete();
+            try
+            {
+                deferral.Complete();
+            }catch
+            {
+            }
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
