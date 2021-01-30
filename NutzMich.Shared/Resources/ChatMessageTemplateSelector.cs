@@ -20,6 +20,9 @@ namespace NutzMich.Shared.Resources
 
         protected override DataTemplate SelectTemplateCore(object item)
         {
+            if (item == null)
+                return FromTemplate;
+
             var message = (ChatNachrichtViewModel)item;
             if (!string.IsNullOrEmpty(message.Nachricht.TechnischerNachrichtenTyp) && message.Nachricht.TechnischerNachrichtenTyp == Reservierung.TECHNISCHER_NACHRICHTENTYP)
                 return ReservierungTemplate;
